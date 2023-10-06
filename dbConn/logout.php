@@ -1,0 +1,9 @@
+<?php
+	session_start();
+	session_destroy();
+    unset($_SESSION["id"]);
+    unset($_SESSION["lname"]);
+    unset($_SESSION["fname"]);
+    unset($_SESSION["mname"]);
+    header("Location:../user-log.php");
+?>
