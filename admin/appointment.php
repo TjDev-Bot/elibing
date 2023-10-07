@@ -166,19 +166,21 @@ require('assets/component/sidebars.php');
                                                                     <input type="time" name="time" id="time" required="required" class="formbold-form-input" />
                                                                 </div>
                                                             </div>
-
                                                             <?php
-                                                            if ($_SESSION['id']) {
-                                                                $user_id = $_SESSION['id'];
-                                                                $select = "SELECT * FROM users WHERE id = $user_id";
-                                                                $query = mysqli_query($conn, $select);
-                                                                while ($data = mysqli_fetch_assoc($query)) {
-                                                                    $id = $data['id'];
-                                                                    $name = $data['firstname'] . ' ' . $data['midname'] . ' ' . $data['lastname'];
-                                                                    $role = $data['role'];
+                                                                if ($_SESSION['id']) {
+                                                                    $user_id = $_SESSION['id'];
+                                                                    $select = "SELECT * FROM tblUsersLogin WHERE UserID = ?";
+                                                                    $stmt = $conn->prepare($select);
+                                                                    $stmt->execute([$user_id]);
+                                                                    
+                                                                    while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                                        $id = $data['UserID'];
+                                                                        $name = $data['Createdby'];
+                                                                        $role = $data['Restriction'];
+                                                                    }
                                                                 }
-                                                            }
                                                             ?>
+
                                                             <div class="formbold-mb-5 w-full  formbold-px-3" style="display: none;">
                                                                 <label for="time" class="formbold-form-label">
                                                                 </label>

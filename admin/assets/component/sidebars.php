@@ -91,7 +91,7 @@
                             </nav>
                         </div>
 
-                        <a class="nav-link collapsed" href="appointment.php" data-bs-toggle="collapse"
+                        <a class="nav-link collapsed" href="location.php" data-bs-toggle="collapse"
                             data-bs-target="#Layouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="bx bx-user"></i></div>
                             Location

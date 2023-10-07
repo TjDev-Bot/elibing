@@ -1,6 +1,6 @@
 <?php
  
- $server = '58.69.225.215'; $db = 'bis'; $user = 'nddu'; $password = 'ndducaps';
+ $server = '58.69.225.215'; $db = 'bis'; $user = 'NDDU'; $password = 'ndducaps';
 //$server = '192.168.1.57'; $db = 'bis'; $user = 'nddu'; $password = 'ndducaps';
  
 $dsn = 'sqlsrv:Server='.$server.';Database='.$db;

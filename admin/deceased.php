@@ -76,36 +76,44 @@ include('../dbConn/conn.php');
                                         </thead>
                                         <tbody id="table-body">
                                             <?php
-                                            $select = "SELECT * FROM occupant INNER JOIN location on location.location_id = occupant.location_id";
-                                            $query = mysqli_query($conn, $select);
+                                                $select = "SELECT * FROM occupant INNER JOIN location ON location.location_id = occupant.location_id";
+                                                $query = $conn->query($select); // Use the PDO query method
 
-                                            while ($data = mysqli_fetch_array($query)) {
-                                                $occupant_id = $data['occupant_id'];
-                                                $nameoccupant = $data['fname'] . ' ' . $data['mname'] . ' ' . $data['lname'];
-                                                $block = $data['block_id'];
-                                                $nicheno = $data['nicheno'];
-                                                $level = $data['level'];
-                                                $startDate = new DateTime($data['intermentdate'] . ' ' . $data['intermenttime']);
-                                                $currentDate = new DateTime();
+                                                while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+                                                    $occupant_id = $data['occupant_id'];
+                                                    $nameoccupant = $data['fname'] . ' ' . $data['mname'] . ' ' . $data['lname'];
+                                                    $block = $data['block_id'];
+                                                    $nicheno = $data['nicheno'];
+                                                    $level = $data['level'];
+                                                    $startDate = new DateTime($data['intermentdate'] . ' ' . $data['intermenttime']);
+                                                    $currentDate = new DateTime();
 
-                                                $timeDifference = $currentDate->diff($startDate);
+                                                    $timeDifference = $currentDate->diff($startDate);
 
-                                                $daysDifference = $timeDifference->days;
-                                                $due = $startDate->add(new DateInterval('P5Y'));
+                                                    $daysDifference = $timeDifference->days;
+                                                    $due = $startDate->add(new DateInterval('P5Y'));
 
-                                                if ($currentDate > $due && $daysDifference >= -7) {
-                                                  
-                                                    $insertChamber = "INSERT INTO chamber (fname, mname, lname, suffix, dateofdeath, causeofdeath) 
-                                                      VALUES ('" . $data['fname'] . "', '" . $data['mname'] . "', '" . $data['lname'] . "', '" . $data['suffix'] . "', 
-                                                      '" . $data['intermentdate'] . "', '" . $data['causeofdeath'] . "')";
-                                                    mysqli_query($conn, $insertChamber);
+                                                    if ($currentDate > $due && $daysDifference >= -7) {
+                                                        $insertChamber = "INSERT INTO chamber (fname, mname, lname, suffix, dateofdeath, causeofdeath) 
+                                                        VALUES (:fname, :mname, :lname, :suffix, :dateofdeath, :causeofdeath)";
+                                                        $stmt = $conn->prepare($insertChamber);
+                                                        $stmt->execute([
+                                                            ':fname' => $data['fname'],
+                                                            ':mname' => $data['mname'],
+                                                            ':lname' => $data['lname'],
+                                                            ':suffix' => $data['suffix'],
+                                                            ':dateofdeath' => $data['intermentdate'],
+                                                            ':causeofdeath' => $data['causeofdeath']
+                                                        ]);
 
-                                                    // Remove data from the current table
-                                                    $deleteOccupant = "DELETE FROM occupant WHERE occupant_id = $occupant_id";
-                                                    mysqli_query($conn, $deleteOccupant);
+                                                        // Remove data from the current table
+                                                        $deleteOccupant = "DELETE FROM occupant WHERE occupant_id = :occupant_id";
+                                                        $stmt = $conn->prepare($deleteOccupant);
+                                                        $stmt->execute([':occupant_id' => $occupant_id]);
+                                                    }
                                                 }
+                                                ?>
 
-                                            ?>
 
                                             <tr>
 
@@ -133,7 +141,6 @@ include('../dbConn/conn.php');
                                                     </button>
                                                 </td>
                                             </tr>
-                                            <?php } ?>
                                         </tbody>
                                         </tbody>
                                     </table>

@@ -1,79 +1,111 @@
+
 <?php
 include "conn.php";
+require_once('../component/nicfunction.php');
 
-$block_id = $_POST['bid'];
+$locID = $_POST['locid'];
 $nicheno = $_POST['nicheno'];
 $level = $_POST['level'];
+$stat = $_POST['stat'];
 
-if (!empty($nicheno) || !empty($level)) {
-    $query = "SELECT MAX(CAST(SUBSTRING_INDEX(nicheno, ' ', -1) AS UNSIGNED)) AS max_nicheno FROM location WHERE block_id = ? AND level = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("is", $block_id, $level);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $max_nicheno = $row['max_nicheno'];
+// Check if the input values are valid
+if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || !empty($stat)) {
+    $batchSize = 10;
+    $numBatches = ceil($nicheno / $batchSize);
 
-    for ($i = 1; $i <= $nicheno; $i++) {
-        $nicherow = "Niche No " . ($max_nicheno + $i); 
-        $sql = "INSERT INTO location (block_id, nicheno, level, status) VALUES (?, ?, ?, '')";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssi", $block_id, $nicherow, $level);
+    // Prepare the insert statement outside the loop
+    $insertSql = "INSERT INTO tblNiche (Nid, LocID, Level, Status) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($insertSql);
+    $stmt->bindParam(1, $nicherow, PDO::PARAM_STR);
+    $stmt->bindParam(2, $locID, PDO::PARAM_STR);
+    $stmt->bindParam(3, $level, PDO::PARAM_STR);
+    $stmt->bindParam(4, $stat, PDO::PARAM_INT);
 
-        if ($stmt->execute()) {
-            echo "<script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var modal = document.createElement('div');
-                modal.innerHTML = 'Your Niche is Successfully Recorded';
-                modal.style.position = 'fixed';
-                modal.style.top = '50%';
-                modal.style.left = '50%';
-                modal.style.transform = 'translate(-50%, -50%)';
-                modal.style.backgroundColor = 'white';
-                modal.style.padding = '20px';
-                modal.style.border = '1px solid #ccc';
-                modal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
-                modal.style.zIndex = '9999';
+    $counter = 1; // Initialize a counter
 
-                document.body.appendChild(modal);
+    for ($batch = 0; $batch < $numBatches; $batch++) {
+        $batchStart = $batch * $batchSize;
+        $batchEnd = min(($batch + 1) * $batchSize, $nicheno);
 
-                setTimeout(function () {
-                    modal.style.display = 'none';
-                    window.location.href = '../admin/niche.php?id=$block_id';
-                }, 1000); 
-            });
-          </script>";
-        } else {
-            echo "<script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var modal = document.createElement('div');
-                        modal.innerHTML = 'Your Niche is Successfully Recorded';
-                        modal.style.position = 'fixed';
-                        modal.style.top = '50%';
-                        modal.style.left = '50%';
-                        modal.style.transform = 'translate(-50%, -50%)';
-                        modal.style.backgroundColor = 'white';
-                        modal.style.padding = '20px';
-                        modal.style.border = '1px solid #ccc';
-                        modal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
-                        modal.style.zIndex = '9999';
+        for ($i = $batchStart; $i < $batchEnd; $i++) {
+            $nicherow = nextNumb("N", "tblNiche", "Nid", 2, "");
+
+            // Check if the generated Nid already exists
+            $checkSql = "SELECT COUNT(*) AS count FROM tblNiche WHERE Nid = ?";
+            $checkStmt = $conn->prepare($checkSql);
+            $checkStmt->bindParam(1, $nicherow, PDO::PARAM_STR);
+            $checkStmt->execute();
+            $count = $checkStmt->fetchColumn();
+
+            while ($count > 0) {
+                
+                echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var modal = document.createElement('div');
+                    modal.innerHTML = 'Nid: $nicherow already exists. Tring the next one';
+                    modal.style.position = 'fixed';
+                    modal.style.top = '20%';
+                    modal.style.left = '50%';
+                    modal.style.transform = 'translate(-50%, -50%)';
+                    modal.style.backgroundColor = 'white';
+                    modal.style.padding = '20px';
+                    modal.style.border = '1px solid #ccc';
+                    modal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+                    modal.style.zIndex = '9999';
         
-                        document.body.appendChild(modal);
+                    document.body.appendChild(modal);
         
-                        setTimeout(function () {
-                            modal.style.display = 'none';
-                            window.location.href = '../admin/niche.php?id=$block_id';
-                        }, 1000); 
-                    });
-                  </script>";
+                
+                });
+                </script>";
+
+                $counter++; // Increment the counter
+                $nicherow = "N" . str_pad($counter, 2, '0', STR_PAD_LEFT);
+                $checkStmt->bindParam(1, $nicherow, PDO::PARAM_STR);
+                $checkStmt->execute();
+                $count = $checkStmt->fetchColumn();
+            }
+
+            // If Nid is unique, insert it
+            if ($stmt->execute()) {
+                echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var modal = document.createElement('div');
+                    modal.innerHTML = 'Niche Successfully Recorded';
+                    modal.style.position = 'fixed';
+                    modal.style.top = '50%';
+                    modal.style.left = '50%';
+                    modal.style.transform = 'translate(-50%, -50%)';
+                    modal.style.backgroundColor = 'white';
+                    modal.style.padding = '20px';
+                    modal.style.border = '1px solid #ccc';
+                    modal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+                    modal.style.zIndex = '9999';
+        
+                    document.body.appendChild(modal);
+        
+            
+                });
+                </script>";
+            } else {
+                echo "An error occurred while inserting a row with Nid: $nicherow.<br>";
+            }
+
+            $counter++; // Increment the counter
         }
 
-        $stmt->close();
+        usleep(100000);
     }
+
+    $stmt->closeCursor();
+
+    echo "<script>
+        setTimeout(function () {
+            window.location.href = '../admin/niche.php?id=$locID';
+        }, 1000);
+    </script>";
 } else {
-    echo "All fields are required";
+    echo "Invalid input. Please check the fields.";
     die();
 }
 ?>
-
-

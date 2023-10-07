@@ -11,7 +11,7 @@ include "../dbConn/conn.php";
 
 if (isset($_GET['id'])) {
     $block_id = $_GET['id'];
-    $select = "SELECT * FROM block WHERE block_id = $block_id";
+    $select = "SELECT * FROM tblNicheLocation WHERE LocID = $block_id";
     // $query = mysqli_query($conn, $select);
 
     // while ($data = mysqli_fetch_assoc($query)) {
@@ -35,17 +35,18 @@ if (isset($_GET['id'])) {
                     </ol>
 
                     <h3>
-                        <?php echo "Block" . ' ' . $block_id ?>
+                        <?php echo "Block" . ' ' . $block_id; ?>
                     </h3>
 
                     <button class="btn btn-danger mb-2" type="button" name="submit" onclick="goBack()">Back</button>
 
                     <form action="../dbConn/adlocation.php" method="POST" class="mb-4" style="float: right">
                         <label for="">Niche No</label>
-                        <input type="text" name="nicheno">
+                        <input type="text" name="nicheno" required>
                         <label for="">Level</label>
-                        <input type="number" name="level">
-                        <input type="hidden" name="bid" value="<?php echo $block_id ?>">
+                        <input type="number" name="level" required>
+                        <input type="hidden" name="locid" value="<?php echo $block_id ?>">
+                        <input type="hidden" value="0" name="stat">
                         <button class="btn btn-primary" type="submit" name="submit">Submit</button>
                     </form>
 
@@ -58,6 +59,8 @@ if (isset($_GET['id'])) {
                                             <tr>
                                                 <th>Niche No</th>
                                                 <th>Level</th>
+                                                <th>Nno</th>
+                                                <th>Size</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -65,20 +68,34 @@ if (isset($_GET['id'])) {
                                         <tbody>
 
                                             <?php
-                                            $selectloc = "SELECT * FROM location WHERE block_id = $block_id ORDER BY level ASC";
-                                            $queryloc = mysqli_query($conn, $selectloc);
-                                            while ($dataloc = mysqli_fetch_array($queryloc)) {
-                                                $location_id = $dataloc['location_id'];
-                                                $nicheno = $dataloc['nicheno'];
-                                                $level = $dataloc['level'];
-                                                $status = $dataloc['status'];
+                                            $selectloc = "SELECT * FROM tblNiche WHERE LocID = '$block_id' ORDER BY Level ASC";
+                                            $queryloc = $conn->query($selectloc);
+                                            while ($dataloc = $queryloc->fetch(PDO::FETCH_ASSOC)) {
+                                                // $location_id = $dataloc['location_id'];
+                                                $nicheno = $dataloc['Nid'];
+                                                $level = $dataloc['Level'];
+                                                $status = $dataloc['Status'];
+                                                $nno = $dataloc['Nno'];
+                                                $size = $dataloc['Size'];
 
+                                                if($status == 0){
+                                                    $statustoString = "Unoccupied";
+                                                }else if($status == 1){
+                                                    $statustoString = "Reserved";
+                                                } else {
+                                                    $statustoString = "Occupied";
+                                                }
+                                                
                                             ?>
                                             <tr>
 
                                                 <td><?php echo $nicheno ?></td>
                                                 <td><?php echo $level ?></td>
-                                                <td><?php echo $status ?></td>
+                                                <td><?php echo $nno ?></td>
+                                                <td><?php echo $size ?></td>
+                                                <td><?php echo $statustoString ?></td>
+
+
 
                                                 <td>
                                                     <button class="btn btn-primary "

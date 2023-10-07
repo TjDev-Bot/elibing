@@ -64,7 +64,7 @@ require_once('component/header.php');
                                                                 <div class="formbold-mb-5">
                                                                     <label for="name"
                                                                         class="formbold-form-label">Relationship to the
-                                                                        Deceased
+                                                                        Deceased 
                                                                     </label>
                                                                     <input type="text" name="relationship" id="name"
                                                                         placeholder="e.g Daughter" required="required"
