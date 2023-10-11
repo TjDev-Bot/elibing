@@ -7,8 +7,8 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include('../dbConn/conn.php');
 
-$select = "SELECT * FROM intermentform ORDER BY STR_TO_DATE(CONCAT(desired_date, ' ', desired_time), '%Y-%m-%d %H:%i:%s') ASC";
-$query = mysqli_query($conn, $select);
+$select = "SELECT * FROM tblDeathRecord ORDER BY IntermentDateTime DESC";
+$query = $conn->query($select);
 
 ?>
 
@@ -25,7 +25,7 @@ $query = mysqli_query($conn, $select);
                     </ol>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
-                            <input type="search" id="searchInput" placeholder="Search here...">
+                            <!-- <input type="search" id="searchInput" placeholder="Search here..."> -->
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll">
                                     <table class="table-no-border">
@@ -43,21 +43,28 @@ $query = mysqli_query($conn, $select);
                                                 <th scope="col" class="px-6 py-3">
                                                     Interment Date
                                                 </th>
-                                                <th scope="col" class="px-6 py-3">
+                                                <!-- <th scope="col" class="px-6 py-3">
                                                     Interment Time
-                                                </th>
+                                                </th> -->
 
                                             </tr>
                                         </thead>
                                         <tbody id="table-body">
                                             <?php
-                                            while ($data = mysqli_fetch_array($query)) {
+                                            while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
                                                 //$user_id = $data['user_id'];
                                                 //$id = $data['id'];
-                                                $name = $data['deceased'];
+                                                $name = $data['Fname'].' '.$data['MName'].' '.$data['Lname'];
                                                 //$deathdate = $data['deathdate'];
-                                                $desireddate = $data['desired_date'];
-                                                $desiredtime = $data['desired_time'];
+                                                $desireddatetime = $data['IntermentDateTime'];
+
+                                                if($desireddatetime === null){
+                                                    $desireddatetime = "N/A";
+                                                } else {
+                                                    $desireddatetime = date('F j, Y g:i A', strtotime($desireddatetime));
+                                                }
+
+                                                
                                             ?>
                                                 <tr>
                                                     <!-- <td>
@@ -70,11 +77,9 @@ $query = mysqli_query($conn, $select);
                                                         <?php echo $name ?>
                                                     </td>
                                                     <td>
-                                                        <?php echo date('F j, Y ', strtotime($desireddate)); ?>
+                                                        <?php echo $desireddatetime ?>
                                                     </td>
-                                                    <td>
-                                                        <?php echo date(' g:i A', strtotime($desiredtime)); ?>
-                                                    </td>
+                                                    
 
 
 

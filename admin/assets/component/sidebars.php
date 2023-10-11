@@ -66,16 +66,20 @@
                             <div class="sb-nav-link-icon"><i class="fa-regular fa-bell-exclamation fa-lg"></i></div>
                             Interment Schedule
                         </a>
-
+<!-- 
                         <a class="nav-link " href="DueCadavers.php">
                             <div class="sb-nav-link-icon"><i class="bx bx-error"></i></div>
                             Due Cadavers
-                        </a>
+                        </a> -->
                         <a class="nav-link " href="renewed.php">
                             <div class="sb-nav-link-icon"><i class="bx bx-error"></i></div>
                             Renewed
                         </a>
-                        <a class="nav-link collapsed" href="appointment.php" data-bs-toggle="collapse"
+                        <a class="nav-link " href="reserve.php">
+                            <div class="sb-nav-link-icon"><i class="bx bx-error"></i></div>
+                            Reserve
+                        </a>
+                        <!-- <a class="nav-link collapsed" href="appointmen.php" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="bx bx-user"></i></div>
                             Walk-in
@@ -89,7 +93,7 @@
                                 <a class="nav-link" href="viewappointment.php">View Appointment</a>
 
                             </nav>
-                        </div>
+                        </div> -->
 
                         <a class="nav-link collapsed" href="location.php" data-bs-toggle="collapse"
                             data-bs-target="#Layouts" aria-expanded="false" aria-controls="collapseLayouts">

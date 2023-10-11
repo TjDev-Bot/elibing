@@ -76,16 +76,16 @@ include('../dbConn/conn.php');
                                         </thead>
                                         <tbody id="table-body">
                                             <?php
-                                                $select = "SELECT * FROM occupant INNER JOIN location ON location.location_id = occupant.location_id";
-                                                $query = $conn->query($select); // Use the PDO query method
+                                                $select = "SELECT * FROM tblDeathRecord INNER JOIN tblNiche ON tblNiche.Nid = tblDeathRecord.ProfileID";
+                                                $query = $conn->query($select);
 
                                                 while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
-                                                    $occupant_id = $data['occupant_id'];
-                                                    $nameoccupant = $data['fname'] . ' ' . $data['mname'] . ' ' . $data['lname'];
-                                                    $block = $data['block_id'];
-                                                    $nicheno = $data['nicheno'];
-                                                    $level = $data['level'];
-                                                    $startDate = new DateTime($data['intermentdate'] . ' ' . $data['intermenttime']);
+                                                    $profileID = $data['ProfileID'];
+                                                    $full = $data['Fname'] . ' ' . $data['MName'] . ' ' . $data['Lname'];
+                                                    $locID = $data['LocID'];
+                                                    $nicheno = $data['Nid'];
+                                                    $level = $data['Level'];
+                                                    $startDate = new DateTime($data['IntermentDateTime']);
                                                     $currentDate = new DateTime();
 
                                                     $timeDifference = $currentDate->diff($startDate);
@@ -93,35 +93,35 @@ include('../dbConn/conn.php');
                                                     $daysDifference = $timeDifference->days;
                                                     $due = $startDate->add(new DateInterval('P5Y'));
 
-                                                    if ($currentDate > $due && $daysDifference >= -7) {
-                                                        $insertChamber = "INSERT INTO chamber (fname, mname, lname, suffix, dateofdeath, causeofdeath) 
-                                                        VALUES (:fname, :mname, :lname, :suffix, :dateofdeath, :causeofdeath)";
-                                                        $stmt = $conn->prepare($insertChamber);
-                                                        $stmt->execute([
-                                                            ':fname' => $data['fname'],
-                                                            ':mname' => $data['mname'],
-                                                            ':lname' => $data['lname'],
-                                                            ':suffix' => $data['suffix'],
-                                                            ':dateofdeath' => $data['intermentdate'],
-                                                            ':causeofdeath' => $data['causeofdeath']
-                                                        ]);
+                                                    // if ($currentDate > $due && $daysDifference >= -7) {
+                                                    //     $insertChamber = "INSERT INTO chamber (fname, mname, lname, suffix, dateofdeath, causeofdeath) 
+                                                    //     VALUES (:fname, :mname, :lname, :suffix, :dateofdeath, :causeofdeath)";
+                                                    //     $stmt = $conn->prepare($insertChamber);
+                                                    //     $stmt->execute([
+                                                    //         ':fname' => $data['fname'],
+                                                    //         ':mname' => $data['mname'],
+                                                    //         ':lname' => $data['lname'],
+                                                    //         ':suffix' => $data['suffix'],
+                                                    //         ':dateofdeath' => $data['intermentdate'],
+                                                    //         ':causeofdeath' => $data['causeofdeath']
+                                                    //     ]);
 
-                                                        // Remove data from the current table
-                                                        $deleteOccupant = "DELETE FROM occupant WHERE occupant_id = :occupant_id";
-                                                        $stmt = $conn->prepare($deleteOccupant);
-                                                        $stmt->execute([':occupant_id' => $occupant_id]);
-                                                    }
-                                                }
+                                                    //     // Remove data from the current table
+                                                    //     $deleteOccupant = "DELETE FROM occupant WHERE occupant_id = :occupant_id";
+                                                    //     $stmt = $conn->prepare($deleteOccupant);
+                                                    //     $stmt->execute([':occupant_id' => $profileID]);
+
+                                              
                                                 ?>
 
 
                                             <tr>
 
                                                 <td>
-                                                    <?php echo $nameoccupant ?>
+                                                    <?php echo $full ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $block ?>
+                                                    <?php echo $locID ?>
 
                                                 </td>
                                                 <td>
@@ -141,7 +141,8 @@ include('../dbConn/conn.php');
                                                     </button>
                                                 </td>
                                             </tr>
-                                        </tbody>
+
+                                            <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>

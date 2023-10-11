@@ -9,19 +9,17 @@ require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
 
-if (isset($_GET['id'])) {
-    $location_id = $_GET['id'];
-    $select = "SELECT * FROM location WHERE location_id = $location_id";
-    $query = mysqli_query($conn, $select);
-
-    // while ($data = mysqli_fetch_assoc($query)) {
-    //     $id = $data['block_id'];
-    // }
-
-    while ($occupant = mysqli_fetch_assoc($query)) {
-        $block_id = $occupant['block_id'];
-        $nicheno = $occupant['nicheno'];
-        $level = $occupant['level'];
+if (isset($_GET['LocID']) && isset($_GET['Nid'])) {
+    $nicheno = $_GET['Nid'];
+    $block_id = $_GET['LocID'];
+    $selectt = "SELECT * FROM tblNiche WHERE Nid = '$nicheno'";
+    $query = $conn->query($selectt);
+    while ($occupant = $query->fetch(PDO::FETCH_ASSOC)) {
+        // $nicheno = $occupant['Nid'];
+        $level = $occupant['Level'];
+        // $status = $occupant['Status'];
+        // $nno = $occupant['Nno'];
+        // $size = $occupant['Size'];
     }
 }
 
@@ -52,10 +50,12 @@ if (isset($_GET['id'])) {
                     </h3>
 
                     <button class="btn btn-danger mb-4 " type="button" name="submit"
-                        onclick="goBack(<?php echo $block_id; ?>)">Back</button>
+                        onclick="goBack('<?php echo $block_id; ?>')">Back</button>
 
+                    <button class="btn btn-danger mb-4" style="float: right" type="button" name="submit"
+                        onclick="resOcuppant('<?php echo $nicheno ?>')">Reserve</button>
                     <button class="btn btn-primary mb-4" style="float: right" type="button" name="submit"
-                        onclick="addOcuppant(<?php echo $location_id; ?>)">Add</button>
+                        onclick="addOcuppant('<?php echo $nicheno; ?>')">Add</button>
 
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -69,6 +69,8 @@ if (isset($_GET['id'])) {
                                             <tr>
                                                 <th>ID Number</th>
                                                 <th>Name</th>
+                                                <th>Date of Death</th>
+                                                <th>Interment Place</th>
                                                 <th>Interment Date & Time</th>
                                                 <th>Action</th>
                                             </tr>
@@ -76,36 +78,69 @@ if (isset($_GET['id'])) {
 
                                         <tbody>
                                             <?php
-                                            $selectocc = "SELECT * FROM occupant WHERE location_id = $location_id";
-                                            $queryocc = mysqli_query($conn, $selectocc);
-                                            while ($data = mysqli_fetch_array($queryocc)) {
-                                                $occupant_id = $data['occupant_id'];
-                                                $name = $data['fname'] . ' ' . $data['mname'] . ' ' . $data['lname'] . ' ' . $data['suffix'];
-                                                $interment =  $data['intermentdate'] . ' ' . $data['intermenttime'];
+                                            // $selectocc = "SELECT * FROM tblDeathRecord";
+                                            // $queryocc = $conn->query($selectocc);
+                                    
+                                           
+                                            // $select = "SELECT * FROM tblNiche
+                                            // INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
+                                            // INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
+                                            // INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID WHERE LocID = '$block_id' ";
+
+                                            $select = "SELECT * FROM tblNiche
+                                            INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
+                                            INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
+                                            INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID WHERE tblNicheLocation.LocID = '$block_id'";
+
+                                 
+                                            $queryocc = $conn->query($select);
+                                            while ($data = $queryocc->fetch(PDO::FETCH_ASSOC)) {
+                                                $profileid = $data['ProfileID'];
+                                                $dateofdeath = $data['DateofDeath'];
+                                                $name = $data['Fname'] . ' ' . $data['MName'] . ' ' . $data['Lname'] . ' ' . $data['Suffix'];
+                                                $intermentplace = $data['IntermentPlace'];
+                                                $intermentdatetime = $data['IntermentDateTime'];
+
+
+                                                if($intermentdatetime === null){
+                                                    $intermentdatetime = "N/A";
+                                                } else {
+                                                    $intermentdatetime = date('F j, Y g:i A', strtotime($intermentdatetime));
+
+                                                }
 
                                             ?>
+
+                                            
                                             <tr>
+
                                                 <td class="px-6 py-4">
-                                                    <?php echo $occupant_id ?>
+                                                    <?php echo $profileid  ?>
                                                 </td>
 
                                                 <td class="px-6 py-4">
                                                     <?php echo $name ?>
                                                 </td>
+                                                <td class="px-6 py-4">
+                                                    <?php echo $dateofdeath ?>
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    <?php echo $intermentplace ?>
+                                                </td>
 
                                                 <td class="px-6 py-4">
-                                                    <?php echo date('F j, Y g:i A', strtotime($interment)); ?>
+                                                    <?php echo $intermentdatetime ?>
                                                 </td>
 
                                                 <td>
                                                     <button class="btn btn-primary "
-                                                        onclick="viewOcuppant(<?php echo $occupant_id; ?>)">
+                                                        onclick="viewOcuppant('<?php echo $profileid; ?>')">
                                                         <i class='bx bx-edit-alt'></i>
                                                     </button>
-                                                    <button class="btn btn-danger"
-                                                        onclick="openDelete(<?php echo $occupant_id; ?>, <?php echo $block_id; ?>, )">
+                                                    <!-- <button class="btn btn-danger"
+                                                        onclick="openDelete('<?php echo $profileid; ?>', '<?php echo $block_id; ?>', '<?php echo $nicheno; ?>')">
                                                         <i class="fa-solid fa-trash"></i>
-                                                    </button>
+                                                    </button> -->
                                                 </td>
                                             </tr>
                                             <?php } ?>
@@ -123,7 +158,7 @@ if (isset($_GET['id'])) {
 
     <script>
     function goBack($block_id) {
-        var url = 'niche.php?id=' + $block_id;
+        var url = 'niche.php?LocId=' + $block_id;
         window.location.href = url;
     }
 
@@ -135,15 +170,23 @@ if (isset($_GET['id'])) {
 
     }
 
-    function addOcuppant($location_id) {
+    function resOcuppant(nicheno) {
 
-        var url = 'form.php?id=' + $location_id;
+        var url = 'appointment.php?Nid=' + nicheno;
 
         window.location.href = url;
 
     }
 
-    function openDelete(occupant_id, block_id) {
+    function addOcuppant(nicheno) {
+
+        var url = 'form.php?id=' + nicheno;
+
+        window.location.href = url;
+
+    }
+
+    function openDelete(profileid, block_id, nicheno) {
         var url = '../dbConn/deleteocc.php?occ_id=' + occupant_id + '&block_id=' + block_id;
         window.location.href = url;
     }

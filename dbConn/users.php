@@ -5,7 +5,7 @@ require_once('../component/function.php');
 $name = $_POST['name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
-$profileID = nextnumb("PROF", "tblUsersLogin","UserID",7,23);
+$profileID = nextnumb("PROF", "tblUsersLogin", "UserID", 7, 23);
 
 if (!empty($name) || !empty($email) || !empty($password)) {
 
@@ -19,15 +19,20 @@ if (!empty($name) || !empty($email) || !empty($password)) {
 
     if ($num == 0) {
         $stmt->closeCursor(); // Close cursor before reusing $stmt
+
+        $hashedPassword = hash('sha1', $password);
+
+        $passwordverify = password_verify($password, $hashedPassword);
         $stmt = $conn->prepare($insert);
         $stmt->bindParam(1, $profileID, PDO::PARAM_STR);
         $stmt->bindParam(2, $name, PDO::PARAM_STR);
         $stmt->bindParam(3, $email, PDO::PARAM_STR);
-        $stmt->bindParam(4, $password, PDO::PARAM_STR);
+        $stmt->bindParam(4, $passwordverify, PDO::PARAM_STR);
         $stmt->execute();
 
         echo "<script>if(confirm('Your Record Successfully Inserted. Now Login')){document.location.href='../user-log.php'};</script>";
     } else {
+        
         echo '<script type="text/javascript"> alert("This Email: ' . $email . ' is already registered"); window.location.href = "../signin.php"; </script>';
     }
     $stmt->closeCursor();

@@ -9,8 +9,8 @@ require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
 
-if (isset($_GET['id'])) {
-    $block_id = $_GET['id'];
+if (isset($_GET['LocId'])) {
+    $block_id = $_GET['LocId'];
     $select = "SELECT * FROM tblNicheLocation WHERE LocID = $block_id";
     // $query = mysqli_query($conn, $select);
 
@@ -99,13 +99,13 @@ if (isset($_GET['id'])) {
 
                                                 <td>
                                                     <button class="btn btn-primary "
-                                                        onclick="addOcuppant(<?php echo $location_id; ?>)">
+                                                    onclick="addOcuppant('<?php echo $block_id; ?>', '<?php echo $nicheno; ?>')">
                                                         <i class='bx bx-edit-alt'></i>
                                                     </button>
-                                                    <button class="btn btn-danger"
+                                                    <!-- <button class="btn btn-danger"
                                                         onclick="openDelete(<?php echo $location_id; ?>, <?php echo $block_id; ?>)">
                                                         <i class="fa-solid fa-trash"></i>
-                                                    </button>
+                                                    </button> -->
 
 
                                                 </td>
@@ -131,9 +131,9 @@ if (isset($_GET['id'])) {
 
     }
 
-    function addOcuppant($location_id) {
+    function addOcuppant(block_id, nicheno) {
 
-        var url = 'occupant.php?id=' + $location_id;
+        var url = 'occupant.php?LocID=' + block_id + '&Nid=' + nicheno;
 
         window.location.href = url;
 

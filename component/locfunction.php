@@ -9,19 +9,18 @@ function nextNumb($tmpInitial, $VarTable, $VarOrder, $VarLength, $DisYr)
         $DisYr = $DisYr . $tmpInitial . '';
     }
 
-    $query = "SELECT ISNULL((SELECT TOP 1 ISNULL(RIGHT(" . $VarOrder . ", 3) + 1, 1) AS pernum FROM " . $VarTable . "  AS x 
-        WHERE LEFT(" . $VarOrder . ", CHARINDEX('', " . $VarOrder . ")) = '" . $DisYr . "' ORDER BY ISNULL(RIGHT(" . $VarOrder . ", 3), 1) DESC), 1) AS pernum";
-
+    $query = "SELECT ISNULL(MAX(CAST(SUBSTRING(" . $VarOrder . ", " . (strlen($DisYr) + 1) . ", " . ($VarLength - strlen($DisYr)) . ") AS INT)), 0) + 1 AS pernum FROM " . $VarTable . " WHERE " . $VarOrder . " LIKE ?";
     $stmt1 = $conn->prepare($query);
-    $stmt1->execute(array());
+    $stmt1->execute(array($DisYr . '%'));
 
-    while ($row = $stmt1->fetch()) {
-        $NextIDnum = $row['pernum'];
-        $NextIDnum = $DisYr . str_pad($NextIDnum, 5, '0', STR_PAD_LEFT);
-        return $NextIDnum;
-    }
+    $row = $stmt1->fetch(PDO::FETCH_ASSOC);
+    $NextIDnum = $row['pernum'];
 
+    $NextIDnum = $DisYr . str_pad($NextIDnum, $VarLength - strlen($DisYr), '0', STR_PAD_LEFT);
+    
     $stmt1->closeCursor();
     $conn = null;
+
+    return $NextIDnum;
 }
 ?>

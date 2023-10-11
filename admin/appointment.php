@@ -21,7 +21,7 @@ require('assets/component/sidebars.php');
                     <!-- <h1 class="mt-4">Walk-in Appointment</h1> -->
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">
-                            <h1>Add Walk-in Appointment</h1>
+                            <h1>Add Reservation Appointment</h1>
                         </li>
                     </ol>
                     <div class="pcoded-inner-content">
@@ -35,16 +35,29 @@ require('assets/component/sidebars.php');
                                             <div class="container-interment">
                                                 <div class="formbold-main">
                                                     <div class="">
-                                                        <form action="../dbConn/intermentadmin.php" method="POST">
+                                                        <?php
+                                                            if(isset($_GET['Nid'])){
+                                                                $nicheno = $_GET['Nid'];
+                                                            }
+                                                        ?>
+                                                        <form
+                                                            action="../dbConn/intermentadmin.php"
+                                                            method="POST">
+                                                    
+                                                            <input type="hidden" name="Nid"
+                                                                value="<?php echo $nicheno; ?>">
                                                             <div class="formbold-mb-5">
-                                                                <label for="name" class="formbold-form-label">Relationship to the
+                                                                <label for="name"
+                                                                    class="formbold-form-label">Relationship to the
                                                                     Deceased
                                                                 </label>
-                                                                <input type="text" name="relationship" id="name" placeholder="e.g Daughter" required="required" class="formbold-form-input" />
+                                                                <input type="text" name="relationship" id="name"
+                                                                    placeholder="e.g Daughter" required="required"
+                                                                    class="formbold-form-input" />
                                                             </div>
                                                             <div class="flex flex-wrap formbold--mx-3">
                                                                 <div class="w-full sm:w-half formbold-px-3">
-                                                                    <div class="formbold-mb-5">
+                                                                    <!-- <div class="formbold-mb-5">
                                                                         <label class="formbold-form-label  ">
                                                                             Address Details
                                                                         </label>
@@ -130,76 +143,159 @@ require('assets/component/sidebars.php');
                                                                             </div>
                                                                         </div>
 
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                             </div>
                                                             <hr>
                                                             <div class="formbold-mb-5">
-                                                                <label for="name" class="formbold-form-label"> Name
-                                                                    of the Deceased
-                                                                </label>
-                                                                <input type="text" name="deceased" id="name" placeholder="Enter Full Name" required="required" class="formbold-form-input" />
-                                                            </div>
-                                                            <div class="formbold-mb-5">
-                                                                <label for="name" class="formbold-form-label"> Age
-                                                                </label>
-                                                                <input type="text" name="age" id="name" placeholder="Enter Age" required="required" class="formbold-form-input" />
-                                                            </div>
-                                                            <div class="formbold-mb-5">
-                                                                <label for="date" class="formbold-form-label">
-                                                                    Date of Death </label>
-                                                                <input type="date" name="deathdate" id="ddate" required="required" class="formbold-form-input" />
-                                                            </div>
-                                                            <hr>
-                                                            <label class="formbold-form-label formbold-form-label-2">
-                                                                Select Desired Date
-                                                            </label>
-                                                            <div class="formbold-mb-5 flex  ">
-                                                                <div class="formbold-mb-5 w-full  ">
-                                                                    <label for="date" class="formbold-form-label">
-                                                                        Date of Death </label>
-                                                                    <input type="date" name="ddate" id="ddate" required="required" class="formbold-form-input" />
+                                                                <div class="row">
+                                                                    <div class="formbold-mb-5 flex">
+                                                                        <div class="formbold-mb-5 w-full  ">
+                                                                            <label for="name"
+                                                                                class="formbold-form-label"> Last
+                                                                                Name
+                                                                            </label>
+                                                                            <input type="text" name="Lname" id="name"
+                                                                                placeholder="Enter Last Name"
+                                                                                required="required"
+                                                                                class="formbold-form-input" />
+                                                                        </div>
+
+                                                                        <div
+                                                                            class="formbold-mb-5 w-full  formbold-px-3">
+                                                                            <label for="name"
+                                                                                class="formbold-form-label"> First
+                                                                                Name
+                                                                            </label>
+                                                                            <input type="text" name="Fname" id="name"
+                                                                                placeholder="Enter First Name"
+                                                                                required="required"
+                                                                                class="formbold-form-input" />
+                                                                        </div>
+
+                                                                        <div
+                                                                            class="formbold-mb-5 w-full  formbold-px-3">
+                                                                            <label for="name"
+                                                                                class="formbold-form-label">
+                                                                                Middle Name
+                                                                            </label>
+                                                                            <input type="text" name="MName" id="name"
+                                                                                placeholder="Enter Middle Name"
+                                                                                required="required"
+                                                                                class="formbold-form-input" />
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <div
+                                                                            class="formbold-mb-5 w-full  formbold-px-3">
+                                                                            <label for="name"
+                                                                                class="formbold-form-label">
+                                                                                Suffix
+                                                                            </label>
+                                                                            <input type="text" name="Suffix" id="name"
+                                                                                placeholder="Jr / Sr"
+                                                                                class="formbold-form-input" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <div class="formbold-mb-5">
+                                                                            <label for="name"
+                                                                                class="formbold-form-label">
+                                                                                Cause of Death
+                                                                            </label>
+                                                                            <input type="text" name="cod" id="name"
+                                                                                class="formbold-form-input" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <div class="formbold-mb-5">
+                                                                            <label for="date"
+                                                                                class="formbold-form-label">
+                                                                                Date of Death </label>
+                                                                            <input type="date" name="deathdate"
+                                                                                id="ddate" required="required"
+                                                                                class="formbold-form-input" />
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col">
+                                                                        <div class="formbold-mb-5">
+                                                                            <label for="name"
+                                                                                class="formbold-form-label">Interment
+                                                                                Place
+                                                                            </label>
+                                                                            <input type="text" name="IntermentPlace"
+                                                                                id="name" placeholder="Enter Place"
+                                                                                required class="formbold-form-input" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                                <!-- <label
+                                                                        class="formbold-form-label formbold-form-label-2">
+                                                                        Select Desired Date
+                                                                    </label>
+                                                                    <div class="formbold-mb-5 flex  ">
+                                                                        <div class="formbold-mb-5 w-full  ">
+                                                                            <label for="date"
+                                                                                class="formbold-form-label">
+                                                                                Date of Death </label>
+                                                                            <input type="date" name="ddate" id="ddate"
+                                                                                required="required"
+                                                                                class="formbold-form-input" />
+                                                                        </div>
+                                                                        <div
+                                                                            class="formbold-mb-5 w-full  formbold-px-3">
+                                                                            <label for="time"
+                                                                                class="formbold-form-label">
+                                                                                Time </label>
+                                                                            <input type="time" name="time" id="time"
+                                                                                required="required"
+                                                                                class="formbold-form-input" />
+                                                                        </div>
+                                                                    </div> -->
+                                                                <?php
+                                                                // if ($_SESSION['id']) {
+                                                                //     $user_id = $_SESSION['id'];
+                                                                //     $select = "SELECT * FROM tblUsersLogin WHERE UserID = ?";
+                                                                //     $stmt = $conn->prepare($select);
+                                                                //     $stmt->execute([$user_id]);
+                                                                    
+                                                                //     while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                                //         $id = $data['UserID'];
+                                                                //         $name = $data['Createdby'];
+                                                                //         $role = $data['Restriction'];
+                                                                //     }
+                                                                // }
+
+                                                              
+                                                            ?>
+
+                                                                <!-- <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                    <label for="time" class="formbold-form-label">
+                                                                    </label>
+                                                                    <input type="hidden" name="locid" id="" required
+                                                                        class="formbold-form-input"
+                                                                        value="" />
                                                                 </div>
                                                                 <div class="formbold-mb-5 w-full  formbold-px-3">
                                                                     <label for="time" class="formbold-form-label">
-                                                                        Time </label>
-                                                                    <input type="time" name="time" id="time" required="required" class="formbold-form-input" />
+                                                                    </label>
+                                                                    <input type="hidden" name="nid" id="" required
+                                                                        class="formbold-form-input"
+                                                                        value="" />
+                                                                </div> -->
+
+
+                                                                <div>
+                                                                    <button class="formbold-btn-next" name="next"
+                                                                        data-bs-target="#exampleModal">Next</button>
                                                                 </div>
-                                                            </div>
-                                                            <?php
-                                                                if ($_SESSION['id']) {
-                                                                    $user_id = $_SESSION['id'];
-                                                                    $select = "SELECT * FROM tblUsersLogin WHERE UserID = ?";
-                                                                    $stmt = $conn->prepare($select);
-                                                                    $stmt->execute([$user_id]);
-                                                                    
-                                                                    while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                                                        $id = $data['UserID'];
-                                                                        $name = $data['Createdby'];
-                                                                        $role = $data['Restriction'];
-                                                                    }
-                                                                }
-                                                            ?>
-
-                                                            <div class="formbold-mb-5 w-full  formbold-px-3" style="display: none;">
-                                                                <label for="time" class="formbold-form-label">
-                                                                </label>
-                                                                <input type="text" name="user_id" id="user_id" required class="formbold-form-input" value="<?php echo $id ?>" />
-                                                            </div>
-                                                            <div class="formbold-mb-5 w-full  formbold-px-3" style="display: none;">
-                                                                <label for="time" class="formbold-form-label">
-                                                                </label>
-                                                                <input type="text" name="user_name" id="user_name" required class="formbold-form-input" value="<?php echo $name ?>" />
-                                                            </div>
-                                                            <div class="formbold-mb-5 w-full  formbold-px-3" style="display: none;">
-                                                                <label for="time" class="formbold-form-label">
-                                                                </label>
-                                                                <input type="text" name="role" id="user_name" required class="formbold-form-input" value="<?php echo $role ?>" />
-                                                            </div>
-
-                                                            <div>
-                                                                <button class="formbold-btn-next" name="next" data-bs-target="#exampleModal">Next</button>
-                                                            </div>
 
 
                                                         </form>
@@ -222,31 +318,31 @@ require('assets/component/sidebars.php');
     </div>
 </body>
 <style>
-    .add-appointment {
-        box-shadow: 0px 10px 14px -7px #276873;
-        background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
-        background-color: #4169e1;
-        border-radius: 8px;
-        display: inline-block;
-        cursor: pointer;
-        color: #ffffff;
-        font-family: Courier New;
-        font-size: 20px;
-        font-weight: bold;
-        padding: 13px 32px;
-        text-decoration: none;
-        text-shadow: 0px 1px 0px #3d768a;
-    }
+.add-appointment {
+    box-shadow: 0px 10px 14px -7px #276873;
+    background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
+    background-color: #4169e1;
+    border-radius: 8px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Courier New;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 13px 32px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #3d768a;
+}
 
-    .add-appointment:hover {
-        background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
-        background-color: #4169e1;
-    }
+.add-appointment:hover {
+    background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
+    background-color: #4169e1;
+}
 
-    .add-appointment:active {
-        position: relative;
-        top: 1px;
-    }
+.add-appointment:active {
+    position: relative;
+    top: 1px;
+}
 </style>
 
 

@@ -7,14 +7,13 @@ $locID = $_POST['locid'];
 $nicheno = $_POST['nicheno'];
 $level = $_POST['level'];
 $stat = $_POST['stat'];
-
 // Check if the input values are valid
 if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || !empty($stat)) {
     $batchSize = 10;
     $numBatches = ceil($nicheno / $batchSize);
 
     // Prepare the insert statement outside the loop
-    $insertSql = "INSERT INTO tblNiche (Nid, LocID, Level, Status) VALUES (?, ?, ?, ?)";
+    $insertSql = "INSERT INTO tblNiche (Nid, LocID, Level, Status) VALUES (?, ?, ?, 0)";
     $stmt = $conn->prepare($insertSql);
     $stmt->bindParam(1, $nicherow, PDO::PARAM_STR);
     $stmt->bindParam(2, $locID, PDO::PARAM_STR);
@@ -101,7 +100,7 @@ if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || 
 
     echo "<script>
         setTimeout(function () {
-            window.location.href = '../admin/niche.php?id=$locID';
+            window.location.href = '../admin/niche.php?LocId=$locID';
         }, 1000);
     </script>";
 } else {

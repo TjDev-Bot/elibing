@@ -1,6 +1,11 @@
 <?php
 include "conn.php";
+include "../component/function.php";
 
+// if(isset($_GET['Nid'])){
+//     $nicheno = $_GET['Nid'];
+// }
+$relationship = $_POST['relationship'];
 $lname = $_POST['Lname'];
 $fname = $_POST['Fname'];
 $mname = $_POST['MName'];
@@ -8,29 +13,51 @@ $suffix = $_POST['Suffix'];
 $dateofdeath = $_POST['DateofDeath'];
 $causeofdeath = $_POST['CauseofDeath'];
 $intermentplace = $_POST['IntermentPlace'];
-$intermentdate = $_POST['IntermentDate'];
-$intermenttime = $_POST['IntermentTime'];
+$nicheno = $_POST['Nid'];
+$appointmentID = nextNumb("APP", "tblIntermentReservation", "AppointmentID",7,23);
+$profileID = nextnumb("PROF", "tblDeathRecord","ProfileID",7, 23);
 
-$loc_id = $_POST['loc_id'];
-$block = $_POST['block_id'];
-$nicheno = $_POST['nicheno'];
-$level = $_POST['level'];
+// $trunc = substr($profileID, 0, 5);
+// $intermentdate = $_POST['IntermentDate'];
+// $intermenttime = $_POST['IntermentTime'];
+
+// $block = $_POST['block_id'];
 
 
 
 if(!empty($lname) || !empty($fname) || !empty($mname) || !empty($suffix) || 
-!empty($dateofdeath || !empty($causeofdeath) || !empty($intermentplace) || !empty($intermentdate) ||
-!empty($intermenttime) || !empty($loc_id) || !empty($block) || !empty($nicheno) || !empty($level))
+!empty($dateofdeath || !empty($causeofdeath) || !empty($intermentplace) || !empty($relationship)   )
 ) {
-    $sql = "INSERT INTO occupant (location_id, block_id, nicheno, level, lname, fname, mname, suffix, dateofdeath, causeofdeath, intermentplace, intermentdate, intermenttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    //Insert Data for tblDeathRecord
+    $sql = "INSERT INTO tblDeathRecord (ProfileID, Lname, Fname, MName, Suffix, DateofDeath, CauseofDeath, IntermentPlace) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iisisssssssss", $loc_id, $block, $nicheno, $level, $lname, $fname, $mname, $suffix, $dateofdeath, $causeofdeath, $intermentplace, $intermentdate, $intermenttime);
+    $stmt->bindParam(1, $profileID, PDO::PARAM_STR);
+    $stmt->bindParam(2, $lname, PDO::PARAM_STR);
+    $stmt->bindParam(3, $fname, PDO::PARAM_STR);
+    $stmt->bindParam(4, $mname, PDO::PARAM_STR);
+    $stmt->bindParam(5, $suffix, PDO::PARAM_STR);
+    $stmt->bindParam(6, $dateofdeath, PDO::PARAM_STR);
+    $stmt->bindParam(7, $causeofdeath, PDO::PARAM_STR);
+    $stmt->bindParam(8, $intermentplace, PDO::PARAM_STR);
 
-    $update = "UPDATE location SET status = 'occupied' WHERE location_id = ?";
-    $updateStmt = $conn->prepare($update);
-    $updateStmt->bind_param("i", $loc_id);
-    if ($stmt->execute() && $updateStmt->execute()) {
-        $block = $loc_id;
+
+    //Insert Data for tblIntermentReservation
+    $sqlreserve = "INSERT INTO tblIntermentReservation (AppointmentID ,Nid, Relationship, ProfID) VALUES (?, ?, ?, ?)";
+    $stmtreserve = $conn->prepare($sqlreserve);
+    $stmtreserve->bindParam(1, $appointmentID, PDO::PARAM_STR);
+    $stmtreserve->bindParam(2, $nicheno, PDO::PARAM_STR);
+    $stmtreserve->bindParam(3, $relationship, PDO::PARAM_STR);
+    $stmtreserve->bindParam(4, $profileID, PDO::PARAM_STR);
+
+
+    $update = "UPDATE tblNiche SET Status = 2 WHERE Nid = '$nicheno'";
+    $stmtupdate = $conn->prepare($update);
+    // $stmtupdate->exeute([]);
+   
+
+    $full = $fname.' '.$mname.' '.$lname;
+    if ($stmt->execute() && $stmtreserve->execute() && $stmtupdate->execute()) {
+        // $block = $loc_id;
 
         echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -50,7 +77,7 @@ if(!empty($lname) || !empty($fname) || !empty($mname) || !empty($suffix) ||
 
             setTimeout(function () {
                 modal.style.display = 'none';
-                window.location.href = '../admin/occupant.php?id=$block';
+                window.location.href = '../admin/scheds.php?id=" . $profileID . "&name=" . $full . "';
             }, 1000); 
         });
       </script>";
@@ -73,17 +100,17 @@ if(!empty($lname) || !empty($fname) || !empty($mname) || !empty($suffix) ||
     
                     setTimeout(function () {
                         modal.style.display = 'none';
-                        window.location.href = '../admin/occupant.php?id=$block';
+                        window.location.href = '../admin/occupant.php?id=$nicheno';
                     }, 1000); 
                 });
               </script>";
     }
 
-    $stmt->close();
-    $updateStmt->close();
+    $stmt = null;
 } else {
 echo "All fields are required";
 die();
 }
 
 ?>
+

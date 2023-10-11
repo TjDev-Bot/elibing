@@ -21,21 +21,22 @@ include "../dbConn/conn.php";
                         </li>
                     </ol>
 
-                    <h3>  <button class="btn btn-primary mb-4" style="float: right" type="button" name="submit" onclick="addChamber()">Add</button></h3>
-</br></br>
+                    <h3> <button class="btn btn-primary mb-4" style="float: right" type="button" name="submit"
+                            onclick="addChamber()">Add</button></h3>
+                    </br></br>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
-                        <input type="search" id="searchInput" placeholder="Search here...">
+                            <input type="search" id="searchInput" placeholder="Search here...">
                             <!-- <input type="search" id="search-input" placeholder="Search here..."> -->
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll">
-                                <table class="table-no-border" id="e-libingTable">
+                                    <table class="table-no-border" id="e-libingTable">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Date of Death</th>
                                                 <th>Cause of Death</th>
-                                                
+
                                             </tr>
                                         </thead>
 
@@ -49,23 +50,23 @@ include "../dbConn/conn.php";
                                                 $causeofdeath =  $data['causeofdeath'];
 
                                             ?>
-                                                <tr>
+                                            <tr>
 
 
-                                                    <td class="px-6 py-4">
-                                                        <?php echo $name ?>
-                                                    </td>
+                                                <td class="px-6 py-4">
+                                                    <?php echo $name ?>
+                                                </td>
 
-                                                    <td class="px-6 py-4">
-                                                        <?php echo date('F j, Y', strtotime($dateofdeath)); ?>
-                                                    </td>
+                                                <td class="px-6 py-4">
+                                                    <?php echo date('F j, Y', strtotime($dateofdeath)); ?>
+                                                </td>
 
-                                                    <td class="px-6 py-4">
-                                                        <?php echo $causeofdeath ?>
-                                                    </td>
+                                                <td class="px-6 py-4">
+                                                    <?php echo $causeofdeath ?>
+                                                </td>
 
-                                                    
-                                                </tr>
+
+                                            </tr>
                                             <?php } ?>
                                         </tbody>
 
@@ -80,45 +81,44 @@ include "../dbConn/conn.php";
     </div>
 
     <script>
-        function goBack($block_id) {
-            var url = 'chamber.php?';
-            window.location.href = url;
-        }
+    function goBack($block_id) {
+        var url = 'chamber.php?';
+        window.location.href = url;
+    }
 
-        function addChamber() {
+    function addChamber() {
 
-            var url = 'cform.php?';
+        var url = 'cform.php?';
 
-            window.location.href = url;
+        window.location.href = url;
 
-        }
+    }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            // Get the input element and table
-            const searchInput = document.getElementById("searchInput");
-            const alumniTable = document.getElementById("e-libingTable");
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the input element and table
+        const searchInput = document.getElementById("searchInput");
+        const alumniTable = document.getElementById("e-libingTable");
 
-            // Add an event listener to the input field
-            searchInput.addEventListener("input", function() {
-                const searchText = searchInput.value.toLowerCase();
+        // Add an event listener to the input field
+        searchInput.addEventListener("input", function() {
+            const searchText = searchInput.value.toLowerCase();
 
-                // Get all the rows in the table body
-                const rows = alumniTable.querySelectorAll("tbody tr");
+            // Get all the rows in the table body
+            const rows = alumniTable.querySelectorAll("tbody tr");
 
-                // Loop through each row and hide/show based on the search text
-                rows.forEach(function(row) {
-                    const rowData = row.textContent.toLowerCase();
-                    if (rowData.includes(searchText)) {
-                        row.style.display = ""; // Show the row
-                    } else {
-                        row.style.display = "none"; // Hide the row
-                    }
-                });
+            // Loop through each row and hide/show based on the search text
+            rows.forEach(function(row) {
+                const rowData = row.textContent.toLowerCase();
+                if (rowData.includes(searchText)) {
+                    row.style.display = ""; // Show the row
+                } else {
+                    row.style.display = "none"; // Hide the row
+                }
             });
         });
+    });
 
     document.getElementById("search-input").addEventListener("input", searchTable);
-
     </script>
 
     <?php

@@ -72,11 +72,11 @@
                         <?php
                             $userId = $_SESSION['id'];
 
-                            $select = "SELECT * FROM users WHERE id = '$userId'";
-                            $selectResult = mysqli_query($conn, $select);
+                            $select = "SELECT * FROM tblUsersLogin WHERE UserID = '$userId'";
+                            $selectResult = $conn->query($select);
 
-                            while($row = mysqli_fetch_assoc($selectResult)){
-                                $fullname = $row['firstname'].' '.$row['midname'].' '.$row['lastname'];
+                            while($row = $selectResult->fetch(PDO::FETCH_ASSOC)){
+                                $fullname = $row['Createdby'];
                             }
                         ?>
                         <span class="span-name"><?php echo $fullname ?></span>
@@ -99,34 +99,49 @@
     </div>
 </nav>
 <?php
-    
+try {
     $userId = $_SESSION['id'];
 
-    $sql = "SELECT * FROM users WHERE id = $userId";
-    $query = mysqli_query($conn, $sql);
-       
-    while($row = mysqli_fetch_assoc($query)){
-        $fullname = $row['firstname'].' '.$row['midname'].' '.$row['lastname'];
-        $address = $row['address'];
-        $email = $row['email'];
-        $contactno = $row['contactno'];
-        $password = $row['password'];
+    $sql = "SELECT * FROM tblUsersLogin WHERE UserID = '$userId'";
+    $query = $conn->query($sql);
+
+    while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+        $fullname = $row['Createdby'];
+        $email = $row['username'];
+        $password = $row['pw'];
 
         if (isset($_POST['update'])) {
-            $firstname = $_POST['firstname'];
-            $midname = $_POST['midname'];
-            $lastname = $_POST['lastname'];
+            $name = $_POST['name'];
             $address = $_POST['address'];
             $email = $_POST['email'];
-            $contactno = $_POST['contactno'];
             $newpassword = $_POST['newpassword'];
-    
-            // Conditionally include newpassword in the UPDATE query if it's not empty
-            $passwordUpdate = !empty($newpassword) ? ", password = '$newpassword'" : "";
-    
-            $updateQuery = "UPDATE users SET firstname = '$firstname', midname = '$midname', lastname = '$lastname', address = '$address', email = '$email', contactno = '$contactno' $passwordUpdate WHERE id = '$userId'";
-            $updateResult = mysqli_query($conn, $updateQuery);
-    
+
+            // Create the update query with conditional password update
+            $updateQuery = "UPDATE tblUsersLogin SET Createdby = :name, username = :email";
+            
+            // Conditionally include password update in the query
+            if (!empty($newpassword)) {
+                $updateQuery .= ", pw = :newpassword";
+            }
+
+            $updateQuery .= " WHERE UserID = :userId";
+            
+            $stmt = $conn->prepare($updateQuery);
+            
+            // Bind parameters
+            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+
+            // Conditionally bind newpassword parameter if not empty
+            if (!empty($newpassword)) {
+                $stmt->bindParam(':newpassword', $newpassword, PDO::PARAM_STR);
+            }
+
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+
+            // Execute the update query
+            $updateResult = $stmt->execute();
+
             if ($updateResult) {
                 echo "<script>if(confirm('Profile updated successfully')){document.location.href='index.php'};</script>";
                 exit();
@@ -134,7 +149,10 @@
                 die("QUERY FAILED" . mysqli_error($conn));
             }
         }
-    
+    }
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
 ?>
 
 
@@ -172,13 +190,7 @@
                             <h4><?php echo $email; ?></h4>
 
                         </div>
-                        <div class="settings-info">
-                            <h4><?php echo $address; ?></h4>
 
-                        </div>
-                        <div class="settings-info">
-                            <h4><?php echo $contactno; ?></h4>
-                        </div>
                     </div>
 
 
@@ -193,45 +205,18 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <label for="lname">Last name</label>
-                                        <input type="text" name="lastname" class="form-control-login"
-                                            value="<?php echo $row['lastname'] ?>" required>
-                                    </div>
-                                    <div class="col">
-                                        <label for="fname">First name</label>
-                                        <input type="text" name="firstname" class="form-control-login"
-                                            value="<?php echo $row['firstname']  ?>" required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="mname">Middle name</label>
-                                        <input type="text" name="midname" class="form-control-login"
-                                            value="<?php echo $row['midname'] ?>" required>
+                                        <label for="mname">Full name</label>
+                                        <input type="text" name="name" class="form-control-login"
+                                            value="<?php echo $fullname ?>" required>
                                     </div>
 
-                                    <div class="col">
-                                        <label for="address">Address</label>
-                                        <input type="text" name="address" class="form-control-login"
-                                            value="<?php echo $address ?>" required>
-                                    </div>
-                                </div>
-
-                                <div class="row">
                                     <div class="col">
                                         <label for="email">Email</label>
                                         <input type="email" name="email" class="form-control-login"
                                             value="<?php echo $email ?>" required>
                                     </div>
 
-                                    <div class="col">
-                                        <label for="contact">Contact No.</label>
-                                        <input type="text" name="contactno" class="form-control-login"
-                                            value="<?php echo $contactno ?>" required>
-                                    </div>
-
                                 </div>
-
                                 <div class="row">
                                     <div class="col">
                                         <label for="password">Old Password</label>
@@ -272,9 +257,9 @@
     </div>
 </div>
 
-<?php } ?>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
     // Initial state: Editing is disabled
@@ -297,7 +282,7 @@ $(document).ready(function() {
             $(".form-control-login").removeAttr("readonly");
             // Show the Save button
             $("#save-button").show();
-           
+
         }
     }
 

@@ -12,25 +12,25 @@ include "../dbConn/conn.php";
 
 
 if (isset($_GET['id'])) {
-    $occupant_id = $_GET['id'];
-    $select = "SELECT * FROM occupant WHERE occupant_id = $occupant_id";
-    $query = mysqli_query($conn, $select);
+    $profId = $_GET['id'];
+    $select = "SELECT * FROM tblDeathRecord WHERE ProfileID = '$profId'";
+    $query = $conn->query($select);
 
     // while ($data = mysqli_fetch_assoc($query)) {
     //     $id = $data['block_id'];
     // }
 
-    while ($occupant = mysqli_fetch_assoc($query)) {
-        $block_id = $occupant['block_id'];
-        $nicheno = $occupant['nicheno'];
-        $level = $occupant['level'];
+    while ($occupant = $query->fetch(PDO::FETCH_ASSOC)) {
+    
         // $id = $occupant['occupant_id'];
-        $name = $occupant['fname'] . ' ' . $occupant['mname'] . ' ' . $occupant['lname'] . ' ' .  $occupant['suffix'];
-        $dateofdeath = $occupant['dateofdeath'];
-        $causeofdeath = $occupant['causeofdeath'];
-        $intermentplace = $occupant['intermentplace'];
-        $intermentdate = $occupant['intermentdate'];
-        $intermenttime = $occupant['intermenttime'];
+        $name = $occupant['Fname'] . ' ' . $occupant['MName'] . ' ' . $occupant['Lname'] . ' ' .  $occupant['Suffix'];
+        $dateofdeath = $occupant['DateofDeath'];
+        $causeofdeath = $occupant['CauseofDeath'];
+        $intermentplace = $occupant['IntermentPlace'];
+
+        $intermentdatetime = date('F j, Y g:i A', strtotime($occupant['IntermentDateTime']));
+
+
     }
 }
 ?>
@@ -59,54 +59,57 @@ if (isset($_GET['id'])) {
                                                     <div class="">
 
                                                         <h3>
-                                                            <?php echo "Block" . ' ' . $block_id ?>
-                                                            ,
-                                                            <?php echo  $nicheno ?>
-                                                            ,
-                                                            <?php echo "Level" . ' ' . $level ?>
-                                                            ,
-                                                            <?php echo "Occupant ID" . ' ' . $occupant_id ?>
+                                                          
 
                                                         </h3>
-                                                        <button class="btn btn-danger" type="button" name="submit" onclick="goBack(<?php echo $block_id ?>)">Back</button>
+                                                        <button class="btn btn-danger" type="button" name="submit"
+                                                            onclick="goBack('<?php echo $block_id ?>')">Back</button>
                                                         <p>
 
                                                         <div class="formbold-mb-5 w-full  formbold-px-3">
                                                             <label for="name" class="formbold-form-label"></label>
                                                             Name
                                                             </label>
-                                                            <input type="text" name="Lname" id="name" value="<?php echo $name ?>" required="required" class="formbold-form-input" readonly />
+                                                            <input type="text" name="Lname" id="name"
+                                                                value="<?php echo $name ?>" required="required"
+                                                                class="formbold-form-input" readonly />
                                                         </div>
 
                                                         <div class="formbold-mb-5 w-full  formbold-px-3">
                                                             <label for="date" class="formbold-form-label">
                                                                 Date of Death </label>
-                                                            <input type="date" name="DateofDeath" id="ddate" value="<?php echo $dateofdeath ?>" required class="formbold-form-input" readonly />
+                                                            <input type="date" name="DateofDeath" id="ddate"
+                                                                value="<?php echo $dateofdeath ?>" required
+                                                                class="formbold-form-input" readonly />
                                                         </div>
 
                                                         <div class="formbold-mb-5 w-full  formbold-px-3">
                                                             <label for="name" class="formbold-form-label">Cause of Death
                                                             </label>
-                                                            <input type="text" name="CauseofDeath" id="name" value="<?php echo $causeofdeath ?>" required class="formbold-form-input" readonly />
+                                                            <input type="text" name="CauseofDeath" id="name"
+                                                                value="<?php echo $causeofdeath ?>" required
+                                                                class="formbold-form-input" readonly />
                                                         </div>
 
                                                         <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                            <label for="name" class="formbold-form-label">Interment Place
+                                                            <label for="name" class="formbold-form-label">Interment
+                                                                Place
                                                             </label>
-                                                            <input type="text" name="IntermentPlace" id="name" value="<?php echo $intermentplace ?>" required class="formbold-form-input" readonly />
+                                                            <input type="text" name="IntermentPlace" id="name"
+                                                                value="<?php echo $intermentplace ?>" required
+                                                                class="formbold-form-input" readonly />
                                                         </div>
 
                                                         <div class="formbold-mb-5 w-full  formbold-px-3">
                                                             <label for="date" class="formbold-form-label">
                                                                 Interment Date</label>
-                                                            <input type="date" name="IntermentDate" id="ddate" value="<?php echo $intermentdate; ?>" required class="formbold-form-input" readonly />
+                                                            <input type="text" name="IntermentDate" id="ddate"
+                                                                value="<?php echo $intermentdatetime; ?>" required
+                                                                class="formbold-form-input" readonly />
+                                                                
                                                         </div>
 
-                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                                <label for="time" class="formbold-form-label">
-                                                                    Interment Time </label>
-                                                                <input type="time" name="IntermentTime" id="time" value="<?php echo $intermenttime; ?>" required class="formbold-form-input" readonly />
-                                                            </div>
+                                                     
                                                     </div>
                                                 </div>
                                             </div>
@@ -126,44 +129,44 @@ if (isset($_GET['id'])) {
     </div>
 
     <script>
-        function goBack() {
-            window.history.back();
-        }
+    function goBack() {
+        window.history.back();
+    }
 
-        function viewOcuppant($location_id) {
+    function viewOcuppant($location_id) {
 
-            var url = 'viewoccupant.php?id=' + $location_id;
+        var url = 'viewoccupant.php?id=' + $location_id;
 
-            window.location.href = url;
+        window.location.href = url;
 
-        }
+    }
 
-        function addOcuppant($location_id) {
+    function addOcuppant($location_id) {
 
-            var url = 'form.php?id=' + $location_id;
+        var url = 'form.php?id=' + $location_id;
 
-            window.location.href = url;
+        window.location.href = url;
 
-        }
-        // JavaScript code for searching the table, same as before
-        function searchTable() {
-            const input = document.getElementById("search-input").value.toLowerCase();
-            const tableRows = document.querySelectorAll("#table-body tr");
+    }
+    // JavaScript code for searching the table, same as before
+    function searchTable() {
+        const input = document.getElementById("search-input").value.toLowerCase();
+        const tableRows = document.querySelectorAll("#table-body tr");
 
-            for (const row of tableRows) {
-                const name = row.querySelector("td:nth-child(2)").innerText.toLowerCase();
-                const dateOfDeath = row.querySelector("td:nth-child(3)").innerText.toLowerCase();
-                const intermentDate = row.querySelector("td:nth-child(4)").innerText.toLowerCase();
+        for (const row of tableRows) {
+            const name = row.querySelector("td:nth-child(2)").innerText.toLowerCase();
+            const dateOfDeath = row.querySelector("td:nth-child(3)").innerText.toLowerCase();
+            const intermentDate = row.querySelector("td:nth-child(4)").innerText.toLowerCase();
 
-                if (name.includes(input) || dateOfDeath.includes(input) || intermentDate.includes(input)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
+            if (name.includes(input) || dateOfDeath.includes(input) || intermentDate.includes(input)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
             }
         }
+    }
 
-        document.getElementById("search-input").addEventListener("input", searchTable);
+    document.getElementById("search-input").addEventListener("input", searchTable);
     </script>
 
 
@@ -173,31 +176,31 @@ if (isset($_GET['id'])) {
     ?>
 
     <style>
-        .add-appointment {
-            box-shadow: 0px 10px 14px -7px #276873;
-            background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
-            background-color: #4169e1;
-            border-radius: 8px;
-            display: inline-block;
-            cursor: pointer;
-            color: #ffffff;
-            font-family: Courier New;
-            font-size: 20px;
-            font-weight: bold;
-            padding: 13px 32px;
-            text-decoration: none;
-            text-shadow: 0px 1px 0px #3d768a;
-        }
+    .add-appointment {
+        box-shadow: 0px 10px 14px -7px #276873;
+        background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
+        background-color: #4169e1;
+        border-radius: 8px;
+        display: inline-block;
+        cursor: pointer;
+        color: #ffffff;
+        font-family: Courier New;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 13px 32px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #3d768a;
+    }
 
-        .add-appointment:hover {
-            background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
-            background-color: #4169e1;
-        }
+    .add-appointment:hover {
+        background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
+        background-color: #4169e1;
+    }
 
-        .add-appointment:active {
-            position: relative;
-            top: 1px;
-        }
+    .add-appointment:active {
+        position: relative;
+        top: 1px;
+    }
     </style>
 </body>
 

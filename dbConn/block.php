@@ -1,32 +1,41 @@
 <?php
 include "conn.php";
-
 include "../component/locfunction.php";
 
 
-
 try {
-    // function getMaxLocID($conn) {
-    //     $query = "SELECT MAX(CAST(INT, SUBSTRING(LocID, 2, LEN(LocID) - 1))) AS max_locid FROM tblNicheLocation";
-    //     $stmt = $conn->prepare($query);
-    //     $stmt->execute();
-    //     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    //     $maxLocID = $result['max_locid'];
-    
-    //     return $maxLocID;
-    // }
-    
-    
-    // $existingMaxLocID = getMaxLocID($conn);
-    
-    // $nextLocID = $existingMaxLocID + 1; 
-    
-    $locID = nextNumb("L", "tblNicheLocation", "LocID", 3, "");
-    
-    $sql = "INSERT INTO tblNicheLocation (LocID) VALUES (?)";   
+    $locID = nextNumb("L", "tblNicheLocation", "LocID", 4, "");
+    $nlname = $_POST['nlname'];
+    $size = $_POST['size'];
+    $des = $_POST['description'];
+    $type = $_POST['type'];
+
+    // Check if the LocID already exists
+    $checkSql = "SELECT COUNT(*) AS count FROM tblNicheLocation WHERE LocID = ?";
+    $checkStmt = $conn->prepare($checkSql);
+    $checkStmt->bindParam(1, $locID, PDO::PARAM_STR);
+    $checkStmt->execute();
+    $result = $checkStmt->fetch(PDO::FETCH_ASSOC);
+    $count = $result['count'];
+
+    // If LocID is a duplicate, keep incrementing it until a non-duplicate value is found
+    while ($count > 0) {
+        $locID = nextNumb("L", "tblNicheLocation", "LocID", 3, $locID);
+        $checkStmt->bindParam(1, $locID, PDO::PARAM_STR);
+        $checkStmt->execute();
+        $result = $checkStmt->fetch(PDO::FETCH_ASSOC);
+        $count = $result['count'];
+    }
+
+    // Insert the non-duplicate LocID
+    $sql = "INSERT INTO tblNicheLocation (LocID, NLName, Size, Description, Type) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(1, $locID, PDO::PARAM_STR);
-    
+    $stmt->bindParam(2, $nlname, PDO::PARAM_STR);
+    $stmt->bindParam(3, $size, PDO::PARAM_STR);
+    $stmt->bindParam(4, $des, PDO::PARAM_STR);
+    $stmt->bindParam(5, $type, PDO::PARAM_STR);
+
     if ($stmt->execute()) {
         echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -47,7 +56,7 @@ try {
             setTimeout(function () {
                 modal.style.display = 'none';
                 window.location.href = '../admin/location.php';
-            }, 1000); 
+            }, 1000);
         });
         </script>";
     } else {
@@ -71,7 +80,7 @@ try {
             setTimeout(function () {
                 modal.style.display = 'none';
                 window.location.href = '../admin/location.php';
-            }, 1000); 
+            }, 1000);
         });
         </script>";
     }

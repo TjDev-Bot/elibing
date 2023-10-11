@@ -1,0 +1,207 @@
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+<style>
+
+</style>
+
+<?php
+
+function build_calendar($month, $year){
+    include('../dbConn/conn.php');
+    $sql = "SELECT * FROM tblDeathRecord WHERE MONTH(IntermentDateTime) = '$month' AND YEAR(IntermentDateTime) = '$year'";
+    $schedules = array();
+    $result = $conn->query($sql);
+    if($result){
+        $count = $result->rowCount();
+        if($count > 0){
+            while($row = $result->fetch(PDO::FETCH_ASSOC)){
+                $schedules[] = $row['IntermentDateTime'];
+                // echo '<pre>';
+                // var_dump($schedules);
+                // echo '</pre>';
+            }
+        }
+    }
+
+
+     $days_of_week = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+     
+     $first_day_of_month = mktime(0,0,0,$month,1,$year);
+     $number_days = date('t', $first_day_of_month);
+     $date_components = getdate($first_day_of_month);
+     $month_name = $date_components['month'];
+     $day_of_week = $date_components['wday'];
+     $date_today = date('Y-m-d');
+
+     $prev_month = date('m', mktime(0,0,0, $month-1, 1, $year));
+     $prev_year = date('Y', mktime(0,0,0, $month-1, 1, $year));
+     $next_month = date('m', mktime(0,0,0, $month+1, 1, $year));
+     $next_year = date('Y', mktime(0,0,0, $month+1, 1, $year));
+
+     $calendar = "<center class='month-sched'><h2>$month_name $year</center></h2></center>";
+     $calendar.= "<div class='text-center'>";
+     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".$prev_month."&year=".$prev_year."'><i class='fa-solid fa-angles-left'></i> Prev</a>";
+     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".date('m')."&year=".date('Y')."'>Current Month</a>";
+     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".$next_month."&year=".$next_year."'><i class='fa-solid fa-angles-right'></i>Next</a>";
+     $calendar.= "</div>";
+
+    $calendar.="<div class='calendar-body'>";
+    $calendar.= "<table class='table table-bordered'>";
+    $calendar.= "<tr>";
+
+    foreach($days_of_week as $day){
+        $calendar.="<th class='header-day'>$day</th>";
+     }
+
+     $calendar.= "</tr><tr>";
+
+     $current_day = 1;
+
+    if($day_of_week > 0){
+        for($k=0; $k<$day_of_week; $k++){
+            $calendar.="<td class='empty'></td>";
+        }
+    }
+
+    $month = str_pad($month, 2, "0", STR_PAD_LEFT);
+    if(isset($_GET['name'])){
+        $name = $_GET['name'];
+        $profileId = $_GET['id'];
+
+    }
+    
+    while($current_day <= $number_days){
+        // if seventh column (saturday) reached, start a new row
+        if($day_of_week == 7){
+            $day_of_week = 0;
+            $calendar.="</tr></tr>";
+        }
+    
+        $current_day_rel = str_pad($current_day, 2, "0", STR_PAD_LEFT);
+        $date = "$year-$month-$current_day_rel";
+    
+        $day_name = strtolower(date('I', strtotime($date)));
+        $today = $date == date('Y-m-d') ? 'today' : '';
+        
+        if (in_array($date, $schedules)) {
+            $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4><button class='btn btn-danger btn-sm disabled'>Reserved</button></td>";
+        } elseif ($date < $date_today) {
+            $calendar .= "<td><h4 class='current_day_notavailable'>$current_day</h4><button class='btn btn-secondary btn-sm disabled'>Not Available</button></td>";
+        } else {
+            $user_selected_date = "SELECT COUNT(*) as count FROM tblDeathRecord WHERE CONVERT(DATE, IntermentDateTime) = :selectedDate";
+            $stmt = $conn->prepare($user_selected_date);
+            $stmt->bindParam(':selectedDate', $date, PDO::PARAM_STR);
+            $stmt->execute();
+            
+            if ($stmt) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $selectedDateCount = $row['count'];
+            
+                if ($selectedDateCount > 0) {
+                    $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4><button class='btn btn-danger btn-sm disabled'>Reserved</button></td>";
+                } else {
+                    $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4>";
+                    $calendar .= " <a href='../dbConn/schedule-date.php?date=" . $date . "&id=" . $profileId . "&name=" . $name . "' class='btn btn-success btn-sm'>Select Date</a> ";
+                    $calendar .= "</td>";
+                }
+            } else {
+                die("Database query error: " . implode(", ", $conn->errorInfo()));
+            }
+        }
+    
+        $current_day++;
+        $day_of_week++;
+    }
+    
+
+    
+     $calendar.= "</table>";
+     $calendar.= "</div>";
+
+     
+     
+     return $calendar;
+
+     
+
+}
+?>
+
+
+
+<div class="banner">
+    <div class="container">
+        <div class="row mt-100">
+            <div class="col-md-12">
+
+                <div class="scheduling-container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card-scheduling-1">
+                                <div class="col-md-12">
+                                    <?php
+                                        $date_components = getdate();
+                                        // var_dump($date_components);
+                                        if(isset($_GET['month']) && isset($_GET['year'])){
+                                            $month = $_GET['month'];
+                                            $year = $_GET['year'];
+                                        }else{
+                                            $month = $date_components['mon'];
+                                            $year = $date_components['year'];
+                                        }
+                                                    
+                                            echo build_calendar($month, $year);
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <!-- <div class="card-scheduling-2">
+                                <div class="header-scheduling">
+                                    <h4> <i class='bx bx-error'></i>
+                                    </h4>
+                                    <h4>Important Reminders: </h4>
+                                    <hr>
+                                </div>
+                                <h4 class="subject">Subject to Holiday Rescheduling</h4>
+                                <div class="reminders-scheduling">
+                                    <p>
+                                        Test dates may be affected by unexpected holidays or other
+                                        similar circumstances; students should be prepared to reschedule
+                                        accordingly.
+                                    </p>
+                                    <p>
+                                        Please check your Email for sudden announcements.
+                                    </p>
+
+                                    <p>
+                                        Thank you and Good luck!
+                                    </p>
+                                </div>
+                                <h4 class="legend">Legend</h4>
+                                <div class="legend-scheduling">
+                                    <p>
+                                        <span class="green-scheduling">GREEN</span> <span class="text-legend">-
+                                            Available</span>
+                                    </p>
+                                    <p>
+                                        <span class="orange-scheduling">ORANGE</span> <span class="text-legend">- Less
+                                            than 5 slots left</span>
+                                    </p>
+
+                                    <p>
+                                        <span class="red-scheduling">RED</span> <span class="text-legend">- Full
+                                            Slots</span>
+                                    </p>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

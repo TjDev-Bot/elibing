@@ -210,12 +210,11 @@ require_once('component/header.php');
                                                                 <?php
                                                                 if ($_SESSION['id']) {
                                                                     $user_id = $_SESSION['id'];
-                                                                    $select = "SELECT * FROM users WHERE id = $user_id";
-                                                                    $query = mysqli_query($conn, $select);
-                                                                    while ($data = mysqli_fetch_assoc($query)) {
-                                                                        $id = $data['id'];
-                                                                        $name = $data['firstname'] . ' ' . $data['midname'] . ' ' . $data['lastname'];
-                                                                        $role = $data['role'];
+                                                                    $select = "SELECT * FROM tblUsersLogin WHERE UserID = '$user_id'";
+                                                                    $query = $conn->query($select);
+                                                                    while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+                                                                        $name = $data['Createdby'];
+                                                                        $role = $data['Restriction'];
                                                                     }
                                                                 }
                                                                 ?>
@@ -225,7 +224,7 @@ require_once('component/header.php');
                                                                     </label>
                                                                     <input type="text" name="user_id" id="user_id"
                                                                         required class="formbold-form-input"
-                                                                        value="<?php echo $id ?>" />
+                                                                        value="<?php echo $user_id ?>" />
                                                                 </div>
                                                                 <div class="formbold-mb-5 w-full  formbold-px-3"
                                                                     style="display: none;">

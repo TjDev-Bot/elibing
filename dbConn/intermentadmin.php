@@ -1,49 +1,116 @@
 <?php
-include('conn.php');
+include "conn.php";
+include "../component/function.php";
 
-$role = $_POST['role'];
-$user_id = $_POST['user_id'];
-$user_name = $_POST['user_name'];
+// if(isset($_GET['Nid'])){
+//     $nicheno = $_GET['Nid'];
+// }
 $relationship = $_POST['relationship'];
-$barangay = $_POST['barangay'];
-$purok = $_POST['purok'];
-$deceased = $_POST['deceased'];
-$age = $_POST['age'];
-$deathdate = $_POST['deathdate'];
-$ddate = $_POST['ddate'];
-$time = $_POST['time'];
+$lname = $_POST['Lname'];
+$fname = $_POST['Fname'];
+$mname = $_POST['MName'];
+$suffix = $_POST['Suffix'];
+$dateofdeath = $_POST['deathdate'];
+$causeofdeath = $_POST['cod'];
+$intermentplace = $_POST['IntermentPlace'];
+$nicheno = $_POST['Nid'];
+$appointmentID = nextNumb("APP", "tblIntermentReservation", "AppointmentID",7,23);
+$profileID = nextnumb("PROF", "tblDeathRecord","ProfileID",7, 23);
 
-if (
-    !empty($user_id) || !empty($user_name)  ||   !empty($role) ||!empty($relationship) || !empty($barangay) || !empty($purok) || !empty($deceased) || !empty($age) ||
-    !empty($deathdate) || !empty($ddate) || !empty($time)
-) { 
-    $sql = "INSERT INTO intermentform (user_id, user_name, role, relationship, barangay, purok, actions, deceased, age,  deathdate,desired_date,desired_time) VALUES (?, ?, ?, ?, ?, ?, 'Add Walk-In Appointment',? , ?, ?, ?, ?)";
+// $trunc = substr($profileID, 0, 5);
+// $intermentdate = $_POST['IntermentDate'];
+// $intermenttime = $_POST['IntermentTime'];
+
+// $block = $_POST['block_id'];
+
+
+
+if(!empty($lname) || !empty($fname) || !empty($mname) || !empty($suffix) || 
+!empty($dateofdeath || !empty($causeofdeath) || !empty($intermentplace) || !empty($relationship)   )
+) {
+    //Insert Data for tblDeathRecord
+    $sql = "INSERT INTO tblDeathRecord (ProfileID, Lname, Fname, MName, Suffix, DateofDeath, CauseofDeath, IntermentPlace) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param(
-        "sssssssssss",
-        $user_id,
-        $user_name,
-        $role,
-        $relationship,
-        $barangay,
-        $purok,
-        $deceased,
-        $age,
-        $deathdate,
-        $ddate,
-        $time,
-    );
+    $stmt->bindParam(1, $profileID, PDO::PARAM_STR);
+    $stmt->bindParam(2, $lname, PDO::PARAM_STR);
+    $stmt->bindParam(3, $fname, PDO::PARAM_STR);
+    $stmt->bindParam(4, $mname, PDO::PARAM_STR);
+    $stmt->bindParam(5, $suffix, PDO::PARAM_STR);
+    $stmt->bindParam(6, $dateofdeath, PDO::PARAM_STR);
+    $stmt->bindParam(7, $causeofdeath, PDO::PARAM_STR);
+    $stmt->bindParam(8, $intermentplace, PDO::PARAM_STR);
 
-    if ($stmt->execute()) {
-        echo "<script>if(confirm('Your Appointment is Successfully Recorded')){document.location.href='../admin/gatepass.php'};</script>";
+
+    //Insert Data for tblIntermentReservation
+    $sqlreserve = "INSERT INTO tblIntermentReservation (AppointmentID ,Nid, Relationship, ProfID) VALUES (?, ?, ?, ?)";
+    $stmtreserve = $conn->prepare($sqlreserve);
+    $stmtreserve->bindParam(1, $appointmentID, PDO::PARAM_STR);
+    $stmtreserve->bindParam(2, $nicheno, PDO::PARAM_STR);
+    $stmtreserve->bindParam(3, $relationship, PDO::PARAM_STR);
+    $stmtreserve->bindParam(4, $profileID, PDO::PARAM_STR);
+
+
+    $update = "UPDATE tblNiche SET Status = 1 WHERE Nid = '$nicheno'";
+    $stmtupdate = $conn->prepare($update);
+    // $stmtupdate->exeute([]);
+   
+
+    // $full = $fname.' '.$mname.' '.$lname;
+    if ($stmt->execute() && $stmtreserve->execute() && $stmtupdate->execute()) {
+        // $block = $loc_id;
+
+        echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var modal = document.createElement('div');
+            modal.innerHTML = 'Data stored';
+            modal.style.position = 'fixed';
+            modal.style.top = '50%';
+            modal.style.left = '50%';
+            modal.style.transform = 'translate(-50%, -50%)';
+            modal.style.backgroundColor = 'white';
+            modal.style.padding = '20px';
+            modal.style.border = '1px solid #ccc';
+            modal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+            modal.style.zIndex = '9999';
+
+            document.body.appendChild(modal);
+
+            setTimeout(function () {
+                modal.style.display = 'none';
+                window.location.href = '../admin/reserve.php';
+            }, 1000); 
+        });
+      </script>";
     } else {
-        echo '<script type="text/javascript"> alert("An error occurred while processing the form. Please try again later."); window.location.href = "../client/index.php"; </script>';
-        echo "Error: " . $stmt->error;
+        echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var modal = document.createElement('div');
+                    modal.innerHTML = 'Something went wrong';
+                    modal.style.position = 'fixed';
+                    modal.style.top = '50%';
+                    modal.style.left = '50%';
+                    modal.style.transform = 'translate(-50%, -50%)';
+                    modal.style.backgroundColor = 'white';
+                    modal.style.padding = '20px';
+                    modal.style.border = '1px solid #ccc';
+                    modal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+                    modal.style.zIndex = '9999';
+    
+                    document.body.appendChild(modal);
+    
+                    setTimeout(function () {
+                        modal.style.display = 'none';
+                        window.location.href = '../admin/occupant.php?id=$nicheno';
+                    }, 1000); 
+                });
+              </script>";
     }
 
-    $stmt->close();
+    $stmt = null;
 } else {
-    echo "All fields are required";
-    die();
+echo "All fields are required";
+die();
 }
+
 ?>
+

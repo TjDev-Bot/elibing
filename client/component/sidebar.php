@@ -11,11 +11,11 @@
                     <?php
                             $userId = $_SESSION['id'];
 
-                            $select = "SELECT * FROM users WHERE id = '$userId'";
-                            $selectResult = mysqli_query($conn, $select);
+                            $select = "SELECT * FROM tblUsersLogin WHERE UserID = '$userId'";
+                            $selectResult = $conn->query($select);
 
-                            while($row = mysqli_fetch_assoc($selectResult)){
-                                $fullname = $row['firstname'].' '.$row['midname'].' '.$row['lastname'];
+                            while($row = $selectResult->fetch(PDO::FETCH_ASSOC)){
+                                $fullname = $row['Createdby'];
                             }
                         ?>
                     <!-- <img class="img-80 img-radius" src="assets/images/avatar-4.jpg" alt="User-Profile-Image"> -->
@@ -26,8 +26,8 @@
                 <div class="main-menu-content">
                     <ul>
                         <li class="more-details">
-                            <a href="#!" data-toggle="modal"
-                                    data-target="#exampleModal"><i class="ti-settings"></i>Settings</a>
+                            <a href="#!" data-toggle="modal" data-target="#exampleModal"><i
+                                    class="ti-settings"></i>Settings</a>
                             <a href="auth-normal-sign-in.html"><i class="ti-layout-sidebar-left"
                                     href="../dbConn/logout.php"></i>Logout</a>
                         </li>
@@ -86,30 +86,28 @@
     
     $userId = $_SESSION['id'];
 
-    $sql = "SELECT * FROM users WHERE id = $userId";
-    $query = mysqli_query($conn, $sql);
+    $sql = "SELECT * FROM tblUsersLogin WHERE UserID = '$userId'";
+    $query = $conn->query($sql);
        
-    while($row = mysqli_fetch_assoc($query)){
-        $fullname = $row['firstname'].' '.$row['midname'].' '.$row['lastname'];
-        $address = $row['address'];
-        $email = $row['email'];
-        $contactno = $row['contactno'];
-        $password = $row['password'];
+    while($row =$query->fetch(PDO::FETCH_ASSOC)){
+        $fullname = $row['Createdby'];
+        // $address = $row['address'];
+        $email = $row['username'];
+        // $contactno = $row['contactno'];
+        $password = $row['pw'];
 
         if (isset($_POST['update'])) {
-            $firstname = $_POST['firstname'];
-            $midname = $_POST['midname'];
-            $lastname = $_POST['lastname'];
+          $name = $_POST['name'];
             $address = $_POST['address'];
             $email = $_POST['email'];
-            $contactno = $_POST['contactno'];
+            // $contactno = $_POST['contactno'];
             $newpassword = $_POST['newpassword'];
     
             // Conditionally include newpassword in the UPDATE query if it's not empty
-            $passwordUpdate = !empty($newpassword) ? ", password = '$newpassword'" : "";
+            $passwordUpdate = !empty($newpassword) ? ", pw = '$newpassword'" : "";
     
-            $updateQuery = "UPDATE users SET firstname = '$firstname', midname = '$midname', lastname = '$lastname', address = '$address', email = '$email', contactno = '$contactno' $passwordUpdate WHERE id = '$userId'";
-            $updateResult = mysqli_query($conn, $updateQuery);
+            $updateQuery = "UPDATE tblUsersLogin SET Createdby = '$name',  username = '$email',  $passwordUpdate WHERE UserID = '$userId'";
+            $updateResult = $conn->query($updateQuery);
     
             if ($updateResult) {
                 echo "<script>if(confirm('Profile updated successfully')){document.location.href='index.php'};</script>";
@@ -117,8 +115,11 @@
             } else {
                 die("QUERY FAILED" . mysqli_error($conn));
             }
-    }
+        }
+    
 ?>
+
+
 
     <!-- Profile Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -141,25 +142,19 @@
                             <!-- <div class="settings-avatar">
                             <img src="../images/seal.jpg" alt="">
                         </div> -->
-                            <div class="toggle-settings">
-                                <i class='bx bx-edit-alt' id="edit-button"></i>
-                            </div>
+                            <!-- <div class="toggle-settings">
+                            <i class='bx bx-edit-alt' id="edit-button"></i>
+                        </div> -->
 
                             <div class="settings-info" id="settings-info-name">
-                                <h4><?php echo $fullname; ?></h4>
+                                <h4><?php echo $name; ?></h4>
 
                             </div>
                             <div class="settings-info">
                                 <h4><?php echo $email; ?></h4>
 
                             </div>
-                            <div class="settings-info">
-                                <h4><?php echo $address; ?></h4>
 
-                            </div>
-                            <div class="settings-info">
-                                <h4><?php echo $contactno; ?></h4>
-                            </div>
                         </div>
 
 
@@ -174,45 +169,18 @@
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <label for="lname">Last name</label>
-                                            <input type="text" name="lastname" class="form-control-login"
-                                                value="<?php echo $row['lastname'] ?>" required>
-                                        </div>
-                                        <div class="col">
-                                            <label for="fname">First name</label>
-                                            <input type="text" name="firstname" class="form-control-login"
-                                                value="<?php echo $row['firstname']  ?>" required>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="mname">Middle name</label>
-                                            <input type="text" name="midname" class="form-control-login"
-                                                value="<?php echo $row['midname'] ?>" required>
+                                            <label for="mname">Full name</label>
+                                            <input type="text" name="name" class="form-control-login"
+                                                value="<?php echo $fullname ?>" required>
                                         </div>
 
-                                        <div class="col">
-                                            <label for="address">Address</label>
-                                            <input type="text" name="address" class="form-control-login"
-                                                value="<?php echo $address ?>" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
                                         <div class="col">
                                             <label for="email">Email</label>
                                             <input type="email" name="email" class="form-control-login"
                                                 value="<?php echo $email ?>" required>
                                         </div>
 
-                                        <div class="col">
-                                            <label for="contact">Contact No.</label>
-                                            <input type="text" name="contactno" class="form-control-login"
-                                                value="<?php echo $contactno ?>" required>
-                                        </div>
-
                                     </div>
-
                                     <div class="row">
                                         <div class="col">
                                             <label for="password">Old Password</label>
@@ -224,8 +192,7 @@
 
                                         <div class="col">
                                             <label for="conpassword">New Password</label>
-                                            <input type="password" name="newpassword" class="form-control-login"
-                                                >
+                                            <input type="password" name="newpassword" class="form-control-login">
                                             <i class='bx bx-hide' id="new-password-toggle-icon"></i>
 
                                         </div>
@@ -236,8 +203,9 @@
                                     <div class="button-settings">
                                         <button type="button" class="btn btn-danger" id="discard-button"
                                             data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary save-button"
+                                        <button type="submit" class="btn btn-primary" id="save-button"
                                             name="update">Save</button>
+                                        <button type="button" class="btn btn-primary" id="edit-button">Edit</button>
                                     </div>
                                 </div>
                             </form>

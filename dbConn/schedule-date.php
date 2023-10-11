@@ -1,31 +1,25 @@
 <?php
-    include "conn.php";
-    session_start();
-    if (isset($_SESSION['id'])) {
-        $id = $_SESSION['id'];
-        $lname = $_SESSION['lname'];
-        $fname = $_SESSION['fname'];
-        $midname = $_SESSION['midname'];
-        // $role = $_SESSION['role'];
-    }
-    if(isset($_GET['date']) ){
-        $date = $_GET['date'];
-        $name = $_GET['name'];
-    }
+include "conn.php";
+session_start();
 
-   
-    
-    if(isset($_POST['submit'])){
-        $time = $_POST['time'];
-        $userId = $_POST['uid'];
-        $sql = "INSERT INTO schedule(user_id, date, time,status) VALUES ('$userId', '$date','$time', 'selected')";
-        $result = mysqli_query($conn, $sql);
-            if($result) {
-                header('location: ../client/orderpayment.php?id='.$id.'&name='.$name);
-            }
-        }
-    
+if (isset($_GET['date']) && isset($_GET['name']) && isset($_GET['id'])) {
+    $date = $_GET['date'];
+    $name = $_GET['name'];
+    $profileId = $_GET['id'];
+}
 
+if (isset($_POST['submit'])) {
+    $time = $_POST['time'];
+    
+    $datetime = $date.' '.$time;
+    $sql = "UPDATE tblDeathRecord SET IntermentDateTime = ? WHERE ProfileID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$datetime, $profileId]);
+
+    if ($stmt->rowCount() > 0) {
+        header('location: ../admin/orderpayment.php?id=' . $profileId . '&name=' . $name);
+    }
+}
 ?>
 
 
@@ -138,7 +132,6 @@
             <form method="post" action="" autocomplete="off">
                 <button type="button" class="btn btn-danger btn-block" onclick="goBack()">Back</button>
 
-                <input type="hidden" name="uid" value="<?php echo $id ?>">
                 <div class="form-group">
                     <label for="date_text">Interment Date</label>
                     <input type="text" class="form-control" id="date_text" aria-describedby="emailHelp" disabled

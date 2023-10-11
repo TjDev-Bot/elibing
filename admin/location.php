@@ -25,6 +25,10 @@ require_once('../component/locfunction.php');
                         <div class="container">
 
                             <form action="../dbConn/block.php" method="POST">
+                                <input type="text" name="nlname" placeholder="Input NL Name">
+                                <input type="text" name="size" placeholder="Input Size">
+                                <input type="text" name="description" placeholder="Input Description">
+                                <input type="text" name="type" placeholder="Input Type">
                                 <button class="btn btn-primary mb-4" type="submit">Add Block</button>
                             </form>
 
@@ -65,7 +69,7 @@ require_once('../component/locfunction.php');
                                                         <button class="btn btn-primary" onclick="addNiche('<?php echo $id; ?>')">
                                                             <i class='bx bx-edit-alt'></i>
                                                         </button>
-                                                        <button class="btn btn-danger" onclick="openDelete(<?php echo $id; ?>)"><i class="fa-solid fa-trash"></i></button>
+                                                        <!-- <button class="btn btn-danger" onclick="openDelete(<?php echo $id; ?>)"><i class="fa-solid fa-trash"></i></button> -->
                                                     </td>
                                                 </tr>
                                             <?php } ?>
@@ -85,7 +89,7 @@ require_once('../component/locfunction.php');
         function addNiche(id) {
             console.log("addNiche called with id:", id);
 
-            var url = 'niche.php?id=' + id;
+            var url = 'niche.php?LocId=' + id;
 
             window.location.href = url;
 

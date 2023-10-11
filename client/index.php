@@ -59,11 +59,11 @@ include "../dbConn/conn.php";
                                                                     <?php 
                                                                         if(isset($_SESSION['id'])){
                                                                             $user_id = $_SESSION['id'];
-                                                                            $select = "SELECT * FROM schedule WHERE user_id = '$user_id'";
-                                                                            $query  = mysqli_query($conn, $select);
-                                                                            while($data = mysqli_fetch_assoc($query)){
-                                                                                $date = $data['date'];
-                                                                                $time = $data['time'];
+                                                                            $select = "SELECT * FROM tblDeathRecord WHERE ProfileID = '$user_id'";
+                                                                            $query  = $conn->query($select);
+                                                                            while($data = $query->fetch(PDO::FETCH_ASSOC)){
+                                                                                $date = $data['IntermentDateTime'];
+                                                                             
                                                                             }
                                                                         }
                                                                         
@@ -75,7 +75,7 @@ include "../dbConn/conn.php";
                                                                             </div>
                                                                         </td>
                                                                         <td class="text-right">
-                                                                            <?php echo date('F d, Y', strtotime($date))?> at <?php echo $time ?>
+                                                                            <?php echo date('F d, Y g:i A', strtotime($date))?>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
