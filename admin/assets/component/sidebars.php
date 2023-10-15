@@ -71,10 +71,10 @@
                             <div class="sb-nav-link-icon"><i class="bx bx-error"></i></div>
                             Due Cadavers
                         </a> -->
-                        <a class="nav-link " href="renewed.php">
+                        <!-- <a class="nav-link " href="renewed.php">
                             <div class="sb-nav-link-icon"><i class="bx bx-error"></i></div>
                             Renewed
-                        </a>
+                        </a> -->
                         <a class="nav-link " href="reserve.php">
                             <div class="sb-nav-link-icon"><i class="bx bx-error"></i></div>
                             Reserve
@@ -105,7 +105,7 @@
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="location.php">Block</a>
-                                <a class="nav-link" href="chamber.php">Chamber</a>
+                                <!-- <a class="nav-link" href="chamber.php">Chamber</a> -->
 
                             </nav>
                         </div>

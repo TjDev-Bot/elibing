@@ -27,28 +27,31 @@ include "../dbConn/conn.php";
                         </li>
                     </ol>
                     <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <?php
-                                        $firstDayOfMonth = date('Y-m-01');
-                                        $lastDayOfMonth = date('Y-m-t');
+                                        // $firstDayOfMonth = date('Y-m-01');
+                                        // $lastDayOfMonth = date('Y-m-t');
                                     
-                                        $selectInterment = "SELECT COUNT(*) AS total FROM tblDeathRecord WHERE IntermentDateTime BETWEEN '$firstDayOfMonth' AND '$lastDayOfMonth'";
-                                        $resInterment = $conn->query($selectInterment);
+                                        // $selectInterment = "SELECT COUNT(*) AS total FROM tblDeathRecord WHERE IntermentDateTime BETWEEN '$firstDayOfMonth' AND '$lastDayOfMonth'";
+                                        // $resInterment = $conn->query($selectInterment);
 
-                                        $tblInterment = $resInterment->fetch(PDO::FETCH_ASSOC);
-                                        $totalInterment = $tblInterment['total'];
+                                        // $tblInterment = $resInterment->fetch(PDO::FETCH_ASSOC);
+                                        // $totalInterment = $tblInterment['total'];
+                                        $selectDeath = "SELECT * FROM tblDeathRecord";
+                                        $resDeath = $conn->query($selectDeath);
+
+                                        $tblDeath = $resDeath->fetchAll(PDO::FETCH_ASSOC);
+                                        $totalDeath = count($tblDeath);
 
                                     ?>
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Interment within a month</div>
+                                            Total Buried in the Cemetery</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php echo $totalInterment ?></div>
+                                            <?php echo $totalDeath ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -58,24 +61,9 @@ include "../dbConn/conn.php";
                             </div>
                         </div>
 
-                        <!-- <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Total Deceased Buried</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                     
 
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <!-- <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -102,13 +90,11 @@ include "../dbConn/conn.php";
                                 </div>
                             </div>
                         </div> -->
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <?php
-                                        $selectAvailable = "SELECT * FROM tblNiche WHERE Status = 0";
+                                        $selectAvailable = "SELECT * FROM tblNiche WHERE Status = 2";
                                         $resAvailable = $conn->query($selectAvailable);
 
                                         $tblAvailable = $resAvailable->fetchAll(PDO::FETCH_ASSOC);
@@ -118,7 +104,7 @@ include "../dbConn/conn.php";
                                     ?>
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Total Available Niche</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php echo $totalAvailable?></div>
@@ -130,19 +116,42 @@ include "../dbConn/conn.php";
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <?php
+                                        $selectReserved = "SELECT * FROM tblNiche WHERE Status = 1";
+                                        $resReserved = $conn->query($selectReserved);
+
+                                        $tblReserved = $resReserved->fetchAll(PDO::FETCH_ASSOC);
+                                        $totalReserved = count($tblReserved);
+
+                                    
+                                    ?>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Total Reserved Niche</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $totalReserved?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
 
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
+                        <div class="col-xl-11">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Monthly Revenue</h6>
-                                   
+
                                 </div>
-                                <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
                                         <canvas id="myAreaChart"></canvas>
@@ -152,15 +161,13 @@ include "../dbConn/conn.php";
                         </div>
 
                         <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
+                        <!-- <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Monthly Revenue</h6>
                                     
                                 </div>
-                                <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-pie pt-4 pb-2">
                                         <canvas id="myPieChart"></canvas>
@@ -172,13 +179,11 @@ include "../dbConn/conn.php";
                                         <span class="mr-2">
                                             <i class="fas fa-circle text-success"></i>Interment
                                         </span>
-                                        <!-- <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span> -->
+
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </main>

@@ -97,7 +97,7 @@ include "../dbConn/conn.php";
 
                                                 <td>
                                                     <button class="btn btn-primary "
-                                                        onclick="addOcuppant('<?php echo $block_id; ?>', '<?php echo $nicheno; ?>')">
+                                                        onclick="viewReserve('<?php echo $appointmentID; ?>')">
                                                         <i class='bx bx-edit-alt'></i>
                                                     </button>
 
@@ -125,13 +125,10 @@ include "../dbConn/conn.php";
 
     // }
 
-    // function addOcuppant(block_id, nicheno) {
-
-    //     var url = 'occupant.php?LocID=' + block_id + '&Nid=' + nicheno;
-
-    //     window.location.href = url;
-
-    // }
+    function viewReserve(appointmentID) {
+        var url = 'viewreserve.php?AppID=' + appointmentID;
+        window.location.href = url;
+    }
 
     // function openDelete(location_id, block_id) {
     //     var url = '../dbConn/deleteloc.php?loc_id=' + location_id + '&block_id=' + block_id;

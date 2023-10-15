@@ -1,7 +1,6 @@
 {
     "require": {
-        "clicksend/clicksend-php": "^5.0",
         "phpmailer/phpmailer": "^6.8",
-        "sendinblue/sendinblue-api-bundle": "^2.0"
+        "vonage/client": "^4.0"
     }
 }

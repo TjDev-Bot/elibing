@@ -17,16 +17,13 @@ $nicheno = $_POST['Nid'];
 $appointmentID = nextNumb("APP", "tblIntermentReservation", "AppointmentID",7,23);
 $profileID = nextnumb("PROF", "tblDeathRecord","ProfileID",7, 23);
 
-// $trunc = substr($profileID, 0, 5);
-// $intermentdate = $_POST['IntermentDate'];
-// $intermenttime = $_POST['IntermentTime'];
 
-// $block = $_POST['block_id'];
-
+$contact = $_POST['contact'];
+$email = $_POST['email'];
 
 
 if(!empty($lname) || !empty($fname) || !empty($mname) || !empty($suffix) || 
-!empty($dateofdeath || !empty($causeofdeath) || !empty($intermentplace) || !empty($relationship)   )
+!empty($dateofdeath || !empty($causeofdeath) || !empty($intermentplace) || !empty($relationship) || !empty($contact) || !empty($email)  )
 ) {
     //Insert Data for tblDeathRecord
     $sql = "INSERT INTO tblDeathRecord (ProfileID, Lname, Fname, MName, Suffix, DateofDeath, CauseofDeath, IntermentPlace) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -49,6 +46,12 @@ if(!empty($lname) || !empty($fname) || !empty($mname) || !empty($suffix) ||
     $stmtreserve->bindParam(3, $relationship, PDO::PARAM_STR);
     $stmtreserve->bindParam(4, $profileID, PDO::PARAM_STR);
 
+    $sqlcontact = "INSERT INTO tblContactInfo (ProfID, ContactNo, Email, CreatedWhen) VALUES (?, ?, ?, GETDATE())";
+    $stmtcontact = $conn->prepare($sqlcontact);
+    $stmtcontact->bindParam(1, $profileID, PDO::PARAM_STR);
+    $stmtcontact->bindParam(2, $contact, PDO::PARAM_STR);
+    $stmtcontact->bindParam(3, $email, PDO::PARAM_STR);
+
 
     $update = "UPDATE tblNiche SET Status = 2 WHERE Nid = '$nicheno'";
     $stmtupdate = $conn->prepare($update);
@@ -56,13 +59,13 @@ if(!empty($lname) || !empty($fname) || !empty($mname) || !empty($suffix) ||
    
 
     $full = $fname.' '.$mname.' '.$lname;
-    if ($stmt->execute() && $stmtreserve->execute() && $stmtupdate->execute()) {
+    if ($stmt->execute() && $stmtreserve->execute() && $stmtcontact->execute() && $stmtupdate->execute()) {
         // $block = $loc_id;
 
         echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
             var modal = document.createElement('div');
-            modal.innerHTML = 'Your Data is Successfully Recorded';
+            modal.innerHTML = 'Proceed to Scheduling';
             modal.style.position = 'fixed';
             modal.style.top = '50%';
             modal.style.left = '50%';

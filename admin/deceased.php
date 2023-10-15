@@ -6,6 +6,9 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include('../dbConn/conn.php');
 ?>
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
 
 <body>
     <div id="layoutSidenav">
@@ -29,17 +32,24 @@ include('../dbConn/conn.php');
                                 <div class="col-sm-6">
                                     <select id="timeFilter">
                                         <option value="all">All</option>
-                                        <option value="1_year">1 Year - 4 Years</option>
+                                        <option value="1_year">Fresh</option>
                                         <!-- <option value="2_years">2 Years</option>
                                 <option value="3_years">3 Years</option> -->
                                         <!-- <option value="4_years">4 Years</option> -->
-                                        <option value="5_years">5 Years above</option>
-                                        <option value="1_month_to_6_months">1 week - 6 Months</option>
-                                        <option value="today">Today</option>
-                                        <option value="pastDue">Past Due</option>
+                                        <!-- <option value="5_years">5 Years above</option> -->
+                                        <option value="1_month">Near Due</option>
+                                        <!-- <option value="today">Today</option> -->
+                                        <!-- <option value="pastDue">Past Due</option> -->
                                     </select>
+
+                                    <button class="btn btn-primary btn-print" id="print-button">
+                                        <i class='bx bx-printer'></i>
+                                    </button>
                                 </div>
+
+
                             </div>
+
 
 
                             <div class="activity-log-container">
@@ -60,9 +70,18 @@ include('../dbConn/conn.php');
                                                 <th scope="col" class="px-6 py-3">
                                                     Niche No.
                                                 </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Appartment Type
+                                                </th>
 
                                                 <th scope="col" class="px-6 py-3">
                                                     Level
+                                                </th>
+                                                <th scope="col" class="px-6 py-3" style="display: none;">
+                                                    Contact No
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 " style="display: none;">
+                                                    Email
                                                 </th>
                                                 <th scope="col" class="px-6 py-3">
                                                     Due
@@ -76,7 +95,11 @@ include('../dbConn/conn.php');
                                         </thead>
                                         <tbody id="table-body">
                                             <?php
-                                                $select = "SELECT * FROM tblDeathRecord INNER JOIN tblNiche ON tblNiche.Nid = tblDeathRecord.ProfileID";
+                                                $select = "SELECT * FROM tblNiche
+                                                INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
+                                                INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
+                                                INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
+                                                INNER JOIN tblContactInfo ON tblDeathRecord.ProfileID = tblContactInfo.ProfID";
                                                 $query = $conn->query($select);
 
                                                 while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -85,6 +108,9 @@ include('../dbConn/conn.php');
                                                     $locID = $data['LocID'];
                                                     $nicheno = $data['Nid'];
                                                     $level = $data['Level'];
+                                                    $type = $data['Type'];
+                                                    $contact = $data['ContactNo'];
+                                                    $email = $data['Email'];
                                                     $startDate = new DateTime($data['IntermentDateTime']);
                                                     $currentDate = new DateTime();
 
@@ -128,7 +154,16 @@ include('../dbConn/conn.php');
                                                     <?php echo $nicheno ?>
                                                 </td>
                                                 <td>
+                                                    <?php echo $type ?>
+                                                </td>
+                                                <td>
                                                     <?php echo $level ?>
+                                                </td>
+                                                <td style="display: none;">
+                                                    <?php echo $contact ?>
+                                                </td>
+                                                <td style="display: none;">
+                                                    <?php echo $email ?>
                                                 </td>
                                                 <td>
                                                     <span class="due-date"><?php echo $due->format('F j, Y'); ?></span>
@@ -136,15 +171,34 @@ include('../dbConn/conn.php');
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-primary"
-                                                        onclick="View('<?php echo $occupant_id; ?>')">
+                                                        onclick="View('<?php echo $profileID; ?>')">
                                                         <i class='bx bx-edit-alt'> </i>
                                                     </button>
+                                                    <button class="btn btn-danger" onclick="renew('<?php echo $profileID ?>')">
+                                                        <i class='bx bxs-file-plus'></i>
+                                                    </button>
+                                                    <form id="smsForm" action="../submitsms.php" method="POST">
+
+                                                        <input type="hidden" name="contact"
+                                                            value="<?php echo $contact ?>">
+                                                        <input type="hidden" name="email" value="<?php echo $email ?>">
+                                                        <button class="btn btn-success submit-button" type="button"
+                                                            data-profile-id="<?php echo $profileID ?>">
+                                                            <i class='bx bx-send'></i>
+                                                        </button>
+
+                                                        </form>
+                                                        <div id="response"></div>
+
+
                                                 </td>
                                             </tr>
 
                                             <?php } ?>
                                         </tbody>
                                     </table>
+
+
                                 </div>
                             </div>
                         </div>
@@ -153,7 +207,38 @@ include('../dbConn/conn.php');
             </main>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $(".submit-button").click(function() {
+            var form = $(this).closest('form'); // Find the closest form
+            var formData = form.serialize();
 
+            $.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: formData,
+                success: function(response) {
+                    if (response === "success") {
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'SMS and email sent successfully',
+                            icon: 'success'
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response, // Display the error message from submitsms.php
+                            icon: 'error'
+                        });
+                    }
+                    $("#response").html(response);
+                }
+            });
+        });
+    });
+    </script>
     <style>
     .due-date {
         font-weight: 900;
@@ -169,194 +254,18 @@ include('../dbConn/conn.php');
         justify-content: start; */
     }
     </style>
-
     <script>
-    function updateCountdown() {
-        var dueDateElements = document.querySelectorAll('.due-date');
-        var dueWarningElements = document.querySelectorAll('.due-warning');
-
-        dueDateElements.forEach(function(dueDateElement, index) {
-            var dueDateString = dueDateElement.textContent;
-            var dueDate = new Date(dueDateString);
-            var currentDate = new Date();
-
-            var timeDifference = dueDate - currentDate;
-            var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-            var hoursDifference = Math.floor((timeDifference % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-            var minutesDifference = Math.floor((timeDifference % (60 * 60 * 1000)) / (60 * 1000));
-            var secondsDifference = Math.floor((timeDifference % (60 * 1000)) / 1000);
-
-            var dueWarning = '';
-            var warningColor = '';
-
-            if (currentDate > dueDate) {
-                dueWarning = 'Past Due (' + daysDifference + ' days ' + hoursDifference + 'h ' +
-                    minutesDifference + 'm ' + secondsDifference + 's)';
-                warningColor = 'red';
-                dueDateElement.style.color = 'red';
-            } else if (daysDifference >= 7 && daysDifference < 30) {
-                dueWarning = 'A week (' + daysDifference + ' days)';
-                warningColor = 'blue';
-                dueDateElement.style.color = 'blue';
-            } else if (hoursDifference >= 168) {
-                dueWarning = 'A month or more (' + hoursDifference + 'h ' + minutesDifference + 'm ' +
-                    secondsDifference + 's left)';
-                warningColor = 'green';
-                dueDateElement.style.color = 'green';
-            } else if (daysDifference >= 1 && daysDifference <= 6) {
-                dueWarning = 'a (' + daysDifference + ' day/s left)';
-                warningColor = 'orange';
-                dueDateElement.style.color = 'orange';
-            } else if (daysDifference === 0) {
-                dueWarning = 'Today (' + hoursDifference + 'h ' + minutesDifference + 'm ' + secondsDifference +
-                    's left)';
-                warningColor = 'orange';
-                dueDateElement.style.color = 'orange';
-            } else if (daysDifference >= 30) {
-                dueWarning = 'A month or more (' + daysDifference + ' days)';
-                warningColor = 'green';
-                dueDateElement.style.color = 'green';
-            }
-
-            dueWarningElements[index].textContent = dueWarning;
-            dueWarningElements[index].style.color = warningColor;
-        });
+    function View(profileID) {
+        var url = 'viewmaster.php?id=' + profileID;
+        window.location.href = url;
     }
 
-
-    function updateCountdownInterval() {
-        updateCountdown();
-        setInterval(updateCountdown, 1000); // Update countdown every second
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        updateCountdownInterval();
-
-        const searchInput = document.getElementById("searchInput");
-        const alumniTable = document.getElementById("e-libingTable");
-
-        searchInput.addEventListener("input", function() {
-            const searchText = searchInput.value.toLowerCase();
-            const rows = alumniTable.querySelectorAll("tbody tr");
-
-            rows.forEach(function(row) {
-                const rowData = row.textContent.toLowerCase();
-                if (rowData.includes(searchText)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        });
-
-
-
-        function filterTable() {
-            var selectedValue = document.getElementById('timeFilter').value;
-            var table = document.getElementById('e-libingTable');
-            var rows = table.getElementsByTagName('tr');
-
-            for (var i = 0; i < rows.length; i++) {
-                var row = rows[i];
-                var dueCell = row.querySelector('.due-date');
-                var name = row.getElementsByTagName('td')[0];
-
-                if (name && dueCell) {
-                    var nameText = name.textContent.toLowerCase();
-                    var dueDate = new Date(dueCell.textContent);
-                    var currentDate = new Date();
-
-                    switch (selectedValue) {
-                        case 'all':
-                            row.style.display = '';
-                            break;
-                        case '1_year':
-                            var timeDifference = dueDate - currentDate;
-                            var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-                            if (daysDifference >= 365 && daysDifference <= 1460) {
-                                row.style.display = '';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                            break;
-                            // case '2_years':
-                            //     var timeDifference = dueDate - currentDate;
-                            //     var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-                            //     if (daysDifference >= 730) {
-                            //         row.style.display = '';
-                            //     } else {
-                            //         row.style.display = 'none';
-                            //     }
-                            //     break;
-                            // case '3_years':
-                            //     if (currentDate.getFullYear() - dueDate.getFullYear() === 3) {
-                            //         row.style.display = '';
-                            //     } else {
-                            //         row.style.display = 'none';
-                            //     }
-                            //     break;
-                            // case '4_years':
-                            //     if (currentDate.getFullYear() - dueDate.getFullYear() === 4) {
-                            //         row.style.display = '';
-                            //     } else {
-                            //         row.style.display = 'none';
-                            //     }
-                            //     break;
-                        case '5_years':
-                            var timeDifference = dueDate - currentDate;
-                            var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-                            if (daysDifference >= 1825) {
-                                row.style.display = '';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                            break;
-                        case '1_month_to_6_months':
-                            var timeDifference = dueDate - currentDate;
-                            var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-                            if (daysDifference >= 7 && daysDifference <= 180) {
-                                row.style.display = '';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                            break;
-
-                        case 'today':
-                            var timeDifference = dueDate - currentDate;
-                            var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-                            if (daysDifference >= 0 && daysDifference <= 1) {
-                                row.style.display = '';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                            break;
-                            break;
-                        case 'pastDue':
-                            if (currentDate > dueDate) {
-                                row.style.display = '';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                            break;
-                    }
-                }
-            }
-        }
-
-        // Add an event listener for the filter change event
-        document.getElementById('timeFilter').addEventListener('change', filterTable);
-
-        // Initial table filtering
-        filterTable();
-
-
-    });
-
-    function View($occupant_id) {
-        var url = 'viewmaster.php?id=' + $occupant_id;
+    function renew(profileID) {
+        var url = 'renewal.php?id=' + profileID;
         window.location.href = url;
     }
     </script>
+
 
     <?php
     require('assets/component/script.php');

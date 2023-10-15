@@ -41,8 +41,10 @@ if (isset($_GET['LocId'])) {
                     <button class="btn btn-danger mb-2" type="button" name="submit" onclick="goBack()">Back</button>
 
                     <form action="../dbConn/adlocation.php" method="POST" class="mb-4" style="float: right">
-                        <label for="">Niche No</label>
+                        <label for="">Generate Niche No</label>
                         <input type="text" name="nicheno" required>
+                        <label for="">Size</label>
+                        <input type="text" name="size" required>
                         <label for="">Level</label>
                         <input type="number" name="level" required>
                         <input type="hidden" name="locid" value="<?php echo $block_id ?>">
@@ -57,9 +59,9 @@ if (isset($_GET['LocId'])) {
                                     <table class="table-no-border">
                                         <thead>
                                             <tr>
+                                                <th style="display: none;">Niche ID</th>
                                                 <th>Niche No</th>
                                                 <th>Level</th>
-                                                <th>Nno</th>
                                                 <th>Size</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -72,7 +74,7 @@ if (isset($_GET['LocId'])) {
                                             $queryloc = $conn->query($selectloc);
                                             while ($dataloc = $queryloc->fetch(PDO::FETCH_ASSOC)) {
                                                 // $location_id = $dataloc['location_id'];
-                                                $nicheno = $dataloc['Nid'];
+                                                $nicheid = $dataloc['Nid'];
                                                 $level = $dataloc['Level'];
                                                 $status = $dataloc['Status'];
                                                 $nno = $dataloc['Nno'];
@@ -89,9 +91,9 @@ if (isset($_GET['LocId'])) {
                                             ?>
                                             <tr>
 
-                                                <td><?php echo $nicheno ?></td>
-                                                <td><?php echo $level ?></td>
+                                                <td style="display: none;"><?php echo $nicheid?></td>
                                                 <td><?php echo $nno ?></td>
+                                                <td><?php echo $level ?></td>
                                                 <td><?php echo $size ?></td>
                                                 <td><?php echo $statustoString ?></td>
 
@@ -99,7 +101,7 @@ if (isset($_GET['LocId'])) {
 
                                                 <td>
                                                     <button class="btn btn-primary "
-                                                    onclick="addOcuppant('<?php echo $block_id; ?>', '<?php echo $nicheno; ?>')">
+                                                        onclick="addOcuppant('<?php echo $block_id; ?>', '<?php echo $nicheid; ?>')">
                                                         <i class='bx bx-edit-alt'></i>
                                                     </button>
                                                     <!-- <button class="btn btn-danger"
@@ -131,9 +133,9 @@ if (isset($_GET['LocId'])) {
 
     }
 
-    function addOcuppant(block_id, nicheno) {
+    function addOcuppant(block_id, nicheid) {
 
-        var url = 'occupant.php?LocID=' + block_id + '&Nid=' + nicheno;
+        var url = 'occupant.php?LocID=' + block_id + '&Nid=' + nicheid;
 
         window.location.href = url;
 

@@ -90,7 +90,7 @@ if (isset($_GET['LocID']) && isset($_GET['Nid'])) {
                                             $select = "SELECT * FROM tblNiche
                                             INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
                                             INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
-                                            INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID WHERE tblNicheLocation.LocID = '$block_id'";
+                                            INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID WHERE tblNiche.Nid = '$nicheno'";
 
                                  
                                             $queryocc = $conn->query($select);

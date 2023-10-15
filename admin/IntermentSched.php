@@ -26,9 +26,20 @@ $query = $conn->query($select);
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
                             <!-- <input type="search" id="searchInput" placeholder="Search here..."> -->
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" id="startDate">
+                            <label for="endDate">End Date:</label>
+                            <input type="date" id="endDate">
+                            <button class="btn btn-primary" id="filter-button">
+                                Filter
+                            </button>
+                            <button class="btn btn-primary btn-print" id="print-schedule">
+                                <i class='bx bx-printer'></i>
+                            </button>
+                           
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll">
-                                    <table class="table-no-border">
+                                    <table class="table-no-border" id="table-no-border">
                                         <thead>
                                             <tr>
                                                 <!--<th scope="col" class="px-6 py-3">
@@ -66,24 +77,24 @@ $query = $conn->query($select);
 
                                                 
                                             ?>
-                                                <tr>
-                                                    <!-- <td>
+                                            <tr>
+                                                <!-- <td>
                                                     ?php echo $user_id ?>
                                                 </td>
                                                 <td>
                                                     ?php echo $id ?>
                                                 </td>-->
-                                                    <td>
-                                                        <?php echo $name ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $desireddatetime ?>
-                                                    </td>
-                                                    
+                                                <td>
+                                                    <?php echo $name ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $desireddatetime ?>
+                                                </td>
 
 
 
-                                                </tr>
+
+                                            </tr>
                                             <?php } ?>
                                         </tbody>
                                     </table>
@@ -94,7 +105,7 @@ $query = $conn->query($select);
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Get the input element and table
             const searchInput = document.getElementById("searchInput");
@@ -118,7 +129,7 @@ $query = $conn->query($select);
                 });
             });
         });
-    </script>
+    </script> -->
 
 
 

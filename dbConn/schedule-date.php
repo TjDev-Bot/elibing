@@ -9,19 +9,53 @@ if (isset($_GET['date']) && isset($_GET['name']) && isset($_GET['id'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $time = $_POST['time'];
-    
-    $datetime = $date.' '.$time;
-    $sql = "UPDATE tblDeathRecord SET IntermentDateTime = ? WHERE ProfileID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$datetime, $profileId]);
+    // Validate and sanitize input
+    $time = isset($_POST['time']) ? $_POST['time'] : '';
 
-    if ($stmt->rowCount() > 0) {
-        header('location: ../admin/orderpayment.php?id=' . $profileId . '&name=' . $name);
+    if (empty($time)) {
+        echo "Time is required.";
+    } else {
+        // Attempt to update the database
+        try {
+            $datetime = $date . ' ' . $time;
+            $sql = "UPDATE tblDeathRecord SET IntermentDateTime = ? WHERE ProfileID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$datetime, $profileId]);
+
+            if ($stmt->rowCount() > 0) {
+                echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var modal = document.createElement('div');
+                    modal.innerHTML = 'Data Stored';
+                    modal.style.position = 'fixed';
+                    modal.style.top = '50%';
+                    modal.style.left = '50%';
+                    modal.style.transform = 'translate(-50%, -50%)';
+                    modal.style.backgroundColor = 'white';
+                    modal.style.padding = '20px';
+                    modal.style.border = '1px solid #ccc';
+                    modal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+                    modal.style.zIndex = '9999';
+        
+                    document.body.appendChild(modal);
+        
+                    setTimeout(function () {
+                        modal.style.display = 'none';
+                        window.location.href = '../admin/orderpayment.php?id=" .$profileId . "&name=" . $name . "';
+                    }, 1000); 
+                });
+              </script>";
+                // header('Location: ../admin/orderpayment.php?id=' . $profileId . '&name=' . $name);
+                exit(); // Make sure to exit after a header redirect
+            } else {
+                echo "No records were updated.";
+            }
+        } catch (PDOException $e) {
+            echo "Database error: " . $e->getMessage();
+        }
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -129,7 +163,7 @@ if (isset($_POST['submit'])) {
     <div class="container">
         <div class="card col-md-4">
             <h1 class="card-title typewriter">Confirm Selected Schedule</h1>
-            <form method="post" action="" autocomplete="off">
+            <form method="post" action="" autocomplete="off" onsubmit="return validateForm()">
                 <button type="button" class="btn btn-danger btn-block" onclick="goBack()">Back</button>
 
                 <div class="form-group">
@@ -157,6 +191,22 @@ if (isset($_POST['submit'])) {
     function goBack() {
         window.history.back();
     }
+
+    function validateForm() {
+        var selectedTime = document.getElementById('time').value;
+        var prevSelectedTime = '<?php echo isset($time) ? $time : ''; ?>';
+
+        if (selectedTime === prevSelectedTime) {
+            alert('The selected time has already been taken. Please choose a different time.');
+            return false; // Prevent form submission
+        }
+
+        return true; // Allow form submission if the time is different
+    }
+
+
+    // Call the function when the page loads
+    window.onload = disableSelectedTime;
     </script>
 </body>
 

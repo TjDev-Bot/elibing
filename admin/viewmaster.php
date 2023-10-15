@@ -12,20 +12,30 @@ include "../dbConn/conn.php";
 
 
 if(isset($_GET['id'])){
-    $occ_id = $_GET['id'];
+    $profileID = $_GET['id'];
 
-    $select = "SELECT * FROM occupant INNER JOIN location on location.location_id = occupant.location_id WHERE occupant_id = $occ_id";
-    $query = mysqli_query($conn, $select);
-    while($data = mysqli_fetch_assoc($query)){
-        $nameoccupant = $data['fname'].' '.$data['mname'].' '.$data['lname'];
-        $block = $data['block_id'];
-        $nicheno = $data['nicheno'];
-        $level = $data['level'];
-        $dateofdeath = $data['dateofdeath'];
-        $causeofdeath = $data['causeofdeath'];
-        $intermentplace = $data['intermentplace'];
-        $intermentdate = $data['intermentdate'];
-        $intermenttime = $data['intermenttime'];
+    $select = "SELECT * FROM tblNiche
+    INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
+    INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
+    INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
+    INNER JOIN tblContactInfo ON tblDeathRecord.ProfileID = tblContactInfo.ProfID WHERE ProfileID = '$profileID'";
+    $query = $conn->query($select);
+
+    while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+        $fname = $data['Fname'];
+        $mname =  $data['MName'] ;
+        $lname =  $data['Lname'];
+        $locID = $data['LocID'];
+        $nicheno = $data['Nid'];
+        $level = $data['Level'];
+        $type = $data['Type'];
+        $contact = $data['ContactNo'];
+        $email = $data['Email'];
+        $dateofdeath = $data['DateofDeath'];
+        $causeofdeath = $data['CauseofDeath'];
+        $intermentplace = $data['IntermentPlace'];
+        $relationship = $data['Relationship'];
+        $intermentdate = $data['IntermentDateTime'];
     }
 }
 ?>
@@ -39,7 +49,7 @@ if(isset($_GET['id'])){
                 <div class="container-fluid px-4">
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">
-                            <h1>View Occupant</h1>
+                            <h1>Update Info</h1>
                         </li>
 
                     </ol>
@@ -51,72 +61,114 @@ if(isset($_GET['id'])){
                                         <div class="col-sm">
                                             <div class="container-interment">
                                                 <div class="formbold-main">
-                                                    <div class="">
+                                                    <button class="btn btn-danger" type="button" name="submit"
+                                                        onclick="goBack()">Back</button>
+                                                    <p>
 
-                                                        <h3>
-                                                            <?php echo "Block" . ' ' . $block ?>
-                                                            ,
-                                                            <?php echo  $nicheno ?>
-                                                            ,
-                                                            <?php echo "Level" . ' ' . $level ?>
-                                                            ,
-                                                            <?php echo "Occupant ID" . ' ' . $occ_id?>
+                                                    <form action="../dbConn/updatecontact.php" method="POST">
+                                                        <input type="hidden" name="profid"
+                                                            value="<?php echo $profileID ?>">
+                                                        <div class="formbold flex">
+                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label"></label>
+                                                                Relationship
+                                                                </label>
+                                                                <input type="text" name="relationship"
+                                                                    value="<?php echo  $relationship ?>"
+                                                                    class="formbold-form-input" />
+                                                            </div>
 
-                                                        </h3>
-                                                        <button class="btn btn-danger" type="button" name="submit"
-                                                            onclick="goBack()">Back</button>
-                                                        <p>
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="" class="formbold-form-label">
+                                                                        Contact No
+                                                                    </label>
+                                                                    <input type="tel" name="contact"
+                                                                        value="<?php echo $contact ?>"
+                                                                        placeholder="Please enter a valid Philippine phone number with 63 and 10 digits."
+                                                                        class="formbold-form-input"
+                                                                        pattern="^\63\d{10}$"
+                                                                        title="Please enter a valid Philippine phone number with 63 and 10 digits." />
+                                                                </div>
 
-                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                            <label for="name" class="formbold-form-label"></label>
-                                                            Name
-                                                            </label>
-                                                            <input type="text" name="Lname" id="name"
-                                                                value="<?php echo $nameoccupant ?>" required="required"
-                                                                class="formbold-form-input" readonly />
+                                                            </div>
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <label for="date" class="formbold-form-label">
+                                                                    Email</label>
+                                                                <input type="email" name="email"
+                                                                    value="<?php echo $email ?>"
+                                                                    class="formbold-form-input" />
+                                                            </div>
                                                         </div>
+                                                        <div class="formbold-mb-5 flex">
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label"></label>
+                                                                First name
+                                                                </label>
+                                                                <input type="text" name="fname"
+                                                                    value="<?php echo $fname ?>"
+                                                                    class="formbold-form-input" />
+                                                            </div>
 
-                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                            <label for="date" class="formbold-form-label">
-                                                                Date of Death </label>
-                                                            <input type="date" name="DateofDeath" id="ddate"
-                                                                value="<?php echo $dateofdeath ?>" required
-                                                                class="formbold-form-input" readonly />
-                                                        </div>
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label"></label>
+                                                                Middle Name
+                                                                </label>
+                                                                <input type="text" name="mname"
+                                                                    value="<?php echo $mname ?>"
+                                                                    class="formbold-form-input" />
+                                                            </div>
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label"></label>
+                                                                Last Name
+                                                                </label>
+                                                                <input type="text" name="lname"
+                                                                    value="<?php echo $lname ?>"
+                                                                    class="formbold-form-input" />
+                                                            </div>
 
-                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                            <label for="name" class="formbold-form-label">Cause of Death
-                                                            </label>
-                                                            <input type="text" name="CauseofDeath" id="name"
-                                                                value="<?php echo $causeofdeath ?>" required
-                                                                class="formbold-form-input" readonly />
-                                                        </div>
 
-                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                            <label for="name" class="formbold-form-label">Interment
-                                                                Place
-                                                            </label>
-                                                            <input type="text" name="IntermentPlace" id="name"
-                                                                value="<?php echo $intermentplace ?>" required
-                                                                class="formbold-form-input" readonly />
                                                         </div>
+                                                        <div class="formbold-mb-5 flex">
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label">Cause of
+                                                                    Death
+                                                                </label>
+                                                                <input type="text" name="causeofdeath"
+                                                                    value="<?php echo $causeofdeath ?>"
+                                                                    class="formbold-form-input" />
+                                                            </div>
 
-                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                            <label for="date" class="formbold-form-label">
-                                                                Interment Date</label>
-                                                            <input type="date" name="IntermentDate" id="ddate"
-                                                                value="<?php echo $intermentdate; ?>" required
-                                                                class="formbold-form-input" readonly />
-                                                        </div>
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label">Interment
+                                                                    Place
+                                                                </label>
+                                                                <input type="text" name="intermentplace"
+                                                                    value="<?php echo $intermentplace ?>"
+                                                                    class="formbold-form-input" />
+                                                            </div>
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label">
+                                                                    Interment Date and Time
+                                                                </label>
+                                                                <input type="datetime-local" name="intermentdate"
+                                                                    value="<?php echo $intermentdate ?>"
+                                                                    class="formbold-form-input" />
 
-                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                            <label for="time" class="formbold-form-label">
-                                                                Interment Time </label>
-                                                            <input type="time" name="IntermentTime" id="time"
-                                                                value="<?php echo $intermenttime; ?>" required
-                                                                class="formbold-form-input" readonly />
+                                                            </div>
+
                                                         </div>
-                                                    </div>
+                                                        <hr>
+                                                        <button class="formbold-btn-next submit-button" type="button"
+                                                            data-bs-target="#exampleModal" id="updateButton">
+                                                            <span class="update-label">Update</span>
+                                                            <div class="loader"></div>
+                                                        </button>
+
+
+                                                    </form>
+                                                    <div id="response"></div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -126,53 +178,60 @@ if(isset($_GET['id'])){
                         </div>
                     </div>
                 </div>
-
-
-
+            </main>
         </div>
-        </main>
-    </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+    $(document).ready(function() {
+        $(".submit-button").click(function() {
+            var form = $(this).closest('form');
+            var formData = form.serialize();
+            var updateButton = $("#updateButton");
+            var loader = updateButton.find('.loader');
+
+            updateButton.prop("disabled", true);
+            updateButton.find(".update-label").hide();
+            loader.show();
+
+            $.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: formData,
+                success: function(response) {
+                    var trimmedResponse = $.trim(response);
+
+                    // Re-enable the button and hide the loader, show the label
+                    updateButton.prop("disabled", false);
+                    loader.hide();
+                    updateButton.find(".update-label").show();
+
+                    if (trimmedResponse === "success") {
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Info Successfully Updated',
+                            icon: 'success'
+                        }).then(function() {
+                            window.location.href = '../admin/deceased.php';
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response,
+                            icon: 'error'
+                        });
+                    }
+                    $("#response").html(response);
+                }
+            });
+        });
+    });
+
     function goBack() {
         window.history.back();
     }
-
-    function viewOcuppant($location_id) {
-
-        var url = 'viewoccupant.php?id=' + $location_id;
-
-        window.location.href = url;
-
-    }
-
-    function addOcuppant($location_id) {
-
-        var url = 'form.php?id=' + $location_id;
-
-        window.location.href = url;
-
-    }
-    // JavaScript code for searching the table, same as before
-    function searchTable() {
-        const input = document.getElementById("search-input").value.toLowerCase();
-        const tableRows = document.querySelectorAll("#table-body tr");
-
-        for (const row of tableRows) {
-            const name = row.querySelector("td:nth-child(2)").innerText.toLowerCase();
-            const dateOfDeath = row.querySelector("td:nth-child(3)").innerText.toLowerCase();
-            const intermentDate = row.querySelector("td:nth-child(4)").innerText.toLowerCase();
-
-            if (name.includes(input) || dateOfDeath.includes(input) || intermentDate.includes(input)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        }
-    }
-
-    document.getElementById("search-input").addEventListener("input", searchTable);
     </script>
 
 
@@ -182,6 +241,31 @@ if(isset($_GET['id'])){
     ?>
 
     <style>
+    .loader {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 2s linear infinite;
+        display: none;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .update-label {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
     .add-appointment {
         box-shadow: 0px 10px 14px -7px #276873;
         background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
