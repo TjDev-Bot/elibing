@@ -9,10 +9,9 @@ require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
 
-if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
+if (isset($_GET['locid']) && isset($_GET['nid'])) {
     $nicheno = $_GET['nid'];
     $block_id = $_GET['locid'];
-    $profid = $_GET['profid'];
     $selectt = "SELECT * FROM tblNiche WHERE Nid = '$nicheno'";
     $query = $conn->query($selectt);
     while ($occupant = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -23,6 +22,8 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
         // $size = $occupant['Size'];
     }
 }
+
+
 
 ?>
 
@@ -44,25 +45,9 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
 
                     <br>
 
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-danger mb-2" type="button" name="submit"
-                                onclick="goBack('<?php echo $block_id ?>', '<?php echo $profid ?>')">Back</button>
+                    <button class="btn btn-danger mb-2" type="button" name="submit"
+                        onclick="goBack('<?php echo $block_id ?>')">Back</button>
 
-                        </div>
-                        <div class="col-sm-2">
-                            <form action="../dbConn/intermentadmin.php" method="POST">
-                                <input type="hidden" name="profid" value="<?php echo $profid ?>">
-                                <input type="hidden" name="nicheno" value="<?php echo $nicheno ?>">
-                                <input type="hidden" name="blockid" value="<?php echo $block_id ?>">
-                                <button class="btn btn-success submit-button mb-3" type="button" id="updateButton">
-                                    <span class="update-label">Reserve</span>
-                                    <div class="loader"></div>
-                                </button>
-
-                            </form>
-                        </div>
-                    </div>
                     <div style="display:none;" id="response"></div>
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -143,7 +128,7 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
                                                     <input type="hidden" value="<?php echo $profid ?>">
                                                     <input type="hidden" value="<?php echo $level ?>">
                                                     <button class="btn btn-primary "
-                                                        onclick="viewOcuppant('<?php echo $block_id ?>', '<?php echo $nicheno ?>', '<?php echo $profid ?>', '<?php echo $level ?>')">
+                                                        onclick="viewOcuppant('<?php echo $block_id ?>', '<?php echo $nicheno ?>',  '<?php echo $profileid ?>')">
                                                         <i class='bx bx-edit-alt'></i>
                                                     </button>
                                                 </td>
@@ -161,13 +146,13 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
         </div>
     </div>
     <script>
-    function goBack(block_id, profid) {
-        var url = 'niche.php?locid=' + block_id + '&profid=' + profid;
+    function goBack(block_id) {
+        var url = 'addniche.php?locid=' + block_id;
         window.location.href = url;
     }
 
-    function viewOcuppant(block_id, nicheno, profid, level) {
-        var url = 'viewoccupant.php?locid=' + block_id + '&nid=' + nicheno + '&profid=' + profid + '&level=' + level;
+    function viewOcuppant(block_id, nicheno, profid) {
+        var url = 'viewoccupant2.php?locid=' + block_id + '&nid=' + nicheno + '&profid=' + profid;
         window.location.href = url;
     }
     </script>

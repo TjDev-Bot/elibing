@@ -11,14 +11,14 @@ require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
 
-if (isset($_GET['id'])) {
-    $profId = $_GET['id'];
+if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid']) && isset($_GET['level'])) {
+    $block_id = $_GET['locid'];
+    $nid = $_GET['nid'];
+    $profId = $_GET['profid'];
+    $level = $_GET['level'];
+
     $select = "SELECT * FROM tblDeathRecord WHERE ProfileID = '$profId'";
     $query = $conn->query($select);
-
-    // while ($data = mysqli_fetch_assoc($query)) {
-    //     $id = $data['block_id'];
-    // }
 
     while ($occupant = $query->fetch(PDO::FETCH_ASSOC)) {
     
@@ -34,9 +34,6 @@ if (isset($_GET['id'])) {
     }
 }
 ?>
-
-
-
 <body>
     <div id="layoutSidenav">
         <div id="layoutSidenav_content">
@@ -57,13 +54,8 @@ if (isset($_GET['id'])) {
                                             <div class="container-interment">
                                                 <div class="formbold-main">
                                                     <div class="">
-
-                                                        <h3>
-                                                          
-
-                                                        </h3>
                                                         <button class="btn btn-danger" type="button" name="submit"
-                                                            onclick="goBack('<?php echo $block_id ?>')">Back</button>
+                                                            onclick="goBack('<?php echo $block_id ?>' , '<?php echo $nid ?>', '<?php echo $profId ?>', '<?php echo $level ?>')">Back</button>
                                                         <p>
 
                                                         <div class="formbold-mb-5 w-full  formbold-px-3">
@@ -106,10 +98,10 @@ if (isset($_GET['id'])) {
                                                             <input type="text" name="IntermentDate" id="ddate"
                                                                 value="<?php echo $intermentdatetime; ?>" required
                                                                 class="formbold-form-input" readonly />
-                                                                
+
                                                         </div>
 
-                                                     
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -129,44 +121,10 @@ if (isset($_GET['id'])) {
     </div>
 
     <script>
-    function goBack() {
-        window.history.back();
-    }
-
-    function viewOcuppant($location_id) {
-
-        var url = 'viewoccupant.php?id=' + $location_id;
-
+    function goBack(block_id, nicheno, profid, level) {
+        var url = 'occupant.php?locid=' + block_id + '&nid=' + nicheno + '&profid=' + profid + '&level=' + level;
         window.location.href = url;
-
     }
-
-    function addOcuppant($location_id) {
-
-        var url = 'form.php?id=' + $location_id;
-
-        window.location.href = url;
-
-    }
-    // JavaScript code for searching the table, same as before
-    function searchTable() {
-        const input = document.getElementById("search-input").value.toLowerCase();
-        const tableRows = document.querySelectorAll("#table-body tr");
-
-        for (const row of tableRows) {
-            const name = row.querySelector("td:nth-child(2)").innerText.toLowerCase();
-            const dateOfDeath = row.querySelector("td:nth-child(3)").innerText.toLowerCase();
-            const intermentDate = row.querySelector("td:nth-child(4)").innerText.toLowerCase();
-
-            if (name.includes(input) || dateOfDeath.includes(input) || intermentDate.includes(input)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        }
-    }
-
-    document.getElementById("search-input").addEventListener("input", searchTable);
     </script>
 
 

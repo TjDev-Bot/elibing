@@ -15,7 +15,7 @@ if ($result) {
     $role = $result['Restriction'];
 
     $_SESSION['id'] = $result['UserID'];
-    $_SESSION['name'] = $result['Name'];
+    $_SESSION['Createdby'] = $result['Createdby'];
     $_SESSION['restriction'] = $result['Restriction'];
 
     if ($role == 'Client') {

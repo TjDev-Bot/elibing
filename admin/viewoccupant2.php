@@ -10,24 +10,25 @@ require('assets/component/sidebars.php');
 
 include "../dbConn/conn.php";
 
-if(isset($_GET['AppID'])){
-    $appID = $_GET['AppID'];
-    $selectreserve = "SELECT * FROM  tblNiche
-    INNER JOIN tblIntermentReservation ON  tblNiche.Nid =  tblIntermentReservation.Nid 
-    INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
-    INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID WHERE AppointmentID = '$appID'";
-    $queryreserve = $conn->query($selectreserve);
-    while ($dataloc = $queryreserve->fetch(PDO::FETCH_ASSOC)) {
-        // $appointmentID = $dataloc['AppointmentID'];
-        $relationship = $dataloc['Relationship'];
-        $locID = $dataloc['LocID'];
-        $nicheno = $dataloc['Nid'];
-        $profID = $dataloc['ProfID'];
-        $name = $dataloc['Fname'].' '.$dataloc['MName'].' '.$dataloc['Lname'];
-        $status = $dataloc['Status'];
-        $deathdate = $dataloc['DateofDeath'];
-        $causeofdeath = $dataloc['CauseofDeath'];
-        $intermentplace = $dataloc['IntermentPlace'];
+
+if (isset($_GET['locid']) && isset($_GET['nid'])) {
+    $block_id = $_GET['locid'];
+    $nid = $_GET['nid'];
+    $profId = $_GET['profid'];
+
+    $select = "SELECT * FROM tblDeathRecord WHERE ProfileID = '$profId'";
+    $query = $conn->query($select);
+
+    while ($occupant = $query->fetch(PDO::FETCH_ASSOC)) {
+    
+        // $id = $occupant['occupant_id'];
+        $name = $occupant['Fname'] . ' ' . $occupant['MName'] . ' ' . $occupant['Lname'] . ' ' .  $occupant['Suffix'];
+        $dateofdeath = $occupant['DateofDeath'];
+        $causeofdeath = $occupant['CauseofDeath'];
+        $intermentplace = $occupant['IntermentPlace'];
+
+        $intermentdatetime = date('F j, Y g:i A', strtotime($occupant['IntermentDateTime']));
+
 
     }
 }
@@ -42,7 +43,7 @@ if(isset($_GET['AppID'])){
                 <div class="container-fluid px-4">
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">
-                            <h1>View Details</h1>
+                            <h1>View Occupant</h1>
                         </li>
 
                     </ol>
@@ -61,22 +62,15 @@ if(isset($_GET['AppID'])){
 
                                                         </h3>
                                                         <button class="btn btn-danger" type="button" name="submit"
-                                                            onclick="goBack()">Back</button>
+                                                            onclick="goBack('<?php echo $block_id ?>' , '<?php echo $nid ?>')">Back</button>
                                                         <p>
-
-                                                            <input type="hidden" name="profid" id="name"
-                                                                value="<?php echo $profID ?>" required="required"
-                                                                class="formbold-form-input" readonly />
-
-                                                            <input type="hidden" name="nid" id="name"
-                                                                value="<?php echo $nicheno ?>" required="required"
-                                                                class="formbold-form-input" readonly />
+                                                        <div class="formbold-mb-5 w-full  formbold-px-3 flex">
 
                                                             <div class="formbold-mb-5 w-full  formbold-px-3">
                                                                 <label for="name" class="formbold-form-label"></label>
                                                                 Name
                                                                 </label>
-                                                                <input type="text" name="name" id="name"
+                                                                <input type="text" name="Lname" id="name"
                                                                     value="<?php echo $name ?>" required="required"
                                                                     class="formbold-form-input" readonly />
                                                             </div>
@@ -84,11 +78,13 @@ if(isset($_GET['AppID'])){
                                                             <div class="formbold-mb-5 w-full  formbold-px-3">
                                                                 <label for="date" class="formbold-form-label">
                                                                     Date of Death </label>
-                                                                <input type="text" name="DateofDeath" id="ddate"
-                                                                    value="<?php echo $deathdate ?>" required
+                                                                <input type="date" name="DateofDeath" id="ddate"
+                                                                    value="<?php echo $dateofdeath ?>" required
                                                                     class="formbold-form-input" readonly />
                                                             </div>
 
+                                                        </div>
+                                                        <div class="formbold-mb-5 w-full  formbold-px-3 flex">
                                                             <div class="formbold-mb-5 w-full  formbold-px-3">
                                                                 <label for="name" class="formbold-form-label">Cause of
                                                                     Death
@@ -97,7 +93,6 @@ if(isset($_GET['AppID'])){
                                                                     value="<?php echo $causeofdeath ?>" required
                                                                     class="formbold-form-input" readonly />
                                                             </div>
-
                                                             <div class="formbold-mb-5 w-full  formbold-px-3">
                                                                 <label for="name" class="formbold-form-label">Interment
                                                                     Place
@@ -106,11 +101,14 @@ if(isset($_GET['AppID'])){
                                                                     value="<?php echo $intermentplace ?>" required
                                                                     class="formbold-form-input" readonly />
                                                             </div>
-
-                                                            <div>
-                                                                <button class="formbold-btn-next" name="next"
-                                                                    onclick="pay('<?php echo $profID ?>', '<?php echo $nicheno ?>')">Proceed</button>
-                                                            </div>
+                                                        </div>
+                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                            <label for="date" class="formbold-form-label">
+                                                                Interment Date</label>
+                                                            <input type="text" name="IntermentDate" id="ddate"
+                                                                value="<?php echo $intermentdatetime; ?>" required
+                                                                class="formbold-form-input" readonly />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -121,20 +119,23 @@ if(isset($_GET['AppID'])){
                         </div>
                     </div>
                 </div>
-            </main>
+
+
+
         </div>
+        </main>
+    </div>
     </div>
 
     <script>
-    function goBack() {
-        window.history.back();
-    }
-
-    function pay(id, nid) {
-        var url = 'orderpayment.php?profid=' + id + '&nid=' + nid;
+    function goBack(block_id, nicheno) {
+        var url = 'viewoccupant1.php?locid=' + block_id + '&nid=' + nicheno;
         window.location.href = url;
     }
     </script>
+
+
+
     <?php
     require('assets/component/script.php');
     ?>

@@ -78,97 +78,54 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-    function filterTable() {
-        var selectedValue = document.getElementById('timeFilter').value;
-        var table = document.getElementById('e-libingTable');
-        var rows = table.getElementsByTagName('tr');
+   function filterTable() {
+    var selectedValue = document.getElementById('timeFilter').value;
+    var table = document.getElementById('e-libingTable');
+    var rows = table.getElementsByTagName('tr');
 
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
-            var dueCell = row.querySelector('.due-date');
-            var name = row.getElementsByTagName('td')[0];
+    for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var dueCell = row.querySelector('.due-date');
+        var name = row.getElementsByTagName('td')[0];
 
-            if (name && dueCell) {
-                var nameText = name.textContent.toLowerCase();
-                var dueDate = new Date(dueCell.textContent);
-                var currentDate = new Date();
+        if (name && dueCell) {
+            var nameText = name.textContent.toLowerCase();
+            var dueDate = new Date(dueCell.textContent);
+            var currentDate = new Date();
 
-                switch (selectedValue) {
-                    case 'all':
+            switch (selectedValue) {
+                case 'all':
+                    row.style.display = '';
+                    break;
+                case '1_year':
+                    var timeDifference = dueDate - currentDate;
+                    var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
+                    if (daysDifference >= 1 && daysDifference <= 1825) {
                         row.style.display = '';
-                        break;
-                    case '1_year':
-                        var timeDifference = dueDate - currentDate;
-                        var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-                        if (daysDifference == 365) {
-                            row.style.display = '';
-                        } else {
-                            row.style.display = 'none';
-                        }
-                        break;
-                        // case '2_years':
-                        //     var timeDifference = dueDate - currentDate;
-                        //     var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-                        //     if (daysDifference >= 730) {
-                        //         row.style.display = '';
-                        //     } else {
-                        //         row.style.display = 'none';
-                        //     }
-                        //     break;
-                        // case '3_years':
-                        //     if (currentDate.getFullYear() - dueDate.getFullYear() === 3) {
-                        //         row.style.display = '';
-                        //     } else {
-                        //         row.style.display = 'none';
-                        //     }
-                        //     break;
-                        // case '4_years':
-                        //     if (currentDate.getFullYear() - dueDate.getFullYear() === 4) {
-                        //         row.style.display = '';
-                        //     } else {
-                        //         row.style.display = 'none';
-                        //     }
-                        //     break;
-                        // case '5_years':
-                        //     var timeDifference = dueDate - currentDate;
-                        //     var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-                        //     if (daysDifference >= 1825) {
-                        //         row.style.display = '';
-                        //     } else {
-                        //         row.style.display = 'none';
-                        //     }
-                        //     break;
-                    case '1_month':
-                        var timeDifference = dueDate - currentDate;
-                        var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-                        if (daysDifference >= 1 && daysDifference <= 30) {
-                            row.style.display = '';
-                        } else {
-                            row.style.display = 'none';
-                        }
-                        break;
-
-                        // case 'today':
-                        //     var timeDifference = dueDate - currentDate;
-                        //     var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-                        //     if (daysDifference >= 0 && daysDifference <= 1) {
-                        //         row.style.display = '';
-                        //     } else {
-                        //         row.style.display = 'none';
-                        //     }
-                        //     break;
-                        //     break;
-                        // case 'pastDue':
-                        //     if (currentDate > dueDate) {
-                        //         row.style.display = '';
-                        //     } else {
-                        //         row.style.display = 'none';
-                        //     }
-                        //     break;
-                }
+                    } else {
+                        row.style.display = 'none';
+                    }
+                    break;
+                case '1_month':
+                    var timeDifference = dueDate - currentDate;
+                    var daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
+                    if (daysDifference >= 0 && daysDifference <= 30) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                    break;
             }
         }
     }
+}
+
+// Add an event listener for the filter change event
+document.getElementById('timeFilter').addEventListener('change', filterTable);
+
+// Initial table filtering
+filterTable();
+
 
     // Add an event listener for the filter change event
     document.getElementById('timeFilter').addEventListener('change', filterTable);

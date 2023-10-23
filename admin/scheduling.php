@@ -37,11 +37,15 @@ function build_calendar($month, $year){
      $next_month = date('m', mktime(0,0,0, $month+1, 1, $year));
      $next_year = date('Y', mktime(0,0,0, $month+1, 1, $year));
 
+     if(isset($_GET['id'])){
+        $profileId = $_GET['id'];
+
+    }
      $calendar = "<center class='month-sched'><h2>$month_name $year</center></h2></center>";
      $calendar.= "<div class='text-center'>";
-     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".$prev_month."&year=".$prev_year."'><i class='fa-solid fa-angles-left'></i> Prev</a>";
-     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".date('m')."&year=".date('Y')."'>Current Month</a>";
-     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".$next_month."&year=".$next_year."'><i class='fa-solid fa-angles-right'></i>Next</a>";
+     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".$prev_month."&year=".$prev_year."&id=".$profileId."'><i class='fa-solid fa-angles-left'></i> Prev</a>";
+     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".date('m')."&year=".date('Y')."&id=".$profileId."'>Current Month</a>";
+     $calendar.= "<a id='next-button' class='btn btn-primary btn-xs mx-1' href='?month=".$next_month."&year=".$next_year."&id=".$profileId."'>Next <i class='fa-solid fa-angles-right'></i></a>";
      $calendar.= "</div>";
 
     $calendar.="<div class='calendar-body'>";
@@ -63,8 +67,7 @@ function build_calendar($month, $year){
     }
 
     $month = str_pad($month, 2, "0", STR_PAD_LEFT);
-    if(isset($_GET['name'])){
-        $name = $_GET['name'];
+    if(isset($_GET['id'])){
         $profileId = $_GET['id'];
 
     }
@@ -99,11 +102,11 @@ function build_calendar($month, $year){
                 if ($selectedDateCount >= 0) {
                     // $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4><button class='btn btn-danger btn-sm disabled'>Reserved</button></td>";
                     $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4>";
-                    $calendar .= " <a href='../dbConn/schedule-date.php?date=" . $date . "&id=" . $profileId . "&name=" . $name . "' class='btn btn-success btn-sm'>Select Date</a> ";
+                    $calendar .= " <a href='../dbConn/schedule-date.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
                     $calendar .= "</td>";                    
                 } else {
                     $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4>";
-                    $calendar .= " <a href='../dbConn/schedule-date.php?date=" . $date . "&id=" . $profileId . "&name=" . $name . "' class='btn btn-success btn-sm'>Select Date</a> ";
+                    $calendar .= " <a href='../dbConn/schedule-date.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
                     $calendar .= "</td>";
                 }
             } else {
@@ -157,47 +160,7 @@ function build_calendar($month, $year){
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <!-- <div class="card-scheduling-2">
-                                <div class="header-scheduling">
-                                    <h4> <i class='bx bx-error'></i>
-                                    </h4>
-                                    <h4>Important Reminders: </h4>
-                                    <hr>
-                                </div>
-                                <h4 class="subject">Subject to Holiday Rescheduling</h4>
-                                <div class="reminders-scheduling">
-                                    <p>
-                                        Test dates may be affected by unexpected holidays or other
-                                        similar circumstances; students should be prepared to reschedule
-                                        accordingly.
-                                    </p>
-                                    <p>
-                                        Please check your Email for sudden announcements.
-                                    </p>
 
-                                    <p>
-                                        Thank you and Good luck!
-                                    </p>
-                                </div>
-                                <h4 class="legend">Legend</h4>
-                                <div class="legend-scheduling">
-                                    <p>
-                                        <span class="green-scheduling">GREEN</span> <span class="text-legend">-
-                                            Available</span>
-                                    </p>
-                                    <p>
-                                        <span class="orange-scheduling">ORANGE</span> <span class="text-legend">- Less
-                                            than 5 slots left</span>
-                                    </p>
-
-                                    <p>
-                                        <span class="red-scheduling">RED</span> <span class="text-legend">- Full
-                                            Slots</span>
-                                    </p>
-                                </div>
-                            </div> -->
-                        </div>
                     </div>
                 </div>
 

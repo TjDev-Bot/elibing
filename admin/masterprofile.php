@@ -7,8 +7,9 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include('../dbConn/conn.php');
 require_once('../component/locfunction.php');
-if(isset($_GET['profid'])){
+if(isset($_GET['profid']) && isset($_GET['name'])){
     $profid = $_GET['profid'];
+    $name = $_GET['name'];
 }
 
 ?>
@@ -21,14 +22,14 @@ if(isset($_GET['profid'])){
 
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">
-                            <h1>Block</h1>
+                            <h1>Master Profile</h1>
                         </li>
                     </ol>
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
 
-                            <!-- <form action="../dbConn/block.php" method="POST">
+                            <form action="../dbConn/block.php" method="POST">
                                 <div class="">
                                     <select name="type" id="type" class="">
                                         <option value="Chamber">Chamber</option>
@@ -39,9 +40,10 @@ if(isset($_GET['profid'])){
                                 <input type="text" name="size" placeholder="Input Size">
                                 <input type="text" name="description" placeholder="Input Description">
 
-                              
+                                <input type="hidden" name="profid" value="<?php echo $profid?>">
+                                <input type="hidden" name="name" value="<?php echo $name?> ">
                                 <button class="btn btn-primary mb-4" type="submit">Add Block</button>
-                            </form> -->
+                            </form>
 
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll">
@@ -78,7 +80,7 @@ if(isset($_GET['profid'])){
                                                 <td><?php echo $type ?></td>
                                                 <td>
                                                     <button class="btn btn-primary"
-                                                        onclick="addNiche('<?php echo $profid; ?>', '<?php echo $id; ?>')">
+                                                        onclick="addNiche('<?php echo $id; ?>')">
                                                         <i class='bx bx-edit-alt'></i>
                                                     </button>
                                                 </td>
@@ -97,12 +99,11 @@ if(isset($_GET['profid'])){
     </div>
 
     <script>
-    function addNiche(profid, id) {
+    function addNiche(id) {
         console.log("addNiche called with id:", id);
-        var url = 'niche.php?profid=' + profid + '&locid=' + id;
+        var url = 'addniche.php?locid=' + id;
         window.location.href = url;
     }
-
     </script>
 
 

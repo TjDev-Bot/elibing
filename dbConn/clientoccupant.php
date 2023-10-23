@@ -55,7 +55,6 @@ try {
             $stmtreserve->bindParam(3, $fullname, PDO::PARAM_STR);
             $stmtreserve->bindParam(4, $profileID, PDO::PARAM_STR);
     
-
             $sqlcontact = "INSERT INTO tblContactInfo (ProfID, ContactNo, Email, Createdby, CreatedWhen, CreatedSoftwareby, ModifiedSoftwareby) VALUES (?, ?, ?, ?, GETDATE(), 'E-Libing','E-Libing')";
             $stmtcontact = $conn->prepare($sqlcontact);
             $stmtcontact->bindParam(1, $profileID, PDO::PARAM_STR);
@@ -82,7 +81,7 @@ try {
     
                         setTimeout(function () {
                             modal.style.display = 'none';
-                            window.location.href = '../admin/scheds.php?id=" . $profileID ."';
+                            window.location.href = '../client/intermentschedule.php?id=" . $profileID ."';
                         }, 1000); 
                     });
                   </script>";

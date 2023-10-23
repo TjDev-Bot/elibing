@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
-    </script>
+</script> -->
 
 <?php
 include('../dbConn/conn.php');
 require_once('component/header.php');
+if(isset($_SESSION['id']) && isset($_SESSION['Createdby'])){
+    $id = $_SESSION['id'];
+    $createdby = $_SESSION['Createdby'];
+}
+
 ?>
 
 <body>
@@ -59,242 +64,152 @@ require_once('component/header.php');
                                                 <div class="container-interment">
                                                     <div class="formbold-main">
                                                         <div class="">
-
-                                                            <form action="../dbConn/interment.php" method="POST">
-                                                                <div class="formbold-mb-5">
-                                                                    <label for="name"
-                                                                        class="formbold-form-label">Relationship to the
-                                                                        Deceased 
+                                                            <form action="../dbConn/clientoccupant.php" method="POST">
+                                                                <input type="hidden" value="<?php echo $id?> ">
+                                                                <input type="hidden" name="create"
+                                                                    value="<?php  echo $createdby ?>">
+                                                                <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                    <label for="time" class="formbold-form-label">
                                                                     </label>
-                                                                    <input type="text" name="relationship" id="name"
-                                                                        placeholder="e.g Daughter" required="required"
-                                                                        class="formbold-form-input" />
+                                                                    <input type="hidden" name="Nid" id="user_name"
+                                                                        required class="formbold-form-input"
+                                                                        value="<?php echo $nicheno ?>" />
                                                                 </div>
-                                                                <div class="flex flex-wrap formbold--mx-3">
-                                                                    <div class="w-full sm:w-half formbold-px-3">
-                                                                        <div class="formbold-mb-5">
-                                                                            <label class="formbold-form-label  ">
-                                                                                Address Details
-                                                                            </label>
-                                                                        </div>
-                                                                        <div class="formbold-mb-5 flex ">
 
-                                                                            <div class="formbold-mb-5 ">
-                                                                                <div class="select">
-                                                                                    <select name="barangay"
-                                                                                        id="barangay">
-                                                                                        <option selected disabled>Choose
-                                                                                            your Barangay
-                                                                                        </option>
-                                                                                        <option value="b1">Apopong
-                                                                                        </option>
-                                                                                        <option value="b2">Baluan
-                                                                                        </option>
-                                                                                        <option value="b3">Batomelong
-                                                                                        </option>
-                                                                                        <option value="b4">Buayan
-                                                                                        </option>
-                                                                                        <option value="b5">Bula</option>
-                                                                                        <option value="b6">Calumpang
-                                                                                        </option>
-                                                                                        <option value="b7">City Heights
-                                                                                        </option>
-                                                                                        <option value="b8">Conel
-                                                                                        </option>
-                                                                                        <option value="b9">Dadiangas
-                                                                                            East</option>
-                                                                                        <option value="b10">Dadiangas
-                                                                                            North</option>
-                                                                                        <option value="b11">Dadiangas
-                                                                                            South</option>
-                                                                                        <option value="b12">Dadiangas
-                                                                                            West</option>
-                                                                                        <option value="b13">Fatima
-                                                                                        </option>
-                                                                                        <option value="b14">Katangawan
-                                                                                        </option>
-                                                                                        <option value="b15">Labangal
-                                                                                        </option>
-                                                                                        <option value="b16">Lagao
-                                                                                        </option>
-                                                                                        <option value="b17">Ligaya
-                                                                                        </option>
-                                                                                        <option value="b18">Mabuhay
-                                                                                        </option>
-                                                                                        <option value="b19">Olympog
-                                                                                        </option>
-                                                                                        <option value="b20">San Isidro
-                                                                                        </option>
-                                                                                        <option value="b21">San Jose
-                                                                                        </option>
-                                                                                        <option value="b22">Siguel
-                                                                                        </option>
-                                                                                        <option value="b23">Sinawal
-                                                                                        </option>
-                                                                                        <option value="b24">Tambler
-                                                                                        </option>
-                                                                                        <option value="b25">Tinagacan
-                                                                                        </option>
-                                                                                        <option value="b26">Uper Labay
-                                                                                        </option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="formbold-mb-5  formbold-px-3">
-                                                                                <div class="select">
-                                                                                    <select name="purok" id="purok">
-                                                                                        <option selected disabled>Choose
-                                                                                            Purok</option>
-                                                                                        <option value="prk1">Prk 1
-                                                                                        </option>
-                                                                                        <option value="prk2">Prk 2
-                                                                                        </option>
-                                                                                        <option value="prk3">Prk 3
-                                                                                        </option>
-                                                                                        <option value="prk4">Prk 4
-                                                                                        </option>
-                                                                                        <option value="prk5">Prk 5
-                                                                                        </option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </div>
+                                                                <div class="formbold-mb-5 flex">
+                                                                    <div class="formbold-mb-5 w-full">
+                                                                        <label for="name"
+                                                                            class="formbold-form-label">
+                                                                            Full Name
+                                                                        </label>
+                                                                        <input type="text" name="fullname" id="name"
+                                                                            required class="formbold-form-input" />
+                                                                    </div>
+                                                                    <div class="formbold-mb-5 w-full">
+                                                                        <label for="name"
+                                                                            class="formbold-form-label">Relationship to
+                                                                            the
+                                                                            Deceased
+                                                                        </label>
+                                                                        <input type="text" name="relationship" id="name"
+                                                                            placeholder="e.g Daughter"
+                                                                            required="required"
+                                                                            class="formbold-form-input" />
                                                                     </div>
                                                                 </div>
+
+
+                                                                <div class="formbold-mb-5 flex">
+                                                                    <div class="formbold-mb-5 w-full">
+                                                                        <label for="" class="formbold-form-label">
+                                                                            Contact No
+                                                                        </label>
+                                                                        <input type="tel" name="contact" id="name"
+                                                                            placeholder="Please enter a valid Philippine phone number with 63 and 10 digits."
+                                                                            required class="formbold-form-input"
+                                                                            pattern="^\63\d{10}$"
+                                                                            title="Please enter a valid Philippine phone number with 63 and 10 digits." />
+                                                                    </div>
+
+                                                                    <div class="formbold-mb-5 w-full">
+                                                                        <label for="name" class="formbold-form-label">
+                                                                            Email Address
+                                                                        </label>
+                                                                        <input type="email" name="email" id=""
+                                                                            placeholder=""
+                                                                            class="formbold-form-input" />
+                                                                    </div>
+
+                                                                </div>
+
                                                                 <hr>
-                                                                <div class="formbold-mb-5">
-                                                                    <label for="name" class="formbold-form-label"> Name
-                                                                        of the Deceased
-                                                                    </label>
-                                                                    <input type="text" name="deceased" id="name"
-                                                                        placeholder="Enter Full Name"
-                                                                        required="required"
-                                                                        class="formbold-form-input" />
-                                                                </div>
-                                                                <div class="formbold-mb-5">
-                                                                    <label for="name" class="formbold-form-label"> Age
-                                                                    </label>
-                                                                    <input type="text" name="age" id="name"
-                                                                        placeholder="Enter Age" required="required"
-                                                                        class="formbold-form-input" />
-                                                                </div>
-                                                                <div class="formbold-mb-5">
-                                                                    <label for="date" class="formbold-form-label">
-                                                                    Date of Death </label>
-                                                                    <input type="date" name="deathdate" id="ddate"
-                                                                        required="required"
-                                                                        class="formbold-form-input" />
-                                                                </div>
-                                                                <hr>
-                                                                <!-- <label
-                                                                    class="formbold-form-label formbold-form-label-2">
-                                                                    Select Desired Date
-                                                                </label>
-                                                                <div class="formbold-mb-5 flex  ">
+                                                                <h6 class="mb-5">Deceased Information</h6>
+                                                                <div class="formbold-mb-5 flex">
                                                                     <div class="formbold-mb-5 w-full  ">
-                                                                        <label for="date" class="formbold-form-label">
-                                                                            Date </label>
-                                                                        <input type="date" name="ddate" id="ddate"
+                                                                        <label for="name" class="formbold-form-label">
+                                                                            Last
+                                                                            Name
+                                                                        </label>
+                                                                        <input type="text" name="Lname" id="name"
+                                                                            placeholder="Enter Last Name"
                                                                             required="required"
                                                                             class="formbold-form-input" />
                                                                     </div>
-                                                                    <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                                        <label for="time" class="formbold-form-label">
-                                                                            Time </label>
-                                                                        <input type="time" name="time" id="time"
-                                                                            required="required"
-                                                                            class="formbold-form-input" />
-                                                                    </div>
-                                                                </div> -->
-                                                                <?php
-                                                                if ($_SESSION['id']) {
-                                                                    $user_id = $_SESSION['id'];
-                                                                    $select = "SELECT * FROM tblUsersLogin WHERE UserID = '$user_id'";
-                                                                    $query = $conn->query($select);
-                                                                    while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
-                                                                        $name = $data['Createdby'];
-                                                                        $role = $data['Restriction'];
-                                                                    }
-                                                                }
-                                                                ?>
-                                                                <div class="formbold-mb-5 w-full  formbold-px-3"
-                                                                    style="display: none;">
-                                                                    <label for="time" class="formbold-form-label">
-                                                                    </label>
-                                                                    <input type="text" name="user_id" id="user_id"
-                                                                        required class="formbold-form-input"
-                                                                        value="<?php echo $user_id ?>" />
-                                                                </div>
-                                                                <div class="formbold-mb-5 w-full  formbold-px-3"
-                                                                    style="display: none;">
-                                                                    <label for="time" class="formbold-form-label">
-                                                                    </label>
-                                                                    <input type="text" name="user_name" id="user_name"
-                                                                        required class="formbold-form-input"
-                                                                        value="<?php echo $name ?>" />
-                                                                </div>
-                                                                <div class="formbold-mb-5 w-full  formbold-px-3"
-                                                                    style="display: none;">
-                                                                    <label for="time" class="formbold-form-label">
-                                                                    </label>
-                                                                    <input type="text" name="role" id="user_name"
-                                                                        required class="formbold-form-input"
-                                                                        value="<?php echo $role ?>" />
-                                                                </div>
 
-                                                                <div>
-                                                                    <button class="formbold-btn-next" name="next"
-                                                                        >Next</button>
+                                                                    <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                        <label for="name" class="formbold-form-label">
+                                                                            First
+                                                                            Name
+                                                                        </label>
+                                                                        <input type="text" name="Fname" id="name"
+                                                                            placeholder="Enter First Name"
+                                                                            required="required"
+                                                                            class="formbold-form-input" />
+                                                                    </div>
+
+                                                                    <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                        <label for="name" class="formbold-form-label">
+                                                                            Middle Name
+                                                                        </label>
+                                                                        <input type="text" name="MName" id="name"
+                                                                            placeholder="Enter Middle Name"
+                                                                            required="required"
+                                                                            class="formbold-form-input" />
+                                                                    </div>
+
+                                                                    <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                        <label for="name" class="formbold-form-label">
+                                                                            Suffix
+                                                                        </label>
+                                                                        <select class="w-full" name="Suffix" id="">
+                                                                            <option value="" select disable>Select
+                                                                                Suffix
+                                                                            </option>
+                                                                            <option value="Jr">Jr</option>
+                                                                            <option value="Sr">Sr</option>
+                                                                        </select>
+                                                                        <!-- <input type="text" name="Suffix" id="name"
+                                                                        placeholder="Jr / Sr"
+                                                                        class="formbold-form-input" /> -->
+                                                                    </div>
                                                                 </div>
-                                                            </form>
-                                                            <!--<div>
+                                                                <div class="formbold-mb-5 flex">
+                                                                    <div class="formbold-mb-5">
+                                                                        <label for="date" class="formbold-form-label">
+                                                                            Date of Death </label>
+                                                                        <input type="date" name="DateofDeath" id="ddate"
+                                                                            required class="formbold-form-input" />
+                                                                    </div>
+
+                                                                    <div class="formbold-mb-5 w-full">
+                                                                        <label for="name"
+                                                                            class="formbold-form-label">Cause
+                                                                            of Death
+                                                                        </label>
+                                                                        <input type="text" name="CauseofDeath" id="name"
+                                                                            placeholder="" required
+                                                                            class="formbold-form-input" />
+                                                                    </div>
+
+                                                                    <div class="formbold-mb-5 w-full">
+                                                                        <label for="name"
+                                                                            class="formbold-form-label">Interment Place
+                                                                        </label>
+                                                                        <input type="text" name="IntermentPlace"
+                                                                            id="name" placeholder="Enter Place" required
+                                                                            class="formbold-form-input" />
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
                                                                 <button class="formbold-btn-next" name="next"
-                                                                    data-bs-toggle="modal"
                                                                     data-bs-target="#exampleModal">Next</button>
-                                                            </div>-->
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Page-body end -->
-                                    <!-- Payment Method Modal
-                                    <div class="modal fade" id="exampleModal" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">We Accept
-                                                        E-Wallet Payments</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="container-payment-method">
-                                                        <div class="accept col-50">
-                                                            <div class="icon-container">
-                                                                <span class="icon-container">
-                                                                    <div class="gcash">
-                                                                        <img width="90" height="45"
-                                                                            src="https://orangemagazine.ph/wp-content/uploads/2022/05/GCASH-Logo.png"
-                                                                            alt="gcash" />
-                                                                    </div>
-                                                                    <div class="paymaya">
-                                                                        <img width="55" height="50"
-                                                                            src="https://play-lh.googleusercontent.com/MYVxoAAKgx1buBB-jn-U1wb8iUguAKwWH6EtfdT6l-zA_xqw2bxbHvycs25RXt9NZR4"
-                                                                            alt="maya" />
-                                                                    </div>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-cancel"
-                                                        data-bs-dismiss="modal">Cancel </button>
-                                                    <button type="button" class="btn btn-primary">Proceed</button> -->
                                 </div>
                             </div>
                         </div>
@@ -304,12 +219,6 @@ require_once('component/header.php');
             </div>
         </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
-
     <!-- Required Jquery -->
     <script type="text/javascript" src="assets/js/jquery/jquery.min.js "></script>
     <script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>

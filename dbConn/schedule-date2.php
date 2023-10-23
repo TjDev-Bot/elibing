@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
         
                     setTimeout(function () {
                         modal.style.display = 'none';
-                        window.location.href = '../admin/location.php?profid=" .$profileId ."';
+                        window.location.href = '../client/block.php?profid=" .$profileId ."';
                     }, 1000); 
                 });
               </script>";

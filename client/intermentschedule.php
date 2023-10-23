@@ -59,7 +59,6 @@ if(isset($_GET['name'])){
                                             <div class="col-sm">
                                                 <div class="container-interment">
                                                     <div class="formbold-main">
-                                                     
                                                         <?php include('scheduling.php') ?>
                                                     </div>
                                                 </div>

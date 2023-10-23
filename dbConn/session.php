@@ -4,7 +4,7 @@
         header("Location: index.php");
     } else {
         $id = $_SESSION['id'];
-        $name = $_SESSION['name'];
+        $name = $_SESSION['Createdby'];
         $restriction = $_SESSION['restriction'];
     }
 ?>

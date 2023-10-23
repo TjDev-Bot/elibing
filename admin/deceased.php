@@ -18,7 +18,7 @@ include('../dbConn/conn.php');
                     <!-- <h1 class="mt-4">Deceased</h1> -->
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">
-                            <h1>Deceased</h1>
+                            <h1>Death Record</h1>
                         </li>
                     </ol>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -33,13 +33,7 @@ include('../dbConn/conn.php');
                                     <select id="timeFilter">
                                         <option value="all">All</option>
                                         <option value="1_year">Fresh</option>
-                                        <!-- <option value="2_years">2 Years</option>
-                                <option value="3_years">3 Years</option> -->
-                                        <!-- <option value="4_years">4 Years</option> -->
-                                        <!-- <option value="5_years">5 Years above</option> -->
                                         <option value="1_month">Near Due</option>
-                                        <!-- <option value="today">Today</option> -->
-                                        <!-- <option value="pastDue">Past Due</option> -->
                                     </select>
 
                                     <button class="btn btn-primary btn-print" id="print-button">
@@ -99,7 +93,8 @@ include('../dbConn/conn.php');
                                                 INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
                                                 INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
                                                 INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
-                                                INNER JOIN tblContactInfo ON tblDeathRecord.ProfileID = tblContactInfo.ProfID";
+                                                INNER JOIN tblContactInfo ON tblDeathRecord.ProfileID = tblContactInfo.ProfID
+                                                INNER JOIN tblBuriedRecord ON tblNiche.Nid = tblBuriedRecord.Nid WHERE tblBuriedRecord.OccupancyDate IS NOT NULL";
                                                 $query = $conn->query($select);
 
                                                 while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -111,7 +106,8 @@ include('../dbConn/conn.php');
                                                     $type = $data['Type'];
                                                     $contact = $data['ContactNo'];
                                                     $email = $data['Email'];
-                                                    $startDate = new DateTime($data['IntermentDateTime']);
+                                                    $occ = $data['OccupancyDate'];
+                                                    $startDate = new DateTime($occ);
                                                     $currentDate = new DateTime();
 
                                                     $timeDifference = $currentDate->diff($startDate);
@@ -142,7 +138,6 @@ include('../dbConn/conn.php');
 
 
                                             <tr>
-
                                                 <td>
                                                     <?php echo $full ?>
                                                 </td>
@@ -165,7 +160,7 @@ include('../dbConn/conn.php');
                                                 <td style="display: none;">
                                                     <?php echo $email ?>
                                                 </td>
-                                                <td>
+                                                <td> 
                                                     <span class="due-date"><?php echo $due->format('F j, Y'); ?></span>
                                                     <span class="due-warning"></span>
                                                 </td>
@@ -174,7 +169,8 @@ include('../dbConn/conn.php');
                                                         onclick="View('<?php echo $profileID; ?>')">
                                                         <i class='bx bx-edit-alt'> </i>
                                                     </button>
-                                                    <button class="btn btn-danger" onclick="renew('<?php echo $profileID ?>')">
+                                                    <button class="btn btn-danger"
+                                                        onclick="renew('<?php echo $profileID ?>')">
                                                         <i class='bx bxs-file-plus'></i>
                                                     </button>
                                                     <form id="smsForm" action="../submitsms.php" method="POST">
@@ -187,8 +183,8 @@ include('../dbConn/conn.php');
                                                             <i class='bx bx-send'></i>
                                                         </button>
 
-                                                        </form>
-                                                        <div id="response"></div>
+                                                    </form>
+                                                    <div id="response"></div>
 
 
                                                 </td>

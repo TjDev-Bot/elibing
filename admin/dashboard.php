@@ -94,7 +94,7 @@ include "../dbConn/conn.php";
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <?php
-                                        $selectAvailable = "SELECT * FROM tblNiche WHERE Status = 2";
+                                        $selectAvailable = "SELECT * FROM tblNiche WHERE Status = 0";
                                         $resAvailable = $conn->query($selectAvailable);
 
                                         $tblAvailable = $resAvailable->fetchAll(PDO::FETCH_ASSOC);

@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
+</script>
 <?php
 require('assets/component/header.php');
 require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
+include "../dbConn/conn.php";
+
+if(isset($_GET['nid']) && isset($_GET['profid'])){
+    $nid = $_GET['nid'];
+    $profid = $_GET['profid'];
+} 
+
+
+if (isset($_POST['paymentButton'])) {
+    $nid = $_POST['nid'];
+    $profid = $_POST['id'];
+
+    try {
+        $update1 = "UPDATE tblNiche SET Status = 2 WHERE Nid = ?";
+        $stmt1 = $conn->prepare($update1);
+        $stmt1->execute([$nid]);
+
+        // $update2 = "UPDATE tblIntermentReservation SET Nid = ? WHERE ProfID = ?";
+        // $stmt2 = $conn->prepare($update2);
+        // $stmt2->execute([$nid, $profid]);
+
+        if ($stmt1->rowCount() > 0) {
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            echo "No records updated.";
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
 ?>
+
 
 
 
@@ -21,267 +57,252 @@ require('assets/component/sidebars.php');
                         </li>
                     </ol>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <form action="" method="POST">
+                            <input type="hidden" name="nid" value="<?php echo $nid ?>">
+                            <input type="hidden" name="id" value="<?php echo $profid ?>">
+                            <button class="btn btn-success" name="paymentButton" type="submit">Payment</button>
+                        </form>
                         <div class="container">
-                            <form action="" method="post">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="">
-                                            <?php 
-                                                                        $select = "SELECT * FROM prices";
-                                                                        $query = mysqli_query($conn, $select);
-                                                                        while($data = mysqli_fetch_assoc($query)){
-                                                                            $apartmentniche = $data['apartmentniche'];
-                                                                            $floatingniche1stuser = $data['floatingniche1stuser'];
-                                                                            $floatingniche2nduser = $data['floatingniche2nduser'];
-                                                                            $below18 = $data['18andbelow'];
-                                                                            $age0 = $data['0age'];
-                                                                            $bonechamber = $data['bonechamber'];
-                                                                            $mausoleum = $data['mausoleum'];
-                                                                            $mausdownpayment = $data['mausdownpayment'];
-                                                                            $mausamortization = $data['mausamortization'];
-                                                                            $exhupermitfee = $data['exhupermitfee'];
-                                                                            $exhufee = $data['exhufee'];
-                                                                            $burialfee = $data['burialfee'];
-                                                                            $deathcertificate = $data['deathcertificate'];
-                                                                        }
+                            <div class="row">
+                                <div class="col">
+                                    <div class="">
+                                        <?php 
+                                                // $select = "SELECT * FROM prices";
+                                                // $query = mysqli_query($conn, $select);
+                                                // while($data = mysqli_fetch_assoc($query)){
+                                                //     $apartmentniche = $data['apartmentniche'];
+                                                //     $floatingniche1stuser = $data['floatingniche1stuser'];
+                                                //     $floatingniche2nduser = $data['floatingniche2nduser'];
+                                                //     $below18 = $data['18andbelow'];
+                                                //     $age0 = $data['0age'];
+                                                //     $bonechamber = $data['bonechamber'];
+                                                //     $mausoleum = $data['mausoleum'];
+                                                //     $mausdownpayment = $data['mausdownpayment'];
+                                                //     $mausamortization = $data['mausamortization'];
+                                                //     $exhupermitfee = $data['exhupermitfee'];
+                                                //     $exhufee = $data['exhufee'];
+                                                //     $burialfee = $data['burialfee'];
+                                                //     $deathcertificate = $data['deathcertificate'];
+                                                // }
 
-                                                                        $selectinter = "SELECT * FROM intermentform WHERE user_id = $user_id";
-                                                                        $queryinter = mysqli_query($conn, $selectinter);
-                                                                        while($datainter = mysqli_fetch_assoc($queryinter)){
-                                                                            $age = $datainter['age'];
-                                                                            
-                                                                            if($age >= 1 && $age <= 18){
-                                                                                $age0ContainerStyle = 'display: none;'; 
-                                                                                $below18ContainerStyle = ''; 
-                                                                            } else if($age <= 0 ){
-                                                                                $age0ContainerStyle = ''; 
-                                                                                $below18ContainerStyle = 'display: none;';
-                                                                            } else {
-                                                                                $age0ContainerStyle = 'display: none;';
-                                                                                $below18ContainerStyle = 'display: none;'; 
-                                                                            }
-                                                                        }                                                                    
+                                                // $selectinter = "SELECT * FROM intermentform WHERE user_id = $user_id";
+                                                // $queryinter = mysqli_query($conn, $selectinter);
+                                                // while($datainter = mysqli_fetch_assoc($queryinter)){
+                                                //     $age = $datainter['age'];
+                                                    
+                                                //     if($age >= 1 && $age <= 18){
+                                                //         $age0ContainerStyle = 'display: none;'; 
+                                                //         $below18ContainerStyle = ''; 
+                                                //     } else if($age <= 0 ){
+                                                //         $age0ContainerStyle = ''; 
+                                                //         $below18ContainerStyle = 'display: none;';
+                                                //     } else {
+                                                //         $age0ContainerStyle = 'display: none;';
+                                                //         $below18ContainerStyle = 'display: none;'; 
+                                                //     }
+                                                // }                                                                    
 
 
-                                                                    ?>
+                                        ?>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="">Apartment Type
+                                                    Niche</label>
+                                                <label for=""></label>
+                                            </div>
+                                            <div class="col">
+                                                ₱
+                                                <input type="text" id="apartmentniche" value="" select disabled>
+
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <label for="floatingNiche">Floating
+                                            Niche</label>
+                                        <div>
                                             <div class="row">
                                                 <div class="col">
-                                                    <label for="">Apartment Type
-                                                        Niche</label>
-                                                    <label for=""><?php echo $user_id ?></label>
+                                                    <label for="b1">b1. 1st User</label>
+
+
                                                 </div>
                                                 <div class="col">
+                                                    <input type="radio" id="b1" name="floatingNiche" value="">
                                                     ₱
-                                                    <input type="text" id="apartmentniche"
-                                                        value="<?php echo number_format($apartmentniche, 2) ?>" select
-                                                        disabled>
 
                                                 </div>
                                             </div>
-
-
-
-
-                                            <label for="floatingNiche">Floating
-                                                Niche</label>
-                                            <div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label for="b1">b1. 1st User</label>
-
-
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="radio" id="b1" name="floatingNiche"
-                                                            value=" <?php echo $floatingniche1stuser ?>">
-                                                        ₱
-                                                        <?php echo number_format($floatingniche1stuser, 2) ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label for="b2">b2. 2nd User</label>
-
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="radio" id="b2" name="floatingNiche"
-                                                            value=" <?php echo $floatingniche2nduser ?>">
-                                                        ₱
-                                                        <?php echo number_format($floatingniche2nduser, 2) ?>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                            <br>
-                                            <div class="row" style="<?php echo $below18ContainerStyle ?>">
-                                                <div class="col">
-                                                    <label for="">Child Burial (18 and
-                                                        Below)</label>
-                                                </div>
-                                                <div class="col">
-                                                    ₱
-                                                    <input type="text" id="below18"
-                                                        value="<?php echo number_format($below18, 2) ?>" select
-                                                        disabled>
-
-                                                </div>
-                                            </div>
-
-                                            <div class="row" style="<?php echo $age0ContainerStyle ?>">
-                                                <div class="col">
-                                                    <label for="">Child Burial (0 age -
-                                                        vault)</label>
-                                                </div>
-                                                <div class="col">
-                                                    ₱
-                                                    <input type="text" value="<?php echo number_format($age0, 2) ?>"
-                                                        select disabled>
-
-                                                </div>
-                                            </div>
-
-
-
+                                        </div>
+                                        <div>
                                             <div class="row">
                                                 <div class="col">
-                                                    <label for="">Individual Bone Chamber
-                                                        (Aperment
-                                                        Vault)</label>
+                                                    <label for="b2">b2. 2nd User</label>
 
                                                 </div>
                                                 <div class="col">
+                                                    <input type="radio" id="b2" name="floatingNiche" value="">
                                                     ₱
-                                                    <input type="text"
-                                                        value="<?php echo number_format($bonechamber, 2) ?>" select
-                                                        disabled>
 
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label for="">Mausoleum Fully
-                                                            Paid</label>
-
-
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="radio" id="" name="mau"
-                                                            value=" <?php echo $mausoleum ?>">
-                                                        ₱
-                                                        <?php echo number_format($mausoleum, 2) ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label for="">d1. 30%
-                                                            Downpayment</label>
-
-
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="radio" id="" name="mau"
-                                                            value=" <?php echo $mausdownpayment ?>">
-                                                        ₱
-                                                        <?php echo number_format($mausdownpayment, 2) ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label for="">d2. 24 months
-                                                            Amortization</label>
-
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="radio" id="" name="mau"
-                                                            value="<?php echo $mausamortization?> ">
-                                                        ₱
-                                                        <?php echo number_format($mausamortization, 2)?>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <br>
-
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="">Exhumation Permit
-                                                        Fee</label>
-
-                                                </div>
-                                                <div class="col">
-                                                    ₱
-                                                    <input type="text"
-                                                        value="<?php echo number_format($exhupermitfee, 2) ?>" select
-                                                        disabled>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="">Exhumation Fee</label>
-                                                </div>
-                                                <div class="col">
-                                                    ₱
-                                                    <input type="text" value="<?php echo number_format($exhufee, 2) ?>"
-                                                        select disabled>
-
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="">Burial Fee</label>
-
-                                                </div>
-                                                <div class="col">
-                                                    ₱
-                                                    <input type="text" value="<?php echo number_format($burialfee, 2)?>"
-                                                        select disabled>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="">Certified Photocopy Death
-                                                        Certificate</label>
-
-
-                                                </div>
-                                                <div class="col">
-                                                    ₱
-                                                    <input type="text"
-                                                        value="<?php echo number_format($deathcertificate, 2)?>" select
-                                                        disabled>
                                                 </div>
                                             </div>
 
                                         </div>
-                                    </div>
+
+                                        <br>
+                                        <div class="row" style="<?php ?>">
+                                            <div class="col">
+                                                <label for="">Child Burial (18 and
+                                                    Below)</label>
+                                            </div>
+                                            <div class="col">
+                                                ₱
+                                                <input type="text" id="below18" select disabled>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="">
+                                            <div class="col">
+                                                <label for="">Child Burial (0 age -
+                                                    vault)</label>
+                                            </div>
+                                            <div class="col">
+                                                ₱
+                                                <input type="text" select disabled>
+
+                                            </div>
+                                        </div>
 
 
 
-                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="">Individual Bone Chamber
+                                                    (Aperment
+                                                    Vault)</label>
 
-                                        <div id="totalSection">
-                                            <h4>Total Amount:</h4>
-                                            ₱
-                                            <input type="text" id="totalAmount"
-                                                value="<?php echo number_format($totalamount, 2, '.', ',') ?>">
+                                            </div>
+                                            <div class="col">
+                                                ₱
+                                                <input type="text">
+
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="">Mausoleum Fully
+                                                        Paid</label>
+
+
+                                                </div>
+                                                <div class="col">
+                                                    <input type="radio" id="" name="mau" value="">
+                                                    ₱
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="">d1. 30%
+                                                        Downpayment</label>
+
+
+                                                </div>
+                                                <div class="col">
+                                                    <input type="radio" id="" name="mau" value="">
+                                                    ₱
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="">d2. 24 months
+                                                        Amortization</label>
+
+                                                </div>
+                                                <div class="col">
+                                                    <input type="radio" id="" name="mau" value="">
+                                                    ₱
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <br>
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="">Exhumation Permit
+                                                    Fee</label>
+
+                                            </div>
+                                            <div class="col">
+                                                ₱
+                                                <input type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="">Exhumation Fee</label>
+                                            </div>
+                                            <div class="col">
+                                                ₱
+                                                <input type="text" select disabled>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="">Burial Fee</label>
+
+                                            </div>
+                                            <div class="col">
+                                                ₱
+                                                <input type="text" select disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="">Certified Photocopy Death
+                                                    Certificate</label>
+
+
+                                            </div>
+                                            <div class="col">
+                                                ₱
+                                                <input type="text" value="" select disabled>
+                                            </div>
                                         </div>
 
                                     </div>
                                 </div>
-                            </form>
+
+                                <div class="col">
+                                    <div id="totalSection">
+                                        <h4>Total Amount:</h4>
+                                        ₱
+                                        <input type="text" id="totalAmount" value="<?php echo number_format() ?>">
+                                    </div>
+                                </div>
+
+
+                            </div>
+
                         </div>
+
                     </div>
+                </div>
             </main>
         </div>
     </div>

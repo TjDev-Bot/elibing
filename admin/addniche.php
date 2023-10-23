@@ -9,15 +9,9 @@ require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
 
-if (isset($_GET['locid']) && isset($_GET['profid'])) {
+if (isset($_GET['locid'])) {
     $block_id = $_GET['locid'];
-    $profid = $_GET['profid'];
-    $select = "SELECT * FROM tblNicheLocation WHERE LocID = $block_id";
-    // $query = mysqli_query($conn, $select);
-
-    // while ($data = mysqli_fetch_assoc($query)) {
-    //     $id = $data['block_id'];
-    // }
+    $select = "SELECT * FROM tblNicheLocation WHERE LocID = $block_id"; 
 }
 ?>
 
@@ -36,18 +30,20 @@ if (isset($_GET['locid']) && isset($_GET['profid'])) {
                     </ol>
                     <br>
 
-                    <button class="btn btn-danger mb-2" type="button" name="submit" onclick="goBack('<?php echo $profid ?>')">Back</button>
+                    <button class="btn btn-danger mb-2" type="button" name="submit" onclick="goBack()">Back</button>
 
-                    <!-- <form action="../dbConn/adlocation.php" method="POST" class="mb-4" style="float: right">
+                    <form action="../dbConn/adlocation.php" method="POST" class="mb-4" style="float: right">
                         <label for="">Generate Niche No</label>
                         <input type="text" name="nicheno" required>
                         <label for="">Size</label>
                         <input type="text" name="size" required>
                         <label for="">Level</label>
                         <input type="number" name="level" required>
-                       
+                        <input type="hidden" name="locid" value="<?php echo $block_id ?>">
+                        <input type="hidden" value="0" name="stat">
+                        <input type="hidden" name="profid" value="<?php echo $profid ?>">
                         <button class="btn btn-primary " type="submit" name="submit">Submit</button>
-                    </form> -->
+                    </form>
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
@@ -98,7 +94,7 @@ if (isset($_GET['locid']) && isset($_GET['profid'])) {
 
                                                 <td>
                                                     <button class="btn btn-primary "
-                                                        onclick="addOcuppant('<?php echo $block_id; ?>', '<?php echo $nicheid; ?>' , '<?php echo $profid; ?>')">
+                                                        onclick="addOcuppant('<?php echo $block_id; ?>', '<?php echo $nicheid; ?>')">
                                                         <i class='bx bx-edit-alt'></i>
                                                     </button>
                                                     <!-- <button class="btn btn-danger"
@@ -124,14 +120,18 @@ if (isset($_GET['locid']) && isset($_GET['profid'])) {
     </div>
 
     <script>
-    function goBack(profid) {
-        var url = 'location.php?profid=' + profid;
+    function goBack() {
+        var url = 'masterprofile.php'
         window.location.href = url;
+
     }
 
-    function addOcuppant(block_id, nicheid, profid) {
-        var url = 'occupant.php?locid=' + block_id + '&nid=' + nicheid + '&profid=' + profid;
+    function addOcuppant(block_id, nicheid) {
+
+        var url = 'viewoccupant1.php?locid=' + block_id + '&nid=' + nicheid;
+
         window.location.href = url;
+
     }
 
     function openDelete(location_id, block_id) {

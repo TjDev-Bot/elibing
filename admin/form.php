@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="css/walkin.css">
@@ -8,6 +10,10 @@ require('assets/component/header.php');
 require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 
+if(isset($_SESSION['id']) && isset($_SESSION['Createdby'])){
+    $id = $_SESSION['id'];
+    $createdby = $_SESSION['Createdby'];
+}
 
 if (isset($_GET['id'])) {
     $nicheno = $_GET['id'];
@@ -36,10 +42,12 @@ if (isset($_GET['id'])) {
                                             <div class="container-interment">
                                                 <div class="formbold-main">
                                                     <div class="">
-                                                        <button class="btn btn-danger" type="button" name="submit"
-                                                            onclick="goBack()">Back</button>
-
+                                                        <!-- <button class="btn btn-danger" type="button" name="submit"
+                                                            onclick="goBack()">Back</button> -->
                                                         <form action="../dbConn/adoccupant.php" method="POST">
+                                                            <input type="hidden" value="<?php echo $id?> ">
+                                                            <input type="hidden" name="create"
+                                                                value="<?php echo $createdby ?>">
                                                             <div class="formbold-mb-5 w-full  formbold-px-3">
                                                                 <label for="time" class="formbold-form-label">
                                                                 </label>
@@ -48,15 +56,26 @@ if (isset($_GET['id'])) {
                                                                     value="<?php echo $nicheno ?>" />
                                                             </div>
 
-                                                            <div class="formbold-mb-5">
-                                                                <label for="name"
-                                                                    class="formbold-form-label">Relationship to the
-                                                                    Deceased
-                                                                </label>
-                                                                <input type="text" name="relationship" id="name"
-                                                                    placeholder="e.g Daughter" required="required"
-                                                                    class="formbold-form-input" />
+                                                            <div class="formbold-mb-5 flex">
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="name" class="formbold-form-label">
+                                                                        Full Name
+                                                                    </label>
+                                                                    <input type="text" name="fullname" id="name"
+                                                                        required class="formbold-form-input" />
+                                                                </div>
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="name"
+                                                                        class="formbold-form-label">Relationship to the
+                                                                        Deceased
+                                                                    </label>
+                                                                    <input type="text" name="relationship" id="name"
+                                                                        placeholder="e.g Daughter" required="required"
+                                                                        class="formbold-form-input" />
+                                                                </div>
                                                             </div>
+
+
                                                             <div class="formbold-mb-5 flex">
                                                                 <div class="formbold-mb-5 w-full">
                                                                     <label for="" class="formbold-form-label">
@@ -74,11 +93,14 @@ if (isset($_GET['id'])) {
                                                                         Email Address
                                                                     </label>
                                                                     <input type="email" name="email" id=""
-                                                                        placeholder="" required
+                                                                        placeholder="" 
                                                                         class="formbold-form-input" />
                                                                 </div>
 
                                                             </div>
+
+                                                            <hr>
+                                                            <h6 class="mb-5">Deceased Information</h6>
                                                             <div class="formbold-mb-5 flex">
                                                                 <div class="formbold-mb-5 w-full  ">
                                                                     <label for="name" class="formbold-form-label"> Last
@@ -114,9 +136,15 @@ if (isset($_GET['id'])) {
                                                                     <label for="name" class="formbold-form-label">
                                                                         Suffix
                                                                     </label>
-                                                                    <input type="text" name="Suffix" id="name"
+                                                                    <select class="w-full" name="Suffix" id="">
+                                                                        <option value="" select disable>Select Suffix
+                                                                        </option>
+                                                                        <option value="Jr">Jr</option>
+                                                                        <option value="Sr">Sr</option>
+                                                                    </select>
+                                                                    <!-- <input type="text" name="Suffix" id="name"
                                                                         placeholder="Jr / Sr"
-                                                                        class="formbold-form-input" />
+                                                                        class="formbold-form-input" /> -->
                                                                 </div>
                                                             </div>
                                                             <div class="formbold-mb-5 flex">
@@ -146,7 +174,7 @@ if (isset($_GET['id'])) {
                                                                 </div>
 
 
-                                                               
+
 
                                                             </div>
 
@@ -202,6 +230,7 @@ function goBack() {
     window.history.back();
 }
 </script>
+
 
 <script type="text/javascript" src="assets/js/script.js "></script>
 
