@@ -9,6 +9,8 @@ try {
     $size = $_POST['size'];
     $des = $_POST['description'];
     $type = $_POST['type'];
+    $profid = $_POST['profid'];
+    $name = $_POST['name'];
 
     // Check if the LocID already exists
     $checkSql = "SELECT COUNT(*) AS count FROM tblNicheLocation WHERE LocID = ?";
@@ -40,7 +42,6 @@ try {
         echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
             var modal = document.createElement('div');
-            modal.innerHTML = 'Your Block is Successfully Recorded';
             modal.style.position = 'fixed';
             modal.style.top = '50%';
             modal.style.left = '50%';
@@ -50,21 +51,21 @@ try {
             modal.style.border = '1px solid #ccc';
             modal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
             modal.style.zIndex = '9999';
+            modal.innerHTML = 'Your Block is Successfully Recorded';
 
             document.body.appendChild(modal);
 
             setTimeout(function () {
                 modal.style.display = 'none';
-                window.location.href = '../admin/location.php';
-            }, 1000);
+                window.location.href = '../admin/masterprofile.php?';
+            }, 1000); 
         });
-        </script>";
+    </script>";
     } else {
         // Error handling for any other issues
         echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
             var modal = document.createElement('div');
-            modal.innerHTML = 'An error occurred while processing the form. Please try again later.';
             modal.style.position = 'fixed';
             modal.style.top = '50%';
             modal.style.left = '50%';
@@ -74,15 +75,16 @@ try {
             modal.style.border = '1px solid #ccc';
             modal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
             modal.style.zIndex = '9999';
+            modal.innerHTML = 'An error occurred while processing the form. Please try again later';
 
             document.body.appendChild(modal);
 
             setTimeout(function () {
                 modal.style.display = 'none';
-                window.location.href = '../admin/location.php';
-            }, 1000);
+                window.location.href = '../admin/location.php?id=" . $profid . "&name=" . $name . "';
+            }, 1000); 
         });
-        </script>";
+    </script>";
     }
 } catch (PDOException $e) {
     // Handle any other PDO exceptions here

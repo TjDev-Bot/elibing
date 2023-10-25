@@ -1,3 +1,4 @@
+Thomas Jon A. Barrientos
 <?php
 session_start();
 include('conn.php');
@@ -15,17 +16,20 @@ if ($result) {
     $role = $result['Restriction'];
 
     $_SESSION['id'] = $result['UserID'];
-    $_SESSION['name'] = $result['Name'];
+    $_SESSION['Createdby'] = $result['Createdby'];
     $_SESSION['restriction'] = $result['Restriction'];
 
-    if ($role == 'Client') {
+    if ($role == 'E-Libing Client') {
         header('location: ../client/index.php');
         exit();
-    } elseif ($role == 'Admin') {
+    } elseif ($role == 'E-Libing Admin') {
         header('location: ../admin/dashboard.php');
         exit();
-    } elseif ($role == 'staff') {
-        header('location: ../staff/index.php');
+    } elseif ($role == 'E-Libing Staff') {
+        header('location: ../staff/deceased.php');
+        exit();
+    } elseif ($role == 'E-Libing ACAMP Site') {
+        header('location: ../acamp/Intermentsched.php');
         exit();
     } else {
         die();

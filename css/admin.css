@@ -13,7 +13,7 @@
   left: 0;
   height: 100%;
   width: 260px;
-  background: #01579B;
+  background: #0074B7;
   z-index: 100;
   transition: all 0.5s ease;
 }
@@ -74,7 +74,7 @@
 }
 
 .sidebar .nav-links li:hover {
-  background: red;
+  background: #dc3545;
 }
 
 .sidebar .nav-links li .iocn-link {
@@ -127,7 +127,7 @@
 .sidebar .nav-links li .sub-menu {
   padding: 6px 6px 14px 80px;
   margin-top: -10px;
-  background: red;
+  background: #dc3545;
   display: none;
 }
 
@@ -198,7 +198,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #01579B;
+  background: #0074B7;
   padding: 12px 0;
   transition: all 0.5s ease;
 }
@@ -222,7 +222,7 @@
   object-fit: cover;
   border-radius: 16px;
   margin: 0 14px 0 12px;
-  background: red;
+  background: #dc3545;
   transition: all 0.5s ease;
 }
 
@@ -272,7 +272,7 @@
 
 .home-section .home-content .bx-menu,
 .home-section .home-content .text {
-  color: #01579B;
+  color: #0074B7;
   font-size: 35px;
 }
 
@@ -284,7 +284,7 @@
 .home-section .home-content .text {
   font-size: 26px;
   font-weight: 600;
-  color: #01579B;
+  color: #0074B7;
 }
 
 @media (max-width: 400px) {

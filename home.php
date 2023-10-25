@@ -31,9 +31,9 @@ require('component/navbar.php');
 <body>
 
     <header class="header-home">
-        <img class="bg" src="image/bg.jpg" alt="">
+        <img class="bg" src="image/e-Libing.png" alt="">
         <div class="overlay">
-            <h1 style="font-size:5vw;">E-Libing</h1>
+            <h1 style="font-size:5vw;">e-Libing</h1>
             <p style="font-size:2vw;"> We cater electronic burial services including appointments, bookings, cadaver
                 locations, and many more. </p>
         </div>

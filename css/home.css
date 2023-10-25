@@ -1,303 +1,303 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
   }
-  
-  @media screen and (max-width: 500px) {
-    .navbar a {
-      float: none;
-      display: block;
-    }
-  }
-  
-  .header-section {
-    background-image: white;
-    display: flex;
-    padding: 0px;
-  }
-  
-  .overlay h1 {
-    margin-top: 30%;
-    color: rgba(7, 6, 95);
-    font-size: 80px;
-    text-align: center;
-  }
-  
-  .overlay p {
-    color: rgb(7, 6, 95);
-    font-size: 40px;
-    text-align: center;
-    padding: 20px 20px 20px 20px;
-  
-  }
-  
-  .bg {
-    width: 100%;
-    background-repeat: no-repeat;
-    background-position: center top;
-    display: flex;
-  }
-  
-  header {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 40%;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    overflow: hidden;
-    animation: fadeInUp 1s ease-out;
-  }
-  
-  section h1 {
-    font-family: 'Poppins';
-    font-size: 4em;
-    transition: 0.5s;
-    text-align: center;
-    justify-content: center;
-  }
-  
-  section p {
-    font-size: 1.5rem;
-    letter-spacing: 2px;
-    font-family: 'Poppins', sans-serif;
-    justify-content: flex-end;
-    text-align: center;
-    padding: 0px 15px 0px 15px;
-  }
-  
-  .offer-section {
-    
-    background-color: rgb(1, 57, 94);
-    color: #fff;
-    padding: 30px;
-  }
-  
-  .offer-section p {
-    font-size: 1.5rem;
-    letter-spacing: 5px;
-    font-family: 'Poppins', sans-serif;
-    justify-content: flex-end;
-    color: white;
-    text-align: center;
-    margin: 15px;
-  }
-  
-  .card h2 {
-    font-family: 'Poppins', sans-serif;
-    color: black;
-    margin-top: 5px;
-    margin-left: 125px;
-    text-align: center;
-  }
-  
-  a:link,
-  a:visited {
-    text-decoration: none;
-  }
-  
-  
-  
-  
-  .card:hover {
-    background-color: #E0E0E0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
-  }
-  
-  .card {
-    animation: fadeInUp 2s linear both;
-    border-radius: 15px;
-    background-color: #ffffff;
-    box-shadow: 2px 2px 5px #000000;
-  }
-  
-  .image-wrapper {
-    border-radius: 15px;
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .teaser img {
-    border-radius: 30px;
-    display: flex;
-    margin-top: 25px;
-    max-width: 100%
-  }
-  
-  .card-content {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-.not{
-  animation: fadeInUp 3s linear both;
+}
+
+.header-section {
+  background-image: white;
+  display: flex;
+  padding: 0px;
+}
+
+.overlay h1 {
+  margin-top: 30%;
+  color: rgba(7, 6, 95);
+  font-size: 80px;
+  text-align: center;
+}
+
+.overlay p {
+  color: rgb(7, 6, 95);
+  font-size: 40px;
+  text-align: center;
+  padding: 20px 20px 20px 20px;
 
 }
-  .teaser .teaser-image {
-    border-radius: 30px;
-    display: block;
-    margin-bottom: 10px;
 
-  }
+.bg {
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center top;
+  display: flex;
+}
+
+header {
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 40%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  animation: fadeInUp 1s ease-out;
+}
+
+section h1 {
+  font-family: 'Poppins';
+  font-size: 4em;
+  transition: 0.5s;
+  text-align: center;
+  justify-content: center;
+}
+
+section p {
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  font-family: 'Poppins', sans-serif;
+  justify-content: flex-end;
+  text-align: center;
+  padding: 0px 15px 0px 15px;
+}
+
+.offer-section {
   
-  .teaser h1 {
-    font-family: 'Poppins';
-    font-size: 4em;
-    transition: 0.5s;
-    text-align: center;
+  background-color: rgb(1, 57, 94);
+  color: #fff;
+  padding: 30px;
+}
+
+.offer-section p {
+  font-size: 1.5rem;
+  letter-spacing: 5px;
+  font-family: 'Poppins', sans-serif;
+  justify-content: flex-end;
+  color: white;
+  text-align: center;
+  margin: 15px;
+}
+
+.card h2 {
+  font-family: 'Poppins', sans-serif;
+  color: black;
+  margin-top: 5px;
+  margin-left: 125px;
+  text-align: center;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+}
+
+
+
+
+.card:hover {
+  background-color: #E0E0E0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.card {
+  animation: fadeInUp 2s linear both;
+  border-radius: 15px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 5px #000000;
+}
+
+.image-wrapper {
+  border-radius: 15px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.teaser img {
+  border-radius: 30px;
+  display: flex;
+  margin-top: 25px;
+  max-width: 100%
+}
+
+.card-content {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.not{
+animation: fadeInUp 3s linear both;
+
+}
+.teaser .teaser-image {
+  border-radius: 30px;
+  display: block;
+  margin-bottom: 10px;
+
+}
+
+.teaser h1 {
+  font-family: 'Poppins';
+  font-size: 4em;
+  transition: 0.5s;
+  text-align: center;
+  justify-content: center;
+}
+
+.myButton {
+  box-shadow: 0px 0px 0px 2px #59678f;
+  background-color: #0074B7;
+  border-radius: 23px;
+  border: 2px solid #4e6096;
+  display: inline-block;
+  cursor: pointer;
+  color: #fff5ff;
+  font-family: Arial;
+  font-size: 19px;
+  font-weight: bold;
+  padding: 15px 49px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #283966;
+  margin: 30px;
+}
+
+.myButton:hover {
+  background-color: #022857;
+}
+
+.myButton:active {
+  position: relative;
+  top: 1px;
+}
+
+.container {
+  height: 200px;
+  text-align: center;
+}
+
+.master-profiles {
+  background-color: rgb(1, 57, 94);
+  color: #fff;
+
+}
+
+.master-profiles p {
+  color: #fff;
+  padding-left: 30px;
+  padding-right: 30px;
+  animation: fadeInUp 5s linear both;
+
+}
+
+.cadavers {
+  background-color: rgb(255, 255, 255);
+  color: black;
+}
+
+.cadavers p {
+  color: black;
+  padding: 0px 5px 0px 5px;
+}
+
+.image-wrapper .locator {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  height: 200px;
+}
+
+.image-wrapper .appointment {
+  display: block;
+  width: 100%;
+  object-fit: cover; 
+  height: 200px;
+}
+
+.image-wrapper .burial {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  height: 200px;
+}
+
+#card-locator {
+  width: 200px;
+}
+
+@media screen and (max-width: 1200px) {
+  .card-panel {
+    flex-wrap: wrap;
     justify-content: center;
   }
-  
-  .myButton {
-    box-shadow: 0px 0px 0px 2px #59678f;
-    background-color: #1f4a8f;
-    border-radius: 23px;
-    border: 2px solid #4e6096;
-    display: inline-block;
-    cursor: pointer;
-    color: #fff5ff;
-    font-family: Arial;
-    font-size: 19px;
-    font-weight: bold;
-    padding: 15px 49px;
-    text-decoration: none;
-    text-shadow: 0px 1px 0px #283966;
-    margin: 30px;
-  }
-  
-  .myButton:hover {
-    background-color: #022857;
-  }
-  
-  .myButton:active {
-    position: relative;
-    top: 1px;
-  }
-  
-  .container {
-    height: 200px;
-    text-align: center;
-  }
-  
-  .master-profiles {
-    background-color: rgb(1, 57, 94);
-    color: #fff;
 
+  .card {
+    flex-basis: 40%;
   }
-  
-  .master-profiles p {
-    color: #fff;
-    padding-left: 30px;
-    padding-right: 30px;
-    animation: fadeInUp 5s linear both;
 
+  .overlay h1 {
+    font-size: 70px;
+    margin-top: 60%;
   }
-  
-  .cadavers {
-    background-color: rgb(255, 255, 255);
-    color: black;
+
+}
+
+@media screen and (max-width: 768px) {
+  .card-panel {
+    flex-wrap: wrap;
+    justify-content: space-evenly;
   }
-  
-  .cadavers p {
-    color: black;
-    padding: 0px 5px 0px 5px;
+
+  .card {
+    flex-basis: 70%;
   }
-  
-  .image-wrapper .locator {
-    display: block;
-    width: 100%;
-    object-fit: cover;
-    height: 200px;
+
+  .overlay h1 {
+    font-size: 50px;
   }
-  
-  .image-wrapper .appointment {
-    display: block;
-    width: 100%;
-    object-fit: cover; 
-    height: 200px;
+
+}
+
+@media screen and (max-width: 480px) {
+  .card-panel {
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  
-  .image-wrapper .burial {
-    display: block;
-    width: 100%;
-    object-fit: cover;
-    height: 200px;
+
+  .card {
+    flex-basis: 90%;
   }
-  
-  #card-locator {
-    width: 200px;
+
+  .overlay h1 {
+    font-size: 30px;
   }
-  
-  @media screen and (max-width: 1200px) {
-    .card-panel {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  
-    .card {
-      flex-basis: 40%;
-    }
-  
-    .overlay h1 {
-      font-size: 70px;
-      margin-top: 60%;
-    }
-  
+
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  @media screen and (max-width: 768px) {
-    .card-panel {
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-    }
-  
-    .card {
-      flex-basis: 70%;
-    }
-  
-    .overlay h1 {
-      font-size: 50px;
-    }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  @media screen and (max-width: 480px) {
-    .card-panel {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  
-    .card {
-      flex-basis: 90%;
-    }
-  
-    .overlay h1 {
-      font-size: 30px;
-    }
-  
-  }
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .header-home {
-    position: relative;
-    overflow: hidden;
-  }
+}
+
+.header-home {
+  position: relative;
+  overflow: hidden;
+}
 

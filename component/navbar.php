@@ -16,7 +16,7 @@
                 <li class="navbar-item"><a class="navbar-link" href="home.php">Home</a></li>
                 <li class="navbar-item"><a class="navbar-link" href="about.php">About</a></li>
                 <li class="navbar-item"><a class="navbar-link" href="contact.php">Contact</a></li>
-                <li class="navbar-item"><a class="navbar-link btn" href="user-log.php">Login</a></li>
+                <li class="navbar-item"><a class="navbar-link btn" href="user-log.php" style="color:white">Login</a></li>
             </ul>
         </div>
     </nav>

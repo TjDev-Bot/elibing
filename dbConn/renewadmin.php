@@ -1,39 +1,27 @@
 <?php
 include('conn.php');
 
-$relationship = $_POST['relationship'];
-$deceased = $_POST['deceased'];
-$deathdate = $_POST['deathdate'];
-$interment = $_POST['interment'];
-//$transacdate = $_POST['transacdate'];
-$month = $_POST['month'];
+$profid = $_POST['profid'];
+$occupancy = $_POST['occupancy'];
+try {
+    // Start a transaction
+    $conn->beginTransaction();
 
-if (
-    !empty($relationship) || !empty($deceased) || !empty($deathdate) || !empty($interment)
-    || !empty($month)
-) {
-    $sql = "INSERT INTO renewal (relationship, deceased, deathdate, interment, month) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param(
-        "sssss",
-        $relationship,
-        $deceased,
-        $deathdate,
-        $interment,
-        //$transacdate,
-        $month,
-    );
+    // Prepare and execute the first update statement
+    $update1 = "UPDATE tblBuriedRecord SET OccupancyDate = ? WHERE Profid = ?";
+    $stmt1 = $conn->prepare($update1);
+    $stmt1->execute([$occupancy, $profid]);
+    // // Prepare and execute the second update statement
+    // $update2 = "UPDATE tblIntermentReservation SET Nid = ? WHERE ProfID = ?";
+    // $stmt2 = $conn->prepare($update2);
+    // $stmt2->execute([$nicheno, $profid]);
 
-    if ($stmt->execute()) {
-        echo "<script>if(confirm('Your Appointment is Successfully Recorded')){document.location.href='../admin/gatepass.php'};</script>";
-    } else {
-        echo '<script type="text/javascript"> alert("An error occurred while processing the form. Please try again later."); window.location.href = "#"; </script>';
-        echo "Error: " . $stmt->error;
-    }
+    $conn->commit();
 
-    $stmt->close();
-} else {
-    echo "All fields are required";
-    die();
+    echo "success";
+} catch (PDOException $e) {
+    // Rollback the transaction in case of an error
+    $conn->rollback();
+    echo "Error: " . $e->getMessage();
 }
 ?>

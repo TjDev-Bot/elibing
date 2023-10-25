@@ -59,24 +59,51 @@ include "../dbConn/conn.php";
                                                                     <?php 
                                                                         if(isset($_SESSION['id'])){
                                                                             $user_id = $_SESSION['id'];
-                                                                            $select = "SELECT * FROM tblDeathRecord WHERE ProfileID = '$user_id'";
-                                                                            $query  = $conn->query($select);
+                                                                            $select = "SELECT * FROM tblNiche
+                                                                            INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
+                                                                            INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
+                                                                            INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
+                                                                            INNER JOIN tblContactInfo ON tblDeathRecord.ProfileID = tblContactInfo.ProfID";
+                                                                            $query = $conn->query($select);
                                                                             while($data = $query->fetch(PDO::FETCH_ASSOC)){
                                                                                 $date = $data['IntermentDateTime'];
-                                                                             
+                                                                                $nid = $data['Nid'];
+                                                                                $status = $data['Status'];
+                                                                                $intermentplace = $data['IntermentPlace'];
+                                                                                $id = $data['ProfID'];
                                                                             }
+                                                                            if ($status == 1) {
+                                                                                echo "
+                                                                                <td>
+                                                                                    <div class=\"d-inline-block align-middle\">
+                                                                                        The schedule you selected
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td class=\"text-right\">" . date('F d, Y g:i A', strtotime($date)) . "</td>
+                                                                                <td>
+                                                                                    <div class=\"btn btn-info\" onclick=\"add('$nid', '$id')\">
+                                                                                        Pay
+                                                                                    </div>
+                                                                                </td>";
+                                                                            } else {
+                                                                                echo "
+                                                                                <td>
+                                                                                    <div class=\"d-inline-block align-middle\">
+                                                                                        Interment Schedule
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td class=\"text-right\">" . date('F d, Y g:i A', strtotime($date)) . "</td>
+                                                                                <td class=\"text-right\">
+                                                                                    At $intermentplace
+                                                                                </td>";
+                                                                            }                                                                            
+                                                                            
                                                                         }
                                                                         
                                                                     ?>
                                                                     <tr>
-                                                                        <td>
-                                                                            <div class="d-inline-block align-middle">
-                                                                                The schedule you selected
-                                                                            </div>
-                                                                        </td>
-                                                                        <td class="text-right">
-                                                                            <?php echo date('F d, Y g:i A', strtotime($date))?>
-                                                                        </td>
+
+
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -121,11 +148,18 @@ include "../dbConn/conn.php";
             </div>
         </div>
     </div>
-<style>
-    .text-right{
+    <style>
+    .text-right {
         color: green;
     }
-</style>
+    </style>
+
+    <script>
+    function add(nid, id) {
+        var url = 'orderpayment.php?nid=' + nid + '&profid=' + id;
+        window.location.href = url;
+    }
+    </script>
 
     <!-- Required Jquery -->
     <script type="text/javascript" src="assets/js/jquery/jquery.min.js "></script>

@@ -13,7 +13,7 @@ $intermentplace = $_POST['intermentplace'];
 $intermentdatetime = $_POST['intermentdate'];
 
 try {
-    $update = "UPDATE tblContactInfo SET ContactNo = ?, Email = ? WHERE ProfID = ?";
+    $update = "UPDATE tblContactInfo SET ContactNo = ?, Email = ?, ModifiedWhen = GETDATE() WHERE ProfID = ?";
     $stmt = $conn->prepare($update);
     $stmt->execute([$contact, $email, $profid]);
 
@@ -27,5 +27,5 @@ try {
         echo "Error: Unable to update information";
     }
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    echo " Error: " . $e->getMessage();
 }

@@ -13,8 +13,7 @@ require('component/navbar.php');
         <div class="content">
             <br>
             <!-- <img src="image/lgu_logo.png" alt="logo" class="logo" id="logo"> -->
-            <h2>Welcome</h2>
-            <h3>to e-Libing</h3>
+  
         </div>
         <div class="container-login">
             <form action="dbConn/valLogin.php" method="GET">

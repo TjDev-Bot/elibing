@@ -7,6 +7,10 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include('../dbConn/conn.php');
 require_once('../component/locfunction.php');
+if(isset($_GET['profid'])){
+    $profid = $_GET['profid'];
+}
+
 ?>
 
 <body>
@@ -24,13 +28,20 @@ require_once('../component/locfunction.php');
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
 
-                            <form action="../dbConn/block.php" method="POST">
+                            <!-- <form action="../dbConn/block.php" method="POST">
+                                <div class="">
+                                    <select name="type" id="type" class="">
+                                        <option value="Chamber">Chamber</option>
+                                        <option value="Apartment">Apartment</option>
+                                    </select>
+                                </div>
                                 <input type="text" name="nlname" placeholder="Input NL Name">
                                 <input type="text" name="size" placeholder="Input Size">
                                 <input type="text" name="description" placeholder="Input Description">
-                                <input type="text" name="type" placeholder="Input Type">
+
+                              
                                 <button class="btn btn-primary mb-4" type="submit">Add Block</button>
-                            </form>
+                            </form> -->
 
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll">
@@ -48,6 +59,7 @@ require_once('../component/locfunction.php');
                                         <tbody>
 
                                             <?php
+                                               
                                                 $select = "SELECT * FROM tblNicheLocation";
                                                 $query = $conn->query($select);
 
@@ -58,20 +70,19 @@ require_once('../component/locfunction.php');
                                                     $description = $data['Description'];
                                                     $type = $data['Type'];
                                             ?>
-                                                <tr>
-                                                    <td><?php echo $id ?></td>
-                                                    <td><?php echo $nlname ?></td>
-                                                    <td><?php echo $size ?></td>
-                                                    <td><?php echo $description?></td>
-                                                    <td><?php echo $type ?></td>
-
-                                                    <td>
-                                                        <button class="btn btn-primary" onclick="addNiche('<?php echo $id; ?>')">
-                                                            <i class='bx bx-edit-alt'></i>
-                                                        </button>
-                                                        <!-- <button class="btn btn-danger" onclick="openDelete(<?php echo $id; ?>)"><i class="fa-solid fa-trash"></i></button> -->
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <td><?php echo $id ?></td>
+                                                <td><?php echo $nlname ?></td>
+                                                <td><?php echo $size ?></td>
+                                                <td><?php echo $description?></td>
+                                                <td><?php echo $type ?></td>
+                                                <td>
+                                                    <button class="btn btn-primary"
+                                                        onclick="addNiche('<?php echo $profid; ?>', '<?php echo $id; ?>')">
+                                                        <i class='bx bx-edit-alt'></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
                                             <?php } ?>
                                         </tbody>
                                     </table>
@@ -80,25 +91,18 @@ require_once('../component/locfunction.php');
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </main>
         </div>
     </div>
 
     <script>
-        function addNiche(id) {
-            console.log("addNiche called with id:", id);
+    function addNiche(profid, id) {
+        console.log("addNiche called with id:", id);
+        var url = 'niche.php?profid=' + profid + '&locid=' + id;
+        window.location.href = url;
+    }
 
-            var url = 'niche.php?LocId=' + id;
-
-            window.location.href = url;
-
-        }
-
-        function openDelete($id) {
-            var url = '../dbConn/delete.php?id=' + $id;
-            window.location.href = url;
-        }
     </script>
 
 

@@ -9,8 +9,9 @@ require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
 
-if (isset($_GET['LocId'])) {
-    $block_id = $_GET['LocId'];
+if (isset($_GET['locid']) && isset($_GET['profid'])) {
+    $block_id = $_GET['locid'];
+    $profid = $_GET['profid'];
     $select = "SELECT * FROM tblNicheLocation WHERE LocID = $block_id";
     // $query = mysqli_query($conn, $select);
 
@@ -19,7 +20,6 @@ if (isset($_GET['LocId'])) {
     // }
 }
 ?>
-
 
 <body>
     <div id="layoutSidenav">
@@ -33,24 +33,20 @@ if (isset($_GET['LocId'])) {
                         </li>
 
                     </ol>
+                    <br>
 
-                    <h3>
-                        <?php echo "Block" . ' ' . $block_id; ?>
-                    </h3>
+                    <button class="btn btn-danger mb-2" type="button" name="submit" onclick="goBack('<?php echo $profid ?>')">Back</button>
 
-                    <button class="btn btn-danger mb-2" type="button" name="submit" onclick="goBack()">Back</button>
-
-                    <form action="../dbConn/adlocation.php" method="POST" class="mb-4" style="float: right">
+                    <!-- <form action="../dbConn/adlocation.php" method="POST" class="mb-4" style="float: right">
                         <label for="">Generate Niche No</label>
                         <input type="text" name="nicheno" required>
                         <label for="">Size</label>
                         <input type="text" name="size" required>
                         <label for="">Level</label>
                         <input type="number" name="level" required>
-                        <input type="hidden" name="locid" value="<?php echo $block_id ?>">
-                        <input type="hidden" value="0" name="stat">
-                        <button class="btn btn-primary" type="submit" name="submit">Submit</button>
-                    </form>
+                       
+                        <button class="btn btn-primary " type="submit" name="submit">Submit</button>
+                    </form> -->
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
@@ -70,7 +66,7 @@ if (isset($_GET['LocId'])) {
                                         <tbody>
 
                                             <?php
-                                            $selectloc = "SELECT * FROM tblNiche WHERE LocID = '$block_id' ORDER BY Level ASC";
+                                            $selectloc = "SELECT * FROM tblNiche WHERE LocID = '$block_id' ORDER BY Nno ASC";
                                             $queryloc = $conn->query($selectloc);
                                             while ($dataloc = $queryloc->fetch(PDO::FETCH_ASSOC)) {
                                                 // $location_id = $dataloc['location_id'];
@@ -101,7 +97,7 @@ if (isset($_GET['LocId'])) {
 
                                                 <td>
                                                     <button class="btn btn-primary "
-                                                        onclick="addOcuppant('<?php echo $block_id; ?>', '<?php echo $nicheid; ?>')">
+                                                        onclick="addOcuppant('<?php echo $block_id; ?>', '<?php echo $nicheid; ?>' , '<?php echo $profid; ?>')">
                                                         <i class='bx bx-edit-alt'></i>
                                                     </button>
                                                     <!-- <button class="btn btn-danger"
@@ -127,18 +123,14 @@ if (isset($_GET['LocId'])) {
     </div>
 
     <script>
-    function goBack() {
-        var url = 'location.php'
+    function goBack(profid) {
+        var url = 'location.php?profid=' + profid;
         window.location.href = url;
-
     }
 
-    function addOcuppant(block_id, nicheid) {
-
-        var url = 'occupant.php?LocID=' + block_id + '&Nid=' + nicheid;
-
+    function addOcuppant(block_id, nicheid, profid) {
+        var url = 'occupant.php?locid=' + block_id + '&nid=' + nicheid + '&profid=' + profid;
         window.location.href = url;
-
     }
 
     function openDelete(location_id, block_id) {

@@ -47,6 +47,7 @@
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav" id="sidenavAccordion">
+            <a class="navbar-brand ps-3" href="index.php"><img src="../image/gensanlogo.png" alt="logo" class="topnavlogo"></a>
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <h1 id="office">Admin</h1>
@@ -59,14 +60,19 @@
                         </a>
 
                         <a class="nav-link " href="deceased.php">
-                            <div class="sb-nav-link-icon"><i class="bx bx-calendar"></i></div>
-                            MasterProfile
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-file-pen"></i></div>
+                            Death Record
+                        </a>
+
+                        <a class="nav-link " href="masterprofile.php">
+                            <div class="sb-nav-link-icon"><i class="bx bxs-user-detail"></i></div>
+                            Master Profile
                         </a>
                         <a class="nav-link " href="IntermentSched.php">
-                            <div class="sb-nav-link-icon"><i class="fa-regular fa-bell-exclamation fa-lg"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i></div>
                             Interment Schedule
                         </a>
-<!-- 
+                        <!-- 
                         <a class="nav-link " href="DueCadavers.php">
                             <div class="sb-nav-link-icon"><i class="bx bx-error"></i></div>
                             Due Cadavers
@@ -76,7 +82,7 @@
                             Renewed
                         </a> -->
                         <a class="nav-link " href="reserve.php">
-                            <div class="sb-nav-link-icon"><i class="bx bx-error"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-check" style="color: #ffffff;"></i></div>
                             Reserve
                         </a>
                         <!-- <a class="nav-link collapsed" href="appointmen.php" data-bs-toggle="collapse"
@@ -95,7 +101,7 @@
                             </nav>
                         </div> -->
 
-                        <a class="nav-link collapsed" href="location.php" data-bs-toggle="collapse"
+                        <!-- <a class="nav-link collapsed" href="location.php" data-bs-toggle="collapse"
                             data-bs-target="#Layouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="bx bx-user"></i></div>
                             Location
@@ -105,13 +111,20 @@
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="location.php">Block</a>
-                                <!-- <a class="nav-link" href="chamber.php">Chamber</a> -->
 
                             </nav>
-                        </div>
+                        </div> -->
+                        <a class="nav-link " href="form.php">
+                            <div class="sb-nav-link-icon"><i class="bx bx-table"></i></div>
+                            Niche
+                        </a>
+                        <a class="nav-link " href="user.php">
+                            <div class="sb-nav-link-icon"><i class="bx bx-user"></i></div>
+                           Users
+                        </a>
 
                         <a class="nav-link " href="activitylog.php">
-                            <div class="sb-nav-link-icon"><i class="bx bx-map"></i></div>
+                            <div class="sb-nav-link-icon"><i class="bx bx-alarm-exclamation"></i></div>
                             Activity Log
                         </a>
                     </div>

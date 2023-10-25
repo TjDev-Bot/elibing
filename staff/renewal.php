@@ -1,120 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <?php
-   require('assets/component/header.php');
-   require('assets/component/topnavbar.php');
-   require('assets/component/sidebar.php');
+require('assets/component/header.php');
+require('assets/component/topnavbar.php');
+require('assets/component/sidebars.php');
+include "../dbConn/conn.php";
 ?>
-
-
+<link rel="stylesheet" href="css/walkin.css">
 
 <body>
     <div id="layoutSidenav">
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <!-- <h1 class="mt-4">Renewal</h1> -->
+                    <!-- <h1 class="mt-4">Walk-in Appointment</h1> -->
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active"><h1>Renewal</h1></li>
+                        <li class="breadcrumb-item active">
+                            <h1>Add Walk-in Renewal</h1>
+                        </li>
                     </ol>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <div class="container"> <input type="search" id="search-input" placeholder="Search here...">
+                    <div class="pcoded-inner-content">
+                        <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-body start -->
+                                <div class="page-body">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div class="container-interment">
+                                                <div class="formbold-main">
+                                                    <div class="">
+                                                        <?php
+                                                    
+                                                            if(isset($_GET['id'])){
+                                                                $id = $_GET['id'];
+                                                            }
+                                                            $select = "SELECT * FROM tblNiche
+                                                            INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
+                                                            INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
+                                                            INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
+                                                            INNER JOIN tblContactInfo ON tblDeathRecord.ProfileID = tblContactInfo.ProfID
+                                                            INNER JOIN tblBuriedRecord ON tblNiche.Nid = tblBuriedRecord.Nid WHERE tblBuriedRecord.OccupancyDate IS NOT NULL";
+                                                            $query = $conn->query($select);
 
-                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                <thead
-                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">
-                                            Niche No.
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Date of Birth
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Transaction Date
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Name of Deceased
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Month Paid
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Action
-                                        </th>
+                                                            while($data = $query->fetch(PDO::FETCH_ASSOC)){
+                                                                $relationship = $data['Relationship'];
+                                                                $name = $data['Fname'].' '.$data['MName'].' '.$data['Lname'];
+                                                                $dateofdeath = $data['DateofDeath'];
+                                                                $occupancydate = $data['OccupancyDate'];
+                                                            }
+                                                        ?>
+                                                        <form action="../dbConn/renewadmin.php" method="POST">
+                                                            <input type="hidden" name="profid" value="<?php echo $id?>">
+                                                            <div class="formbold-mb-5 flex">
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="name"
+                                                                        class="formbold-form-label">Relationship
+                                                                        to the
+                                                                        Deceased
+                                                                    </label>
+                                                                    <input type="text" name="relationship" id="name"
+                                                                        value="<?php echo ucfirst($relationship) ?>"
+                                                                        readonly class="formbold-form-input" />
+                                                                </div>
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="name" class="formbold-form-label"> Name
+                                                                        of the Deceased
+                                                                    </label>
+                                                                    <input type="text" name="deceased" id="name"
+                                                                        value="<?php echo ucwords($name)?>" readonly
+                                                                        class="formbold-form-input" />
+                                                                </div>
 
-                                    </tr>
-                                </thead>
-                                <tbody id="table-body">
-                                    <tr
-                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            1
-                                        </th>
+                                                            </div>
+                                                            <div class="formbold-mb-5 flex">
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="date" class="formbold-form-label">
+                                                                        Date of Death </label>
+                                                                    <input type="text" name="deathdate" id="ddate"
+                                                                        value="<?php echo $dateofdeath ?>" readonly
+                                                                        class="formbold-form-input" />
+                                                                </div>
 
-                                        <td class="px-6 py-4">
-                                            07/13/2002
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            08/02/2023
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            Ana Laurel
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            3 months
-                                        </td>
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="date" class="formbold-form-label">
+                                                                        Occupancy Date</label>
+                                                                    <input type="text" name="interment" id="ddate"
+                                                                        value="<?php echo $occupancydate ?>" readonly
+                                                                        class="formbold-form-input" />
+                                                                </div>
 
-                                        <td class="px-6 py-4">
-                                            <!-- <a href="vw-deceased.php" class="font-medium text-blue-600 dark:text-blue-500 "><i
-                                        class="fa-solid fa-eye"></i></a> -->
-                                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 "><i
-                                                    class="fa-solid fa-trash"></i></a>
-                                        </td>
-
-                                    </tr>
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="date" class="formbold-form-label">
+                                                                        Renew Occupancy</label>
+                                                                    <input type="date" name="occupancy" id="ddate"
+                                                                        class="formbold-form-input" />
+                                                                </div>
+                                                            </div>
+                                                            <hr>
 
 
-                                </tbody>
-                            </table>
+                                                            <div>
+                                                                <button class="btn btn-success submit-button mb-3"
+                                                                    type="button" id="updateButton">
+                                                                    <span class="update-label">Renew</span>
+                                                                    <div class="loader"></div>
+                                                                </button>
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+                                                    <div style="display:none;" id="response"></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+
             </main>
         </div>
     </div>
 
-    <script>
-    // JavaScript code for searching the table, same as before
-    function searchTable() {
-        const input = document.getElementById("search-input").value.toLowerCase();
-        const tableRows = document.querySelectorAll("#table-body tr");
+    <style>
+    .add-appointment {
+        box-shadow: 0px 10px 14px -7px #276873;
+        background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
+        background-color: #4169e1;
+        border-radius: 8px;
+        display: inline-block;
+        cursor: pointer;
+        color: #ffffff;
+        font-family: Courier New;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 13px 32px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #3d768a;
+    }
 
-        for (const row of tableRows) {
-            const name = row.querySelector("td:nth-child(2)").innerText.toLowerCase();
-            const dateOfDeath = row.querySelector("td:nth-child(3)").innerText.toLowerCase();
-            const intermentDate = row.querySelector("td:nth-child(4)").innerText.toLowerCase();
+    .add-appointment:hover {
+        background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
+        background-color: #4169e1;
+    }
 
-            if (name.includes(input) || dateOfDeath.includes(input) || intermentDate.includes(input)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
+    .add-appointment:active {
+        position: relative;
+        top: 1px;
+    }
+
+    .loader {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 2s linear infinite;
+        display: none;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
         }
     }
 
-    document.getElementById("search-input").addEventListener("input", searchTable);
+    .update-label {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .add-appointment {
+        box-shadow: 0px 10px 14px -7px #276873;
+        background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
+        background-color: #4169e1;
+        border-radius: 8px;
+        display: inline-block;
+        cursor: pointer;
+        color: #ffffff;
+        font-family: Courier New;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 13px 32px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #3d768a;
+    }
+
+    .add-appointment:hover {
+        background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
+        background-color: #4169e1;
+    }
+
+    .add-appointment:active {
+        position: relative;
+        top: 1px;
+    }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $(".submit-button").click(function() {
+            var form = $(this).closest('form');
+            var formData = form.serialize();
+            var updateButton = $("#updateButton");
+            var loader = updateButton.find('.loader');
+
+            updateButton.prop("disabled", true);
+            updateButton.find(".update-label").hide();
+            loader.show();
+
+            $.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: formData,
+                success: function(response) {
+                    var trimmedResponse = $.trim(response);
+
+                    updateButton.prop("disabled", false);
+                    loader.hide();
+                    updateButton.find(".update-label").show();
+
+                    if (trimmedResponse === "success") {
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Info Successfully Updated',
+                            icon: 'success'
+                        }).then(function() {
+                            // Refresh the page
+                            window.location = "deceased.php";
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response,
+                            icon: 'error'
+                        });
+                    }
+                    $("#response").html(response);
+                }
+            });
+        });
+    });
     </script>
-
-
-
     <?php
-        require('assets/component/script.php');
-    ?>
-
-
+require('assets/component/script.php');
+?>
 </body>
 
 </html>

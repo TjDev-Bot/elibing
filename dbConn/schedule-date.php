@@ -2,9 +2,8 @@
 include "conn.php";
 session_start();
 
-if (isset($_GET['date']) && isset($_GET['name']) && isset($_GET['id'])) {
+if (isset($_GET['date']) && isset($_GET['id'])) {
     $date = $_GET['date'];
-    $name = $_GET['name'];
     $profileId = $_GET['id'];
 }
 
@@ -41,7 +40,7 @@ if (isset($_POST['submit'])) {
         
                     setTimeout(function () {
                         modal.style.display = 'none';
-                        window.location.href = '../admin/orderpayment.php?id=" .$profileId . "&name=" . $name . "';
+                        window.location.href = '../admin/location.php?profid=" .$profileId ."';
                     }, 1000); 
                 });
               </script>";

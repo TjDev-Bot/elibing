@@ -85,7 +85,6 @@ if(isset($_GET['id'])){
                                                                     </label>
                                                                     <input type="tel" name="contact"
                                                                         value="<?php echo $contact ?>"
-                                                                        placeholder="Please enter a valid Philippine phone number with 63 and 10 digits."
                                                                         class="formbold-form-input"
                                                                         pattern="^\63\d{10}$"
                                                                         title="Please enter a valid Philippine phone number with 63 and 10 digits." />
@@ -147,7 +146,7 @@ if(isset($_GET['id'])){
                                                                     value="<?php echo $intermentplace ?>"
                                                                     class="formbold-form-input" />
                                                             </div>
-                                                            <div class="formbold w-full  formbold-px-3">
+                                                            <div class="formbold w-full  formbold-px-3" style="display:none;">
                                                                 <label for="name" class="formbold-form-label">
                                                                     Interment Date and Time
                                                                 </label>
