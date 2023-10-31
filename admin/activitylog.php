@@ -6,12 +6,10 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include('../dbConn/conn.php');
 
-$select = "SELECT * FROM tblNiche
-INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
-INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
-INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
-INNER JOIN tblContactInfo ON tblDeathRecord.ProfileID = tblContactInfo.ProfID
-INNER JOIN tblBuriedRecord ON tblNiche.Nid = tblBuriedRecord.Nid WHERE tblBuriedRecord.OccupancyDate IS NOT NULL";
+
+
+
+$select = "SELECT * FROM tblUsersLogin INNER JOIN TBL_Audit_Trail ON tblUsersLogin.UserID = TBL_Audit_Trail.User_ID ORDER BY TBL_Audit_Trail.Audit_ID  DESC";
 $query = $conn->query($select);
 
 
@@ -31,62 +29,55 @@ $query = $conn->query($select);
                             <h1>Activity Log</h1>
                         </li>
                     </ol>
-
+                    <input type="search" id="searchInput" placeholder="Search here...">
                     <div class="activity-log-container">
-                        <input type="search" id="searchInput" placeholder="Search here...">
-
                         <div class="activity-log-container-scroll">
                             <table class="table-no-border" id="e-libingTable">
                                 <thead>
                                     <tr>
-                                        <th>Name of User</th>
-                                        <th>Name of Deceased</th>
-                                        <th>Name of Requestor</th>
-                                        <th>Created When</th>
-                                        <th>Modified When</th>
+                                        <th>User</th>
                                         <th>Action</th>
+                                        <th>Date & Time</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
+                                <?php
                                    while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
-                                    $full = $data['Createdby'];
-                                    $locID = $data['LocID'];
-                                    $name = $data['Fname'].' '.$data['MName'].' '.$data['Lname'];
-                                    $requestor = $data['Requestor'];
-                                    $nicheno = $data['Nid'];
-                                    $level = $data['Level'];
-                                    $type = $data['Type'];
-                                    $contact = $data['ContactNo'];
-                                    $email = $data['Email'];
-                                    $occ = $data['OccupancyDate'];
-                                    $createdwhen = $data['CreatedWhen'];
-                                    $modifiedwhen = $data['ModifiedWhen'];
+                                        // $full = $data['Createdby'];
+                                        // $locID = $data['LocID'];
+                                        // $name = $data['Fname'].' '.$data['MName'].' '.$data['Lname'];
+                                        // $requestor = $data['Requestor'];
+                                        // $nicheno = $data['Nid'];
+                                        // $level = $data['Level'];
+                                        // $type = $data['Type'];
+                                        // $contact = $data['ContactNo'];
+                                        // $email = $data['Email'];
+                                        // $occ = $data['OccupancyDate'];
+                                        // $createdwhen = $data['CreatedWhen'];
+                                        // $modifiedwhen = $data['ModifiedWhen'];
+                                        $full = $data['Createdby'];
+                                        $action = $data['Action'];
+                                        $datetime = $data['Date'].' '.$data['Timex'];
+                                        $restriction = $data['Restriction'];
 
-                                    ?>
-                                    <tr>
-                                      
-                                        <td>
-                                            <?php echo $full ?>
-                                        </td>
-                                      
-                                        <td>
-                                            <?php echo $name ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $requestor ?>
-                                        </td>
-                                      
-                                        <td>
-                                            <?php echo date('F j, Y g:i A', strtotime($createdwhen)); ?>
-                                        </td>
-                                        <td>
-                                            <?php echo date('F j, Y g:i A', strtotime($modifiedwhen)); ?>
-                                        </td>
-
-                                    </tr>
-                                    <?php }
-                                     ?>
+                                        $restrictionsArray = explode(',', $restriction);
+                                        foreach ($restrictionsArray as $restrictionItem) {
+                                            if (stripos($restrictionItem, 'E-Libing') !== false) {
+                                                // Display the record if it contains 'E-Libing' (case-insensitive)
+                                                ?>
+                                        <tr>
+                                            <td><?php echo $restriction . ' ' . $full ?></td>
+                                            <td><?php echo $action ?></td>
+                                            <td><?php echo date('F j, Y g:i A', strtotime($datetime)); ?></td>
+                                        </tr>
+                                        <?php
+                                                break; // Stop checking once we find a match
+                                            }
+                                        }
+                                    }
+                                
+                                ?>
                                 </tbody>
                             </table>
                         </div>
@@ -95,6 +86,7 @@ $query = $conn->query($select);
             </main>
         </div>
     </div>
+
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Get the input element and table
@@ -120,9 +112,11 @@ $query = $conn->query($select);
         });
     });
     </script>
+
     <?php
     require('assets/component/script.php');
     ?>
+
 </body>
 
 </html>

@@ -1,4 +1,6 @@
 <nav class="sb-topnav navbar navbar-expand ">
+      <!-- Sidebar Toggle-->
+      <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fa-solid fa-bars" style="color: #fbc805;"></i></button>
     <!-- Navbar Brand-->
 
 
@@ -24,8 +26,6 @@
             </ul>
         </li>
     </ul>
-    <!-- Sidebar Toggle-->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fa-solid fa-bars" style="color: #fbc805;"></i></button>
 </nav>
 
 <style>

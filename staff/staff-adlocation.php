@@ -78,7 +78,7 @@ if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || 
         
                     setTimeout(function () {
                         modal.style.display = 'none';
-                        window.location.href = '../admin/addniche.php?locid=". $locID . "';
+                        window.location.href = '../staff/addniche.php?locid=". $locID . "';
                     }, 1000); 
                 });
                 </script>";
@@ -113,7 +113,7 @@ if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || 
         
                     setTimeout(function () {
                         modal.style.display = 'none';
-                        window.location.href = '../admin/niche.php?locid=". $locID . "&profid=" . $profid . "';
+                        window.location.href = '../staff/niche.php?locid=". $locID . "&profid=" . $profid . "';
                     }, 1000); 
                 });
                 </script>";
@@ -132,7 +132,7 @@ if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || 
     echo "<script>
     setTimeout(function () {
         modal.style.display = 'none';
-        window.location.href = '../admin/niche.php?locid=". $locID . "&profid=" . $profid . "';
+        window.location.href = '../staff/niche.php?locid=". $locID . "&profid=" . $profid . "';
     }, 1000); 
     </script>";
     

@@ -2,6 +2,8 @@
 include('conn.php');
 require_once('../component/function.php');
 
+date_default_timezone_set('Asia/Manila'); 
+$currentDateTime = date('h:i:s A');
 $name = $_POST['fullname'];
 $email = $_POST['email'];
 $password = $_POST['pw'];
@@ -17,6 +19,13 @@ if (!empty($name) || !empty($email) || !empty($password) || !empty($role)) {
     $stmt->bindParam(1, $email, PDO::PARAM_STR);
     $stmt->execute();
     $num = $stmt->rowCount();
+
+    
+    $stmt2 = "INSERT INTO TBL_Audit_Trail (User_ID, Date, Timex, Action) VALUES (?, GETDATE(), ?, 'New Added User')";
+    $insertAudit = $conn->prepare($stmt2);
+    $insertAudit->bindParam(1, $userID, PDO::PARAM_STR);
+    $insertAudit->bindParam(2, $currentDateTime, PDO::PARAM_STR);
+    $insertAudit->execute();
 
     if ($num == 0) {
         $stmt->closeCursor(); // Close cursor before reusing $stmt

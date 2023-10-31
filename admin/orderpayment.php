@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -11,27 +12,21 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
-if(isset($_GET['nid']) && isset($_GET['profid'])){
-    $nid = $_GET['nid'];
-    $profid = $_GET['profid'];
-} 
-
+ob_start(); 
 
 if (isset($_POST['paymentButton'])) {
+ 
+
     $nid = $_POST['nid'];
-    $profid = $_POST['id'];
+    $profidd = $_POST['id'];
 
     try {
         $update1 = "UPDATE tblNiche SET Status = 2 WHERE Nid = ?";
         $stmt1 = $conn->prepare($update1);
         $stmt1->execute([$nid]);
 
-        // $update2 = "UPDATE tblIntermentReservation SET Nid = ? WHERE ProfID = ?";
-        // $stmt2 = $conn->prepare($update2);
-        // $stmt2->execute([$nid, $profid]);
-
         if ($stmt1->rowCount() > 0) {
-            header("Location: dashboard.php");
+            echo '<script>alert("Payment Successful"); window.location = "gatepass.php?profid=' . $profidd . '";</script>';
             exit();
         } else {
             echo "No records updated.";
@@ -40,6 +35,7 @@ if (isset($_POST['paymentButton'])) {
         echo "Error: " . $e->getMessage();
     }
 }
+
 ?>
 
 
@@ -57,6 +53,12 @@ if (isset($_POST['paymentButton'])) {
                         </li>
                     </ol>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <?php
+                                 if(isset($_GET['nid']) && isset($_GET['profid'])){
+                                    $nid = $_GET['nid'];
+                                    $profid = $_GET['profid'];
+                                }
+                       ?>
                         <form action="" method="POST">
                             <input type="hidden" name="nid" value="<?php echo $nid ?>">
                             <input type="hidden" name="id" value="<?php echo $profid ?>">

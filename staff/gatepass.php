@@ -5,8 +5,8 @@
 require('assets/component/header.php');
 require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
-include '../dbConn/conn.php';
 
+include '../dbConn/conn.php';
 if(isset($_GET['profid'])){
     $profid = $_GET['profid'];
 

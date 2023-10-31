@@ -2,11 +2,13 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="css/walkin.css">
 
 <?php
 require('assets/component/header.php');
 require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
+require('assets/component/script.php');
 include('../dbConn/conn.php');
 
 ?>
@@ -30,31 +32,32 @@ include('../dbConn/conn.php');
 
                                 <div class="formbold-mb-5 flex">
                                     <div class="formbold-mb-5">
-                                        <label for="" class="formbold-form-label">
+                                        <label>
                                             Full Name
                                         </label>
-                                        <input type="text" name="fullname" id="name" placeholder="Enter Full Name"
-                                            required class="formbold-form-input" />
+                                        <input type="text" name="fullname" id="inputFields"
+                                            placeholder="Enter Full Name" required class="formbold-form-input" />
                                     </div>
-                                    <div class="formbold-mb-5 w-full formbold-px-3">
-                                        <label for="name" class="formbold-form-label">Email
+                                    <div class="formbold-mb-5">
+                                        <label>Email
                                         </label>
-                                        <input type="text" name="email" id="name" placeholder="Enter email for login"
-                                            required="required" class="formbold-form-input" />
+                                        <input type="text" name="email" id="inputFields"
+                                            placeholder="Enter email for login" required="required"
+                                            class="formbold-form-input" />
                                     </div>
                                 </div>
 
 
                                 <div class="formbold-mb-5 flex">
-                                    <div class="formbold-mb-5 w-full">
-                                        <label for="name" class="formbold-form-label">
+                                    <div class="formbold-mb-5">
+                                        <label>
                                             Password
                                         </label>
-                                        <input type="password" name="pw" id="" placeholder="Enter Password"
+                                        <input type="password" name="pw" id="inputFields" placeholder="Enter Password"
                                             class="formbold-form-input" />
                                     </div>
-                                    <div class="formbold-mb-5 w-full">
-                                        <label for="name" class="formbold-form-label">
+                                    <div id="inputFields">
+                                        <label>
                                             User Role
                                         </label>
                                         <select class="formbold-form-label" name="role" id="">
@@ -66,9 +69,16 @@ include('../dbConn/conn.php');
                                     </div>
 
                                 </div>
-                                <button class="formbold-btn-next" name="next"
-                                    data-bs-target="#exampleModal">Add</button>
-                                <hr>
+                                <button class="btn btn-primary mb-4" id="addButton" type="submit"><svg
+                                        class="svg-inline--fa fa-plus fa-lg" style="color: white;" aria-hidden="true"
+                                        focusable="false" data-prefix="fas" data-icon="plus" role="img"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                                        <path fill="currentColor"
+                                            d="M240 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H176V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H384c17.7 0 32-14.3 32-32s-14.3-32-32-32H240V80z">
+                                        </path>
+                                    </svg>
+                                    <!-- <i class="fa-solid fa-plus fa-lg" style="color: white;"></i> Font Awesome fontawesome.com -->
+                                    Add</button>
                             </form>
                             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                                 <div class="container">
@@ -87,6 +97,7 @@ include('../dbConn/conn.php');
                                                 <tbody>
 
                                                     <?php
+                                                    
                                                     $selectloc = "SELECT * FROM tblUsersLogin";
                                                     $queryloc = $conn->query($selectloc);
                                                     while ($dataloc = $queryloc->fetch(PDO::FETCH_ASSOC)) {
@@ -94,6 +105,7 @@ include('../dbConn/conn.php');
                                                         $role = $dataloc['Restriction'];
                                                         $name = $dataloc['Createdby'];
                                                         $date = $dataloc['CreatedDate'];
+                                                        $userid = $dataloc['UserID'];
 
                                                         $first = explode(' ', $role)[0];
                                                         if ($first == 'E-Libing') {
@@ -101,45 +113,40 @@ include('../dbConn/conn.php');
 
 
                                                             ?>
-                                                            <tr>
-                                                                <td>
-                                                                    <?php echo $username ?>
-                                                                </td>
-                                                                <td>
-                                                                    <?php echo $name ?>
-                                                                </td>
-                                                                <td>
-                                                                    <?php echo $role ?>
-                                                                </td>
-                                                                <td>
-                                                                    <?php echo $date ?>
-                                                                </td>
-
-
-
-
-                                                                <td>
-                                                                    <button class="btn btn-primary "
-                                                                        onclick="addOcuppant('<?php echo $block_id; ?>', '<?php echo $nicheid; ?>' , '<?php echo $profid; ?>')">
-                                                                        <i class='bx bx-edit-alt'></i>
-                                                                    </button>
-                                                                    <!-- <button class="btn btn-danger"
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $username ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $name ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $role ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $date ?>
+                                                        </td>
+                                                        <td>
+                                                            <input type="hidden" value="<?php echo $userid ?>">
+                                                            <button class="btn btn-primary "
+                                                                onclick="addNiche('<?php echo $userid ?>')">
+                                                                <i class='bx bx-edit-alt'></i>
+                                                            </button>
+                                                            <!-- <button class="btn btn-danger"
                                                         onclick="openDelete(<?php echo $location_id; ?>, <?php echo $block_id; ?>)">
                                                         <i class="fa-solid fa-trash"></i>
                                                     </button> -->
 
 
-                                                                </td>
-                                                            </tr>
-                                                        <?php }
+                                                        </td>
+                                                    </tr>
+                                                    <?php }
                                                     } ?>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -151,5 +158,11 @@ include('../dbConn/conn.php');
 
 </body>
 
+<script>
+function addNiche(id) {
+    var url = 'updateuser.php?userID=' + id;
+    window.location.href = url;
+}
+</script>
 
 </html>

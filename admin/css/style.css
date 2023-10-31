@@ -368,6 +368,7 @@ label {
 
 button {
   border-radius: 0;
+  margin-left: 5px;
 }
 
 button:focus:not(:focus-visible) {

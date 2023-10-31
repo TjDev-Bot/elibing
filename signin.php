@@ -61,7 +61,7 @@ require('component/navbar.php');
 
 /* Style for the close button */
 .modal-content button {
-    background-color: red;
+    background-color: #dc3545;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -78,9 +78,9 @@ require('component/navbar.php');
 
 /* Style for the modal header */
 .modal-content h2 {
-    font-size: 30px;
+    font-size: 40px;
     color: black;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 /* Style for the link container */
@@ -89,6 +89,14 @@ require('component/navbar.php');
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+}
+.custom-button:disabled {
+    background-color: gray;
+    color: white;
+    cursor: not-allowed;
+}
+.custom-button:disabled:hover {
+    background-color: gray;
 }
 </style>
 
@@ -99,8 +107,6 @@ require('component/navbar.php');
         <div class="content">
             <br>
             <!-- <img src="image/lgu_logo.png" alt="logo" class="logo" id="logo"> -->
-            <h2>Welcome</h2>
-            <h3>to e-Libing</h3>
         </div>
         <div class="container-login">
             <form action="dbConn/users.php" method="POST" enctype="multipart/form-data">
@@ -129,16 +135,15 @@ require('component/navbar.php');
                                 <label for="password">Password</label>
                                 <input type="password" name="password" class="form-control-login" required>
                             </div>
-
-                         
-
                         </div>
 
-                        <button class="custom-button" name="userlogin">Sign in</button>
-                        <h4 class="sign">Already have an account? <span><a href="user-log.php">Login</a></span></h4>
+                        <button class="custom-button" name="userlogin" id="signin" disabled>Sign in</button>
+                        <h4 class="sign">Already have an account? <span><a href="user-log.php">&nbsp;Login</a></span></h4>
                         <div class="link-container">
                             <!-- Modal Link -->
-                            <div class="modal-link" onclick="toggleModal()">Terms and Conditions</div>
+                            <input type="checkbox"id="checkme" onclick="toggleModalAndTermsChanged(this)"> &nbsp;
+
+                            <div class="modal-link"  onclick="toggleModal()" style="color:gold">Terms and Conditions</div>
                         </div>
                     </div>
                 </div>
@@ -154,7 +159,8 @@ require('component/navbar.php');
 
         <!-- Modal Header -->
         <h2>Terms and Conditions</h2>
-
+<hr>
+<br>
         <!-- Modal Body -->
         <h3>1. Acceptance of terms</h3>
         <p>By using this website, you accept these terms and conditions of use, all relevant laws and regulations, and
@@ -189,6 +195,7 @@ require('component/navbar.php');
             <li>transfer the materials to another person or 'mirror' the materials on any other server.</li>
         </ul>
 
+        <br>
         <!-- Modal Footer -->
         <button onclick="toggleModal()">Close</button>
     </div>
@@ -198,6 +205,20 @@ require('component/navbar.php');
 function toggleModal() {
     var modal = document.getElementById('modalContainer');
     modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+}
+
+function terms_changed(checkbox) {
+    var signinButton = document.getElementById("signin");
+    if (checkbox.checked) {
+        signinButton.disabled = false;
+    } else {
+        signinButton.disabled = true;
+    }
+}
+
+function toggleModalAndTermsChanged(checkbox) {
+    toggleModal();
+    terms_changed(checkbox);
 }
 </script>
 

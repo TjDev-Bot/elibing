@@ -8,7 +8,9 @@ try {
     $size = isset($_POST['size']) ? $_POST['size'] : null; // Use null for missing size
     $des = isset($_POST['description']) ? $_POST['description'] : '';
     $type = isset($_POST['type']) ? $_POST['type'] : '';
-
+    $userID = isset($_POST['userid']) ? $_POST['userid'] : '';
+    date_default_timezone_set('Asia/Manila'); 
+    $currentDateTime = date('h:i:s A');
 
     $checkSql = "SELECT COUNT(*) AS count FROM tblNicheLocation WHERE LocID = ?";
     $checkStmt = $conn->prepare($checkSql);
@@ -33,7 +35,12 @@ try {
     $stmt->bindParam(4, $des, PDO::PARAM_STR);
     $stmt->bindParam(5, $type, PDO::PARAM_STR);
 
-    if ($stmt->execute()) {
+    $stmt1 = "INSERT INTO TBL_Audit_Trail (User_ID, Date, Timex, Action) VALUES (?, GETDATE(), ?, 'Add Block: ".$type."')";
+    $insertAudit = $conn->prepare($stmt1);
+    $insertAudit->bindParam(1, $userID, PDO::PARAM_STR);
+    $insertAudit->bindParam(2, $currentDateTime, PDO::PARAM_STR);
+
+    if ($stmt->execute() && $insertAudit->execute()) {
         echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
             var modal = document.createElement('div');

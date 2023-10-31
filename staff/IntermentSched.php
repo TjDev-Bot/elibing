@@ -7,7 +7,10 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include('../dbConn/conn.php');
 
-$select = "SELECT * FROM tblDeathRecord INNER JOIN tblIntermentReservation ON tblDeathRecord.ProfileID = tblIntermentReservation.ProfID ORDER BY IntermentDateTime DESC";
+$select = "SELECT * FROM tblIntermentReservation
+LEFT JOIN tblBuriedRecord ON tblIntermentReservation.ProfID = tblBuriedRecord.Profid
+INNER JOIN tblNiche ON tblIntermentReservation.Nid = tblNiche.Nid 
+INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID  ORDER BY IntermentDateTime DESC";
 $query = $conn->query($select);
 
 ?>
@@ -17,7 +20,6 @@ $query = $conn->query($select);
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <!-- <h1 class="mt-4">Interment Schedule</h1> -->
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">
                             <h1>Interment Schedule</h1>
@@ -26,17 +28,17 @@ $query = $conn->query($select);
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
                             <!-- <input type="search" id="searchInput" placeholder="Search here..."> -->
-                            <label for="startDate" style="padding-right: 127px">Start Date:</label> <label
-                                for="endDate">End Date:</label>
-                            </br>
-                            <input type="date" id="startDate">
-                            <input type="date" id="endDate">
-                            <button class="btn btn-primary " id="filter-button">
-                                Filter
-                            </button>
-                            <button class="btn btn-primary btn-print" id="print-schedule">
-                                <i class='bx bx-printer'></i>
-                            </button>
+                                <label for="startDate" style="padding-right: 127px">Start Date:</label> <label
+                                    for="endDate">End Date:</label>
+                                </br>
+                                <input type="date" id="startDate">
+                                <input type="date" id="endDate">
+                                <button class="btn btn-primary " id="filter-button">
+                                    Filter
+                                </button>
+                                <button class="btn btn-primary btn-print" id="print-schedule">
+                                    <i class='bx bx-printer'></i>
+                                </button>
                             <br><br>
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll" id="interment-schedule-table">
@@ -68,8 +70,10 @@ $query = $conn->query($select);
                                                 $desireddatetime = $data['IntermentDateTime'];
                                                 $nicheno = $data['Nid'];
                                                 $profid = $data['ProfID'];
+                                                $status = $data['Status'];
+                                                $occupancy = $data['OccupancyDate'];
 
-                                                if ($desireddatetime !== null) {
+                                                if ($status !== '1' && $occupancy == null) {
 
                                                     ?>
                                                     <tr id="elementToHide">

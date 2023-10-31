@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,10 +9,18 @@ require('assets/component/sidebars.php');
 
 include "../dbConn/conn.php";
 
+$userID = isset($_SESSION['id']) ? $_SESSION['id'] : ''; 
 
 if (isset($_GET['locid'])) {
     $block_id = $_GET['locid'];
-    $select = "SELECT * FROM tblNicheLocation WHERE LocID = $block_id"; 
+    
+    $select = "SELECT * FROM tblNicheLocation WHERE LocID = '$block_id'";
+    $query = $conn->query($select); 
+    while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+        $type = $data['Type'];
+    
+    }
+
 }
 ?>
 
@@ -32,17 +41,20 @@ if (isset($_GET['locid'])) {
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
 
-                        <button class="btn btn-danger mb-2" type="button" name="submit" onclick="goBack()">Back</button>
-                    <form action="../dbConn/staff-adlocation.php" method="POST">
-                        <input type="text" name="nicheno" placeholder="Generate Niche No." required>
-                        <input type="text" name="size" placeholder="Size" required>
-                        <input type="number" name="level" placeholder="Level" required>
-                        <input type="hidden" name="locid" value="<?php echo $block_id ?>">
-                        <input type="hidden" value="0" name="stat">
-                        <input type="hidden" name="profid" value="<?php echo $profid ?>">
-                        <button class="btn btn-primary " type="submit" name="submit">Submit</button>
-                    </form>
-</br>
+                            <button class="btn btn-danger mb-4" type="button" name="submit"
+                                onclick="goBack()">Back</button>
+                            <form action="../dbConn/adlocation.php" method="POST">
+                                <input type="hidden" name="userid" value="<?php echo $userID ?>">
+                                <input type="text" id="typeParam" value="<?php echo $type; ?>">
+                                <input type="text" name="nicheno" placeholder="Generate Niche No." required>
+                                <input type="text" name="size" placeholder="Size" required>
+                                <input type="number" name="level" placeholder="Level" required>
+                                <input type="hidden" name="locid" value="<?php echo $block_id ?>">
+                                <input type="hidden" value="0" name="stat">
+                                <input type="hidden" name="profid" value="<?php echo $profid ?>">
+                                <button class="btn btn-primary" type="submit" name="submit">Submit</button>
+                            </form>
+                            </br>
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll">
                                     <table class="table-no-border">
@@ -116,6 +128,24 @@ if (isset($_GET['locid'])) {
     </div>
 
     <script>
+    var typeParam = document.getElementById("typeParam").value;
+
+    function hideInputFields() {
+        var inputFields = document.getElementById("inputFields");
+        var addButton = document.getElementById("addButton");
+
+        if (typeParam === "Chamber") {
+            inputFields.style.display = "none";
+            addButton.style.display = "none";
+        } else {
+            inputFields.style.display = "block";
+            addButton.style.display = "block";
+        }
+    }
+
+    window.onload = hideInputFields;
+
+
     function goBack() {
         var url = 'masterprofile.php'
         window.location.href = url;
