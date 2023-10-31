@@ -4,6 +4,7 @@ include "../component/locfunction.php";
 
 try {
     $locID = nextNumb("L", "tblNicheLocation", "LocID", 4, "");
+<<<<<<< HEAD
     $nlname = isset($_POST['nlname']) ? $_POST['nlname'] : '';
     $size = isset($_POST['size']) ? $_POST['size'] : null; // Use null for missing size
     $des = isset($_POST['description']) ? $_POST['description'] : '';
@@ -11,6 +12,14 @@ try {
     $userID = isset($_POST['userid']) ? $_POST['userid'] : '';
     date_default_timezone_set('Asia/Manila'); 
     $currentDateTime = date('h:i:s A');
+=======
+    $nlname = $_POST['nlname'];
+    $size = $_POST['size'];
+    $des = $_POST['description'];
+    $type = $_POST['type'];
+    $profid = $_POST['profid'];
+    $name = $_POST['name'];
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
 
     $checkSql = "SELECT COUNT(*) AS count FROM tblNicheLocation WHERE LocID = ?";
     $checkStmt = $conn->prepare($checkSql);
@@ -83,7 +92,11 @@ try {
 
             setTimeout(function () {
                 modal.style.display = 'none';
+<<<<<<< HEAD
                 window.location.href = '../admin/masterprofile.php';
+=======
+                window.location.href = '../admin/location.php?id=" . $profid . "&name=" . $name . "';
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
             }, 1000); 
         });
     </script>";

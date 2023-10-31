@@ -10,7 +10,11 @@ require('assets/component/header.php');
 require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 
+<<<<<<< HEAD
 if (isset($_SESSION['id']) && isset($_SESSION['Createdby'])) {
+=======
+if(isset($_SESSION['id']) && isset($_SESSION['Createdby'])){
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
     $id = $_SESSION['id'];
     $createdby = $_SESSION['Createdby'];
 }
@@ -41,12 +45,21 @@ if (isset($_GET['id'])) {
                                             <div class="container-interment">
                                                 <div class="formbold-main">
                                                     <div class="">
+<<<<<<< HEAD
 
                                                         <form action="../dbConn/adoccupant.php" method="POST">
                                                             <input type="hidden"  name="userid" value="<?php echo $id ?> ">
                                                             <input type="hidden" name="create"
                                                                 value="<?php echo $createdby ?>">
 
+=======
+                                                        <!-- <button class="btn btn-danger" type="button" name="submit"
+                                                            onclick="goBack()">Back</button> -->
+                                                        <form action="../dbConn/adoccupant.php" method="POST">
+                                                            <input type="hidden" value="<?php echo $id?> ">
+                                                            <input type="hidden" name="create"
+                                                                value="<?php echo $createdby ?>">
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                                                             <div class="formbold-mb-5 w-full  formbold-px-3">
                                                                 <label for="time" class="formbold-form-label">
                                                                 </label>
@@ -55,14 +68,18 @@ if (isset($_GET['id'])) {
                                                                     value="<?php echo $nicheno ?>" />
                                                             </div>
 
+<<<<<<< HEAD
                                                             <h4 class="mb-5">Applicant's Information</h4>
 
+=======
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                                                             <div class="formbold-mb-5 flex">
                                                                 <div class="formbold-mb-5 w-full">
                                                                     <label for="name" class="formbold-form-label">
                                                                         Full Name
                                                                     </label>
                                                                     <input type="text" name="fullname" id="name"
+<<<<<<< HEAD
                                                                         placeholder="Enter Full Name" required
                                                                         class="formbold-form-input" />
                                                                 </div>
@@ -84,6 +101,22 @@ if (isset($_GET['id'])) {
                                                                 </div>
                                                             </div>
 
+=======
+                                                                        required class="formbold-form-input" />
+                                                                </div>
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="name"
+                                                                        class="formbold-form-label">Relationship to the
+                                                                        Deceased
+                                                                    </label>
+                                                                    <input type="text" name="relationship" id="name"
+                                                                        placeholder="e.g Daughter" required="required"
+                                                                        class="formbold-form-input" />
+                                                                </div>
+                                                            </div>
+
+
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                                                             <div class="formbold-mb-5 flex">
                                                                 <div class="formbold-mb-5 w-full">
                                                                     <label for="" class="formbold-form-label">
@@ -101,13 +134,23 @@ if (isset($_GET['id'])) {
                                                                         Email Address
                                                                     </label>
                                                                     <input type="email" name="email" id=""
+<<<<<<< HEAD
                                                                         placeholder="Enter Email Address"
+=======
+                                                                        placeholder="" 
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                                                                         class="formbold-form-input" />
                                                                 </div>
                                                             </div>
+<<<<<<< HEAD
                                                             <br>
                                                             <hr>
                                                             <h4 class="mb-5">Deceased Information</h4>
+=======
+
+                                                            <hr>
+                                                            <h6 class="mb-5">Deceased Information</h6>
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                                                             <div class="formbold-mb-5 flex">
                                                                 <div class="formbold-mb-5 w-full  ">
                                                                     <label for="name" class="formbold-form-label"> Last
@@ -149,6 +192,12 @@ if (isset($_GET['id'])) {
                                                                         <option value="Jr">Jr</option>
                                                                         <option value="Sr">Sr</option>
                                                                     </select>
+<<<<<<< HEAD
+=======
+                                                                    <!-- <input type="text" name="Suffix" id="name"
+                                                                        placeholder="Jr / Sr"
+                                                                        class="formbold-form-input" /> -->
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                                                                 </div>
                                                             </div>
                                                             <div class="formbold-mb-5 flex">
@@ -182,6 +231,13 @@ if (isset($_GET['id'])) {
                                                                         placeholder="Enter Place" required
                                                                         class="formbold-form-input" />
                                                                 </div>
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                                                             </div>
 
                                                             <hr>

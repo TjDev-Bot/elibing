@@ -130,8 +130,13 @@ if(isset($_GET['AppID'])){
         window.history.back();
     }
 
+<<<<<<< HEAD
     function pay(id, nicheno) {
         var url = 'orderpayment.php?profid=' + id + '&nid=' + nicheno;
+=======
+    function pay(id, nid) {
+        var url = 'orderpayment.php?profid=' + id + '&nid=' + nid;
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
         window.location.href = url;
     }
     </script>

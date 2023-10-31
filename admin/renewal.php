@@ -7,6 +7,100 @@ require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 ?>
 <link rel="stylesheet" href="css/walkin.css">
+<<<<<<< HEAD
+=======
+
+<body>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <!-- <h1 class="mt-4">Walk-in Appointment</h1> -->
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">
+                            <h1>Add Walk-in Renewal</h1>
+                        </li>
+                    </ol>
+                    <div class="pcoded-inner-content">
+                        <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-body start -->
+                                <div class="page-body">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div class="container-interment">
+                                                <div class="formbold-main">
+                                                    <div class="">
+                                                        <?php
+                                                    
+                                                            if(isset($_GET['id'])){
+                                                                $id = $_GET['id'];
+                                                            }
+                                                            $select = "SELECT * FROM tblNiche
+                                                            INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
+                                                            INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
+                                                            INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
+                                                            INNER JOIN tblContactInfo ON tblDeathRecord.ProfileID = tblContactInfo.ProfID
+                                                            INNER JOIN tblBuriedRecord ON tblNiche.Nid = tblBuriedRecord.Nid WHERE tblBuriedRecord.OccupancyDate IS NOT NULL";
+                                                            $query = $conn->query($select);
+
+                                                            while($data = $query->fetch(PDO::FETCH_ASSOC)){
+                                                                $relationship = $data['Relationship'];
+                                                                $name = $data['Fname'].' '.$data['MName'].' '.$data['Lname'];
+                                                                $dateofdeath = $data['DateofDeath'];
+                                                                $occupancydate = $data['OccupancyDate'];
+                                                            }
+                                                        ?>
+                                                        <form action="../dbConn/renewadmin.php" method="POST">
+                                                            <input type="hidden" name="profid" value="<?php echo $id?>">
+                                                            <div class="formbold-mb-5 flex">
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="name"
+                                                                        class="formbold-form-label">Relationship
+                                                                        to the
+                                                                        Deceased
+                                                                    </label>
+                                                                    <input type="text" name="relationship" id="name"
+                                                                        value="<?php echo ucfirst($relationship) ?>"
+                                                                        readonly class="formbold-form-input" />
+                                                                </div>
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="name" class="formbold-form-label"> Name
+                                                                        of the Deceased
+                                                                    </label>
+                                                                    <input type="text" name="deceased" id="name"
+                                                                        value="<?php echo ucwords($name)?>" readonly
+                                                                        class="formbold-form-input" />
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="formbold-mb-5 flex">
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="date" class="formbold-form-label">
+                                                                        Date of Death </label>
+                                                                    <input type="text" name="deathdate" id="ddate"
+                                                                        value="<?php echo $dateofdeath ?>" readonly
+                                                                        class="formbold-form-input" />
+                                                                </div>
+
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="date" class="formbold-form-label">
+                                                                        Occupancy Date</label>
+                                                                    <input type="text" name="interment" id="ddate"
+                                                                        value="<?php echo $occupancydate ?>" readonly
+                                                                        class="formbold-form-input" />
+                                                                </div>
+
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="date" class="formbold-form-label">
+                                                                        Renew Occupancy</label>
+                                                                    <input type="date" name="occupancy" id="ddate"
+                                                                        class="formbold-form-input" />
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
 
 <body>
     <div id="layoutSidenav">
@@ -39,6 +133,7 @@ include "../dbConn/conn.php";
                                                             INNER JOIN tblBuriedRecord ON tblNiche.Nid = tblBuriedRecord.Nid WHERE tblBuriedRecord.OccupancyDate IS NOT NULL";
                                                             $query = $conn->query($select);
 
+<<<<<<< HEAD
                                                             while($data = $query->fetch(PDO::FETCH_ASSOC)){
                                                                 $relationship = $data['Relationship'];
                                                                 $name = $data['Fname'].' '.$data['MName'].' '.$data['Lname'];
@@ -114,6 +209,20 @@ include "../dbConn/conn.php";
                                                         </form>
                                                     </div>
                                                     <div style="display:none;" id="response"></div>
+=======
+                                                            <div>
+                                                                <button class="btn btn-success submit-button mb-3"
+                                                                    type="button" id="updateButton">
+                                                                    <span class="update-label">Renew</span>
+                                                                    <div class="loader"></div>
+                                                                </button>
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+                                                    <div style="display:none;" id="response"></div>
+
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                                                 </div>
                                             </div>
                                         </div>
@@ -123,6 +232,12 @@ include "../dbConn/conn.php";
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
             </main>
         </div>
     </div>
@@ -211,6 +326,7 @@ include "../dbConn/conn.php";
 
     <script>
     $(document).ready(function() {
+<<<<<<< HEAD
         $("#occupancySelect").change(function() {
             var selectedOption = $(this).val();
             if (selectedOption !== "") {
@@ -219,30 +335,53 @@ include "../dbConn/conn.php";
                 $("#updateButton").prop("disabled", true);
             }
         });
+=======
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
         $(".submit-button").click(function() {
             var form = $(this).closest('form');
             var formData = form.serialize();
             var updateButton = $("#updateButton");
             var loader = updateButton.find('.loader');
+<<<<<<< HEAD
             updateButton.prop("disabled", true);
             updateButton.find(".update-label").hide();
             loader.show();
+=======
+
+            updateButton.prop("disabled", true);
+            updateButton.find(".update-label").hide();
+            loader.show();
+
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
             $.ajax({
                 type: "POST",
                 url: form.attr("action"),
                 data: formData,
                 success: function(response) {
                     var trimmedResponse = $.trim(response);
+<<<<<<< HEAD
                     updateButton.prop("disabled", false);
                     loader.hide();
                     updateButton.find(".update-label").show();
+=======
+
+                    updateButton.prop("disabled", false);
+                    loader.hide();
+                    updateButton.find(".update-label").show();
+
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                     if (trimmedResponse === "success") {
                         Swal.fire({
                             title: 'Success',
                             text: 'Info Successfully Updated',
                             icon: 'success'
                         }).then(function() {
+<<<<<<< HEAD
                             window.location = "orderpayment.php";
+=======
+                            // Refresh the page
+                            window.location = "deceased.php";
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                         });
                     } else {
                         Swal.fire({

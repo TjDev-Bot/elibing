@@ -12,6 +12,7 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
+<<<<<<< HEAD
 ob_start(); 
 
 if (isset($_POST['paymentButton'])) {
@@ -19,14 +20,34 @@ if (isset($_POST['paymentButton'])) {
 
     $nid = $_POST['nid'];
     $profidd = $_POST['id'];
+=======
+if(isset($_GET['nid']) && isset($_GET['profid'])){
+    $nid = $_GET['nid'];
+    $profid = $_GET['profid'];
+} 
+
+
+if (isset($_POST['paymentButton'])) {
+    $nid = $_POST['nid'];
+    $profid = $_POST['id'];
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
 
     try {
         $update1 = "UPDATE tblNiche SET Status = 2 WHERE Nid = ?";
         $stmt1 = $conn->prepare($update1);
         $stmt1->execute([$nid]);
 
+<<<<<<< HEAD
         if ($stmt1->rowCount() > 0) {
             echo '<script>alert("Payment Successful"); window.location = "gatepass.php?profid=' . $profidd . '";</script>';
+=======
+        // $update2 = "UPDATE tblIntermentReservation SET Nid = ? WHERE ProfID = ?";
+        // $stmt2 = $conn->prepare($update2);
+        // $stmt2->execute([$nid, $profid]);
+
+        if ($stmt1->rowCount() > 0) {
+            header("Location: dashboard.php");
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
             exit();
         } else {
             echo "No records updated.";
@@ -35,7 +56,10 @@ if (isset($_POST['paymentButton'])) {
         echo "Error: " . $e->getMessage();
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
 ?>
 
 
@@ -53,12 +77,15 @@ if (isset($_POST['paymentButton'])) {
                         </li>
                     </ol>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<<<<<<< HEAD
                         <?php
                                  if(isset($_GET['nid']) && isset($_GET['profid'])){
                                     $nid = $_GET['nid'];
                                     $profid = $_GET['profid'];
                                 }
                        ?>
+=======
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                         <form action="" method="POST">
                             <input type="hidden" name="nid" value="<?php echo $nid ?>">
                             <input type="hidden" name="id" value="<?php echo $profid ?>">

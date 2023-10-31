@@ -118,10 +118,20 @@ foreach ($tblDeath as $record) {
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <?php
+<<<<<<< HEAD
                                     $selectAvailable = "SELECT * FROM tblNiche WHERE Status = 0";
                                     $resAvailable = $conn->query($selectAvailable);
                                     $tblAvailable = $resAvailable->fetchAll(PDO::FETCH_ASSOC);
                                     $totalAvailable = count($tblAvailable);
+=======
+                                        $selectAvailable = "SELECT * FROM tblNiche WHERE Status = 0";
+                                        $resAvailable = $conn->query($selectAvailable);
+
+                                        $tblAvailable = $resAvailable->fetchAll(PDO::FETCH_ASSOC);
+                                        $totalAvailable = count($tblAvailable);
+
+                                    
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                                     ?>
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
