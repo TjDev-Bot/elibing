@@ -154,6 +154,7 @@ require('component/navbar.php');
             </div>
         </section>
     </div>
+
 </body>
 
 </html>

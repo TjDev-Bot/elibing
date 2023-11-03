@@ -51,9 +51,7 @@ include('../dbConn/conn.php');
                                     <table class="table-no-border" id="e-libingTable">
                                         <thead>
                                             <tr>
-                                                <!--th scope="col" class="px-6 py-3">
-                                            Niche No.
-                                        </th>-->
+                                
                                                 <th scope="col" class="px-6 py-3">
                                                     Name
                                                 </th>
