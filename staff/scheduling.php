@@ -102,11 +102,11 @@ function build_calendar($month, $year){
                 if ($selectedDateCount >= 0) {
                     // $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4><button class='btn btn-danger btn-sm disabled'>Reserved</button></td>";
                     $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4>";
-                    $calendar .= " <a href='../dbConn/staff-schedule-date.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
+                    $calendar .= " <a href='../dbConn/schedule-date.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
                     $calendar .= "</td>";                    
                 } else {
                     $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4>";
-                    $calendar .= " <a href='../dbConn/staff-schedule-date.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
+                    $calendar .= " <a href='../dbConn/schedule-date.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
                     $calendar .= "</td>";
                 }
             } else {

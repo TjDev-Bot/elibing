@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -25,7 +26,11 @@ if (isset($_POST['paymentButton'])) {
         $stmt1->execute([$nid]);
 
         if ($stmt1->rowCount() > 0) {
+<<<<<<< HEAD
             echo '<script>alert("Payment successful"); window.location = "gatepass.php?profid=' . $profidd . '";</script>';
+=======
+            echo '<script>alert("Payment Successful"); window.location = "gatepass.php?profid=' . $profidd . '";</script>';
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
             exit();
         } else {
             echo "No records updated.";

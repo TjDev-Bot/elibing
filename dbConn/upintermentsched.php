@@ -18,6 +18,12 @@ try {
     $stmt->bindParam(3, $nicheno, PDO::PARAM_STR);
     $stmt->execute();
 
+<<<<<<< HEAD
+=======
+    $update = "UPDATE tblDeathRecord SET IntermentDateTime = NULL WHERE ProfileID = ?";
+    $stmt1 = $conn->prepare($update);
+    $stmt1->execute([$profid]);
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
     
     $conn->commit();
 

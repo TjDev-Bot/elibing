@@ -86,6 +86,10 @@ if(isset($_GET['id']) && isset($_SESSION['id'])){
                                                                     class="formbold-form-input" readonly />
                                                             </div>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
                                                             <div class="formbold-mb-5 w-full formbold-px-3">
                                                                 <label for="name"
                                                                     class="formbold-form-label">Relationship to the
@@ -94,6 +98,30 @@ if(isset($_GET['id']) && isset($_SESSION['id'])){
                                                                 <input type="email" name="relationship" id=""
                                                                     value="<?php  echo $relationship ?>"
                                                                     class="formbold-form-input" readonly />
+<<<<<<< HEAD
+=======
+=======
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="" class="formbold-form-label">
+                                                                        Contact No
+                                                                    </label>
+                                                                    <input type="tel" name="contact"
+                                                                        value="<?php echo $contact ?>"
+                                                                        class="formbold-form-input"
+                                                                        pattern="^\63\d{10}$"
+                                                                        title="Please enter a valid Philippine phone number with 63 and 10 digits." />
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <label for="date" class="formbold-form-label">
+                                                                    Email</label>
+                                                                <input type="email" name="email"
+                                                                    value="<?php echo $email ?>"
+                                                                    class="formbold-form-input" />
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
                                                             </div>
                                                         </div>
 
@@ -190,7 +218,24 @@ if(isset($_GET['id']) && isset($_SESSION['id'])){
                                                                 </label>
                                                                 <input type="text" name="IntermentPlace" id="name"
                                                                     value="<?php echo $intermentplace ?>"
+<<<<<<< HEAD
                                                                     class="formbold-form-input" readonly />
+=======
+<<<<<<< HEAD
+                                                                    class="formbold-form-input" readonly />
+=======
+                                                                    class="formbold-form-input" />
+                                                            </div>
+                                                            <div class="formbold w-full  formbold-px-3" style="display:none;">
+                                                                <label for="name" class="formbold-form-label">
+                                                                    Interment Date and Time
+                                                                </label>
+                                                                <input type="datetime-local" name="intermentdate"
+                                                                    value="<?php echo $intermentdate ?>"
+                                                                    class="formbold-form-input" />
+
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
                                                             </div>
 
                                                         </div>

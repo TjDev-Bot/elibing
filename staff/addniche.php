@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,14 @@ $userID = isset($_SESSION['id']) ? $_SESSION['id'] : '';
 
 if (isset($_GET['locid'])) {
     $block_id = $_GET['locid'];
-    $select = "SELECT * FROM tblNicheLocation WHERE LocID = $block_id"; 
+    
+    $select = "SELECT * FROM tblNicheLocation WHERE LocID = '$block_id'";
+    $query = $conn->query($select); 
+    while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+        $type = $data['Type'];
+    
+    }
+
 }
 ?>
 
@@ -35,9 +43,15 @@ if (isset($_GET['locid'])) {
 
                             <button class="btn btn-danger mb-4" type="button" name="submit"
                                 onclick="goBack()">Back</button>
+<<<<<<< HEAD
                             <form action="../dbConn/staff-adlocation.php" method="POST">
                             <input type="hidden" name="userid" value="<?php echo $userID ?>">
 
+=======
+                            <form action="../dbConn/adlocation.php" method="POST">
+                                <input type="hidden" name="userid" value="<?php echo $userID ?>">
+                                <input type="text" id="typeParam" value="<?php echo $type; ?>">
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
                                 <input type="text" name="nicheno" placeholder="Generate Niche No." required>
                                 <input type="text" name="size" placeholder="Size" required>
                                 <input type="number" name="level" placeholder="Level" required>
@@ -120,6 +134,24 @@ if (isset($_GET['locid'])) {
     </div>
 
     <script>
+    var typeParam = document.getElementById("typeParam").value;
+
+    function hideInputFields() {
+        var inputFields = document.getElementById("inputFields");
+        var addButton = document.getElementById("addButton");
+
+        if (typeParam === "Chamber") {
+            inputFields.style.display = "none";
+            addButton.style.display = "none";
+        } else {
+            inputFields.style.display = "block";
+            addButton.style.display = "block";
+        }
+    }
+
+    window.onload = hideInputFields;
+
+
     function goBack() {
         var url = 'masterprofile.php'
         window.location.href = url;

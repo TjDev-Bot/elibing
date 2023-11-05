@@ -19,7 +19,11 @@ body {
     align-items: center;
     justify-content: center;
     font-family: Arial, sans-serif;
+<<<<<<< HEAD
    margin-right: 400px;
+=======
+    margin: 10px;
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
     cursor: pointer;
     transition: transform ease-in-out .3s;
 }
@@ -40,12 +44,15 @@ body {
     text-align: center;
 }
 
+<<<<<<< HEAD
 .no-data-message {
     text-align: center;
     font-size: 24px;
     margin: 20px 0;
 }
 
+=======
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
 /* Modal */
 .modal {
     display: none;
@@ -66,7 +73,10 @@ body {
     background-color: #fff;
     padding: 20px;
     border: 1px solid #000;
+<<<<<<< HEAD
     width: 80%;
+=======
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   }
   

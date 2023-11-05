@@ -20,7 +20,6 @@ $query = $conn->query($select);
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <!-- <h1 class="mt-4">Interment Schedule</h1> -->
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">
                             <h1>Interment Schedule</h1>
@@ -28,9 +27,25 @@ $query = $conn->query($select);
                     </ol>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
+<<<<<<< HEAD
                             <div class="col-sm-6">
                                 <input type="search" id="searchInput" placeholder="Search here...">
                             </div>
+=======
+                            <!-- <input type="search" id="searchInput" placeholder="Search here..."> -->
+                                <label for="startDate" style="padding-right: 127px">Start Date:</label> <label
+                                    for="endDate">End Date:</label>
+                                </br>
+                                <input type="date" id="startDate">
+                                <input type="date" id="endDate">
+                                <button class="btn btn-primary " id="filter-button">
+                                    Filter
+                                </button>
+                                <button class="btn btn-primary btn-print" id="print-schedule">
+                                    <i class='bx bx-printer'></i>
+                                </button>
+                            <br><br>
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll" id="interment-schedule-table">
 

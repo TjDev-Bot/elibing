@@ -5,8 +5,13 @@
 require('assets/component/header.php');
 require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
+<<<<<<< HEAD
 
 include '../dbConn/conn.php';
+=======
+include '../dbConn/conn.php';
+
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
 if(isset($_GET['profid'])){
     $profid = $_GET['profid'];
 

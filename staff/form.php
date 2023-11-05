@@ -41,7 +41,11 @@ if (isset($_GET['id'])) {
                                                 <div class="formbold-main">
                                                     <div class="">
 
+<<<<<<< HEAD
                                                         <form action="../dbConn/stafadoccupant.php" method="POST">
+=======
+                                                        <form action="../dbConn/adoccupant.php" method="POST">
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
                                                             <input type="hidden"  name="userid" value="<?php echo $id ?> ">
                                                             <input type="hidden" name="create"
                                                                 value="<?php echo $createdby ?>">

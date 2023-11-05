@@ -28,9 +28,14 @@ if(isset($_GET['id'])){
                         </li>
                     </ol>
                     <div class="container">
+<<<<<<< HEAD
                         <form action="../dbConn/staff_delete_data.php" method="GET">
                             <input type="hidden" name="id" value="<?php echo $id ?>">
                             <button class="formbold-btn-back" id="backButton">Back</button>
+=======
+                        <form action="../dbConn/delete_data.php" method="GET">
+                            
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
 
                         </form>
                     </div>

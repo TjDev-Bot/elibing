@@ -112,6 +112,7 @@ foreach ($tblDeath as $record) {
                                     </div>
                                 </div>
                             </div>
+<<<<<<< HEAD
                         </div>
 
                         <div class="col-xl-4 col-md-6 mb-4">
@@ -206,6 +207,112 @@ foreach ($tblDeath as $record) {
 
 
                         </div>
+=======
+                        </div>
+
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <?php
+<<<<<<< HEAD
+                                    $selectAvailable = "SELECT * FROM tblNiche WHERE Status = 0";
+                                    $resAvailable = $conn->query($selectAvailable);
+                                    $tblAvailable = $resAvailable->fetchAll(PDO::FETCH_ASSOC);
+                                    $totalAvailable = count($tblAvailable);
+=======
+                                        $selectAvailable = "SELECT * FROM tblNiche WHERE Status = 0";
+                                        $resAvailable = $conn->query($selectAvailable);
+
+                                        $tblAvailable = $resAvailable->fetchAll(PDO::FETCH_ASSOC);
+                                        $totalAvailable = count($tblAvailable);
+
+                                    
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+                                    ?>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Total Available Niche</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $totalAvailable ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-table-cells fa-2xl" style="color: #dddfeb;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <?php
+                                    $selectReserved = "SELECT * FROM tblNiche WHERE Status = 1";
+                                    $resReserved = $conn->query($selectReserved);
+                                    $tblReserved = $resReserved->fetchAll(PDO::FETCH_ASSOC);
+                                    $totalReserved = count($tblReserved);
+                                    ?>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Total Reserved Niche</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $totalReserved ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-square-person-confined fa-2xl"
+                                                style="color: #dddfeb;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Age Group Distribution</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="myPieChart" class="chart-pie pt-4 pb-2"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Niche Status</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="myBarChart" style="height: 330px; width: 100%;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Monthly Revenue</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-area">
+                                            <canvas id="myLineChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
                     </div>
             </main>
         </div>
