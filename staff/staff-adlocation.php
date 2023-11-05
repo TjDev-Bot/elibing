@@ -17,6 +17,7 @@ $userID = $_POST['userid'];
 if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || !empty($stat) || !empty($size)) {
     $batchSize = 10;
     $numBatches = ceil($nicheno / $batchSize);
+
     $getMaxNnoSql = "SELECT MAX(Nno) FROM tblNiche";
     $getMaxNnoStmt = $conn->prepare($getMaxNnoSql);
     // $getMaxNnoStmt->bindParam(1, $locID, PDO::PARAM_STR);
@@ -77,7 +78,7 @@ if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || 
         
                     setTimeout(function () {
                         modal.style.display = 'none';
-                        window.location.href = '../admin/addniche.php?locid=". $locID . "';
+                        window.location.href = '../staff/addniche.php?locid=". $locID . "';
                     }, 1000); 
                 });
                 </script>";
@@ -112,7 +113,7 @@ if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || 
         
                     setTimeout(function () {
                         modal.style.display = 'none';
-                        window.location.href = '../admin/niche.php?locid=". $locID . "&profid=" . $profid . "';
+                        window.location.href = '../staff/niche.php?locid=". $locID . "&profid=" . $profid . "';
                     }, 1000); 
                 });
                 </script>";
@@ -131,7 +132,7 @@ if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || 
     echo "<script>
     setTimeout(function () {
         modal.style.display = 'none';
-        window.location.href = '../admin/niche.php?locid=". $locID . "&profid=" . $profid . "';
+        window.location.href = '../staff/niche.php?locid=". $locID . "&profid=" . $profid . "';
     }, 1000); 
     </script>";
     

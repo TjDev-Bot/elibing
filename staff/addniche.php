@@ -8,6 +8,7 @@ require('assets/component/sidebars.php');
 
 include "../dbConn/conn.php";
 
+$userID = isset($_SESSION['id']) ? $_SESSION['id'] : ''; 
 
 if (isset($_GET['locid'])) {
     $block_id = $_GET['locid'];
@@ -32,17 +33,20 @@ if (isset($_GET['locid'])) {
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
 
-                        <button class="btn btn-danger mb-2" type="button" name="submit" onclick="goBack()">Back</button>
-                    <form action="../dbConn/staff-adlocation.php" method="POST">
-                        <input type="text" name="nicheno" placeholder="Generate Niche No." required>
-                        <input type="text" name="size" placeholder="Size" required>
-                        <input type="number" name="level" placeholder="Level" required>
-                        <input type="hidden" name="locid" value="<?php echo $block_id ?>">
-                        <input type="hidden" value="0" name="stat">
-                        <input type="hidden" name="profid" value="<?php echo $profid ?>">
-                        <button class="btn btn-primary " type="submit" name="submit">Submit</button>
-                    </form>
-</br>
+                            <button class="btn btn-danger mb-4" type="button" name="submit"
+                                onclick="goBack()">Back</button>
+                            <form action="../dbConn/staff-adlocation.php" method="POST">
+                            <input type="hidden" name="userid" value="<?php echo $userID ?>">
+
+                                <input type="text" name="nicheno" placeholder="Generate Niche No." required>
+                                <input type="text" name="size" placeholder="Size" required>
+                                <input type="number" name="level" placeholder="Level" required>
+                                <input type="hidden" name="locid" value="<?php echo $block_id ?>">
+                                <input type="hidden" value="0" name="stat">
+                                <input type="hidden" name="profid" value="<?php echo $profid ?>">
+                                <button class="btn btn-primary" type="submit" name="submit">Submit</button>
+                            </form>
+                            </br>
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll">
                                     <table class="table-no-border">

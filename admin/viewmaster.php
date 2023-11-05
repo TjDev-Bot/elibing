@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="css/walkin.css">
@@ -11,9 +12,9 @@ require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
 
-if(isset($_GET['id'])){
+if(isset($_GET['id']) && isset($_SESSION['id'])){
     $profileID = $_GET['id'];
-
+    $userID = $_SESSION['id'];
     $select = "SELECT * FROM tblNiche
     INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
     INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
@@ -25,6 +26,7 @@ if(isset($_GET['id'])){
         $fname = $data['Fname'];
         $mname =  $data['MName'] ;
         $lname =  $data['Lname'];
+        $suffix = $data['Suffix'];
         $locID = $data['LocID'];
         $nicheno = $data['Nid'];
         $level = $data['Level'];
@@ -36,7 +38,9 @@ if(isset($_GET['id'])){
         $intermentplace = $data['IntermentPlace'];
         $relationship = $data['Relationship'];
         $intermentdate = $data['IntermentDateTime'];
-    }
+        $requestor = $data['Requestor'];
+        $bday = $data['Birthydate'];
+    }   
 }
 ?>
 
@@ -67,99 +71,132 @@ if(isset($_GET['id'])){
 
                                                     <form action="../dbConn/updatecontact.php" method="POST">
                                                         <input type="hidden" name="profid"
-                                                            value="<?php echo $profileID ?>">
-                                                        <div class="formbold flex">
-                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                                <label for="name" class="formbold-form-label"></label>
-                                                                Relationship
+                                                            value="<?php echo $profileID ?> ">
+                                                            <input type="hidden" name="userid"
+                                                            value="<?php echo $userID?> ">
+                                                        <h4 class="mb-5">Applicant's Information</h4>
+
+                                                        <div class="formbold-mb-5 flex">
+                                                            <div class="formbold-mb-5 w-full">
+                                                                <label for="name" class="formbold-form-label">
+                                                                    Full Name
                                                                 </label>
-                                                                <input type="text" name="relationship"
-                                                                    value="<?php echo  $relationship ?>"
-                                                                    class="formbold-form-input" />
+                                                                <input type="text" name="fullname" id="name"
+                                                                    value="<?php echo $requestor?>"
+                                                                    class="formbold-form-input" readonly />
                                                             </div>
 
-                                                            <div class="formbold w-full  formbold-px-3">
-                                                                <div class="formbold-mb-5 w-full">
-                                                                    <label for="" class="formbold-form-label">
-                                                                        Contact No
-                                                                    </label>
-                                                                    <input type="tel" name="contact"
-                                                                        value="<?php echo $contact ?>"
-                                                                        class="formbold-form-input"
-                                                                        pattern="^\63\d{10}$"
-                                                                        title="Please enter a valid Philippine phone number with 63 and 10 digits." />
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="formbold w-full  formbold-px-3">
-                                                                <label for="date" class="formbold-form-label">
-                                                                    Email</label>
-                                                                <input type="email" name="email"
-                                                                    value="<?php echo $email ?>"
-                                                                    class="formbold-form-input" />
+                                                            <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <label for="name"
+                                                                    class="formbold-form-label">Relationship to the
+                                                                    Deceased
+                                                                </label>
+                                                                <input type="email" name="relationship" id=""
+                                                                    value="<?php  echo $relationship ?>"
+                                                                    class="formbold-form-input" readonly />
                                                             </div>
                                                         </div>
+
+
                                                         <div class="formbold-mb-5 flex">
-                                                            <div class="formbold w-full  formbold-px-3">
-                                                                <label for="name" class="formbold-form-label"></label>
-                                                                First name
+                                                            <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <label for="" class="formbold-form-label">
+                                                                    Contact No
                                                                 </label>
-                                                                <input type="text" name="fname"
-                                                                    value="<?php echo $fname ?>"
+                                                                <input type="tel" name="contact" id=""
+                                                                    value="<?php  echo $contact ?>"
+                                                                    class="formbold-form-input" />
+                                                            </div>
+                                                            <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <label for="name" class="formbold-form-label">
+                                                                    Email Address
+                                                                </label>
+                                                                <input type="email" name="email" id=""
+                                                                    value="<?php  echo $email ?>"
                                                                     class="formbold-form-input" />
                                                             </div>
 
-                                                            <div class="formbold w-full  formbold-px-3">
-                                                                <label for="name" class="formbold-form-label"></label>
-                                                                Middle Name
+                                                        </div>
+                                                        <br>
+                                                        <hr>
+                                                        <h4 class="mb-5">Deceased Information</h4>
+                                                        <div class="formbold-mb-5 flex">
+                                                            <div class="formbold-mb-5 w-full  ">
+                                                                <label for="name" class="formbold-form-label"> Last
+                                                                    Name
                                                                 </label>
-                                                                <input type="text" name="mname"
-                                                                    value="<?php echo $mname ?>"
-                                                                    class="formbold-form-input" />
-                                                            </div>
-                                                            <div class="formbold w-full  formbold-px-3">
-                                                                <label for="name" class="formbold-form-label"></label>
-                                                                Last Name
-                                                                </label>
-                                                                <input type="text" name="lname"
+                                                                <input type="text" name="Lname" id="name"
                                                                     value="<?php echo $lname ?>"
-                                                                    class="formbold-form-input" />
+                                                                    class="formbold-form-input" readonly />
                                                             </div>
 
+                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label"> First
+                                                                    Name
+                                                                </label>
+                                                                <input type="text" name="Fname" id="name"
+                                                                    value="<?php echo $fname ?>"
+                                                                    class="formbold-form-input" readonly />
+                                                            </div>
 
+                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label">
+                                                                    Middle Name
+                                                                </label>
+                                                                <input type="text" name="MName" id="name"
+                                                                    value="<?php echo $mname ?>"
+                                                                    class="formbold-form-input" readonly />
+                                                            </div>
+
+                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label">
+                                                                    Suffix
+                                                                </label>
+                                                                <input type="text" value="<?php echo $suffix ?>"
+                                                                    class="formbold-form-input" readonly>
+                                                                <!-- <input type="text" name="Suffix" id="name"
+                                                                        placeholder="Jr / Sr"
+                                                                        class="formbold-form-input" /> -->
+                                                            </div>
                                                         </div>
                                                         <div class="formbold-mb-5 flex">
-                                                            <div class="formbold w-full  formbold-px-3">
-                                                                <label for="name" class="formbold-form-label">Cause of
-                                                                    Death
-                                                                </label>
-                                                                <input type="text" name="causeofdeath"
-                                                                    value="<?php echo $causeofdeath ?>"
-                                                                    class="formbold-form-input" />
+                                                            <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <label for="date" class="formbold-form-label">
+                                                                    Date of Death </label>
+                                                                <input type="text" name="DateofDeath" id="ddate"
+                                                                    value="<?php echo $bday?>"
+                                                                    class="formbold-form-input" readonly />
+                                                            </div>
+                                                            <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <label for="date" class="formbold-form-label">
+                                                                    Date of Death </label>
+                                                                <input type="text" name="DateofDeath" id="ddate"
+                                                                    value="<?php echo $dateofdeath?>"
+                                                                    class="formbold-form-input" readonly />
                                                             </div>
 
-                                                            <div class="formbold w-full  formbold-px-3">
+                                                            <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <label for="name" class="formbold-form-label">Cause
+                                                                    of Death
+                                                                </label>
+                                                                <input type="text" name="CauseofDeath" id="name"
+                                                                    value="<?php echo $causeofdeath ?>"
+                                                                    class="formbold-form-input" readonly />
+                                                            </div>
+
+                                                            <div class="formbold-mb-5 w-full formbold-px-3">
                                                                 <label for="name" class="formbold-form-label">Interment
                                                                     Place
                                                                 </label>
-                                                                <input type="text" name="intermentplace"
+                                                                <input type="text" name="IntermentPlace" id="name"
                                                                     value="<?php echo $intermentplace ?>"
-                                                                    class="formbold-form-input" />
-                                                            </div>
-                                                            <div class="formbold w-full  formbold-px-3" style="display:none;">
-                                                                <label for="name" class="formbold-form-label">
-                                                                    Interment Date and Time
-                                                                </label>
-                                                                <input type="datetime-local" name="intermentdate"
-                                                                    value="<?php echo $intermentdate ?>"
-                                                                    class="formbold-form-input" />
-
+                                                                    class="formbold-form-input" readonly />
                                                             </div>
 
                                                         </div>
                                                         <hr>
                                                         <button class="formbold-btn-next submit-button" type="button"
-                                                            data-bs-target="#exampleModal" id="updateButton">
+                                                            id="updateButton">
                                                             <span class="update-label">Update</span>
                                                             <div class="loader"></div>
                                                         </button>
@@ -202,7 +239,6 @@ if(isset($_GET['id'])){
                 success: function(response) {
                     var trimmedResponse = $.trim(response);
 
-                    // Re-enable the button and hide the loader, show the label
                     updateButton.prop("disabled", false);
                     loader.hide();
                     updateButton.find(".update-label").show();

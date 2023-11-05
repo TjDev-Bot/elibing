@@ -2,19 +2,22 @@
 include('conn.php');
 
 $profid = $_POST['profid'];
-$occupancy = $_POST['occupancy'];
+$occupancyMonths = $_POST['occupancy'];
+
 try {
     // Start a transaction
     $conn->beginTransaction();
 
-    // Prepare and execute the first update statement
-    $update1 = "UPDATE tblBuriedRecord SET OccupancyDate = ? WHERE Profid = ?";
-    $stmt1 = $conn->prepare($update1);
-    $stmt1->execute([$occupancy, $profid]);
-    // // Prepare and execute the second update statement
-    // $update2 = "UPDATE tblIntermentReservation SET Nid = ? WHERE ProfID = ?";
-    // $stmt2 = $conn->prepare($update2);
-    // $stmt2->execute([$nicheno, $profid]);
+    // Get the current date
+    $currentDate = date('Y-m-d');
+
+    // Calculate the new date by adding the selected months
+    $newDate = date('Y-m-d', strtotime("$currentDate +$occupancyMonths months"));
+
+    // Prepare and execute the update statement
+    $update = "UPDATE tblBuriedRecord SET OccupancyDate = ? WHERE Profid = ?";
+    $stmt = $conn->prepare($update);
+    $stmt->execute([$newDate, $profid]);
 
     $conn->commit();
 

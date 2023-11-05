@@ -13,17 +13,14 @@ include "../dbConn/conn.php";
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <!-- <h1 class="mt-4">Walk-in Appointment</h1> -->
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">
                             <h1>Add Walk-in Renewal</h1>
                         </li>
                     </ol>
                     <div class="pcoded-inner-content">
-                        <!-- Main-body start -->
                         <div class="main-body">
                             <div class="page-wrapper">
-                                <!-- Page-body start -->
                                 <div class="page-body">
                                     <div class="row">
                                         <div class="col-sm">
@@ -31,7 +28,6 @@ include "../dbConn/conn.php";
                                                 <div class="formbold-main">
                                                     <div class="">
                                                         <?php
-                                                    
                                                             if(isset($_GET['id'])){
                                                                 $id = $_GET['id'];
                                                             }
@@ -56,62 +52,68 @@ include "../dbConn/conn.php";
                                                                 <div class="formbold-mb-5 w-full">
                                                                     <label for="name"
                                                                         class="formbold-form-label">Relationship
-                                                                        to the
-                                                                        Deceased
-                                                                    </label>
+                                                                        to the Deceased</label>
                                                                     <input type="text" name="relationship" id="name"
                                                                         value="<?php echo ucfirst($relationship) ?>"
                                                                         readonly class="formbold-form-input" />
                                                                 </div>
                                                                 <div class="formbold-mb-5 w-full">
                                                                     <label for="name" class="formbold-form-label"> Name
-                                                                        of the Deceased
-                                                                    </label>
+                                                                        of the Deceased</label>
                                                                     <input type="text" name="deceased" id="name"
                                                                         value="<?php echo ucwords($name)?>" readonly
                                                                         class="formbold-form-input" />
                                                                 </div>
-
                                                             </div>
                                                             <div class="formbold-mb-5 flex">
                                                                 <div class="formbold-mb-5 w-full">
-                                                                    <label for="date" class="formbold-form-label">
-                                                                        Date of Death </label>
+                                                                    <label for="date" class="formbold-form-label">Date
+                                                                        of Death</label>
                                                                     <input type="text" name="deathdate" id="ddate"
                                                                         value="<?php echo $dateofdeath ?>" readonly
                                                                         class="formbold-form-input" />
                                                                 </div>
-
                                                                 <div class="formbold-mb-5 w-full">
-                                                                    <label for="date" class="formbold-form-label">
-                                                                        Occupancy Date</label>
+                                                                    <label for="date"
+                                                                        class="formbold-form-label">Occupancy
+                                                                        Date</label>
                                                                     <input type="text" name="interment" id="ddate"
                                                                         value="<?php echo $occupancydate ?>" readonly
                                                                         class="formbold-form-input" />
                                                                 </div>
-
                                                                 <div class="formbold-mb-5 w-full">
-                                                                    <label for="date" class="formbold-form-label">
-                                                                        Renew Occupancy</label>
-                                                                    <input type="date" name="occupancy" id="ddate"
-                                                                        class="formbold-form-input" />
+                                                                    <label for="date" class="formbold-form-label">Renew
+                                                                        Occupancy</label>
+                                                                    <select name="occupancy" id="occupancySelect"
+                                                                        class="formbold-form-input">
+                                                                        <option value="">Select Renewal Period</option>
+                                                                        <option value="1">1 Month</option>
+                                                                        <option value="2">2 Months</option>
+                                                                        <option value="3">3 Months</option>
+                                                                        <option value="4">4 Months</option>
+                                                                        <option value="5">5 Months</option>
+                                                                        <option value="6">6 Months</option>
+                                                                        <option value="7">7 Months</option>
+                                                                        <option value="8">8 Months</option>
+                                                                        <option value="9">9 Months</option>
+                                                                        <option value="10">10 Months</option>
+                                                                        <option value="11">11 Months</option>
+                                                                        <option value="12">12 Months</option>
+
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                             <hr>
-
-
                                                             <div>
                                                                 <button class="btn btn-success submit-button mb-3"
-                                                                    type="button" id="updateButton">
+                                                                    type="button" id="updateButton" disabled>
                                                                     <span class="update-label">Renew</span>
                                                                     <div class="loader"></div>
                                                                 </button>
                                                             </div>
-
                                                         </form>
                                                     </div>
                                                     <div style="display:none;" id="response"></div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -121,9 +123,6 @@ include "../dbConn/conn.php";
                         </div>
                     </div>
                 </div>
-
-
-
             </main>
         </div>
     </div>
@@ -212,35 +211,38 @@ include "../dbConn/conn.php";
 
     <script>
     $(document).ready(function() {
+        $("#occupancySelect").change(function() {
+            var selectedOption = $(this).val();
+            if (selectedOption !== "") {
+                $("#updateButton").prop("disabled", false);
+            } else {
+                $("#updateButton").prop("disabled", true);
+            }
+        });
         $(".submit-button").click(function() {
             var form = $(this).closest('form');
             var formData = form.serialize();
             var updateButton = $("#updateButton");
             var loader = updateButton.find('.loader');
-
             updateButton.prop("disabled", true);
             updateButton.find(".update-label").hide();
             loader.show();
-
             $.ajax({
                 type: "POST",
                 url: form.attr("action"),
                 data: formData,
                 success: function(response) {
                     var trimmedResponse = $.trim(response);
-
                     updateButton.prop("disabled", false);
                     loader.hide();
                     updateButton.find(".update-label").show();
-
                     if (trimmedResponse === "success") {
                         Swal.fire({
                             title: 'Success',
                             text: 'Info Successfully Updated',
                             icon: 'success'
                         }).then(function() {
-                            // Refresh the page
-                            window.location = "deceased.php";
+                            window.location = "orderpayment.php";
                         });
                     } else {
                         Swal.fire({

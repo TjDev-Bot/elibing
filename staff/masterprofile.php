@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <?php
 require('assets/component/header.php');
 require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include('../dbConn/conn.php');
 require_once('../component/locfunction.php');
-if(isset($_GET['profid']) && isset($_GET['name'])){
+
+$userID = isset($_SESSION['id']) ? $_SESSION['id'] : ''; 
+if (isset($_GET['profid']) && isset($_GET['name']) ) {
     $profid = $_GET['profid'];
     $name = $_GET['name'];
 }
-
 ?>
 
 <body>
@@ -19,42 +19,40 @@ if(isset($_GET['profid']) && isset($_GET['name'])){
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">
                             <h1>Master Profile</h1>
                         </li>
                     </ol>
-
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
-
-                            <form action="../dbConn/staffblock.php" method="POST">
+                            <form action="../dbConn/block.php" method="POST">
                                 <div class="">
-                                    <select name="type" id="type" class="" onchange="enableAddButton(this)">
+                                    <select name="type" id="type" class="" onchange="toggleInputFields(this)">
                                         <option value="" selected disabled>Type</option>
                                         <option value="Chamber">Chamber</option>
                                         <option value="Apartment">Apartment</option>
                                     </select>
                                 </div>
-                                </br>
-                                <input type="text" name="nlname" placeholder="Input NL Name">
-                                <input type="text" name="size" placeholder="Input Size">
-                                <input type="text" name="description" placeholder="Input Description">
+                                <br>
+                                <div id="inputFields">
+                                    <input type="hidden" name="userid" value="<?php echo $userID ?>">
 
-                                <input type="hidden" name="profid" value="<?php echo $profid?>">
-                                <input type="hidden" name="name" value="<?php echo $name?> ">
-                                <button class="btn btn-primary mb-4" id="addButton" type="submit" disabled><i
-                                        class="fa-solid fa-plus fa-lg" style="color: white;"></i> Add</button>
+                                    <input type="text" name="nlname" placeholder="Input Niche Location" readonly>
+                                    <input type="text" name="size" placeholder="Input Size" readonly>
+                                    <input type="text" name="description" placeholder="Input Description" readonly>
+                                    <button class="btn btn-primary mb-4" id="addButton" type="submit" disabled>
+                                        <i class="fa-solid fa-plus fa-lg" style="color: white;"></i> Add
+                                    </button>
+                                </div>
                             </form>
-
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll">
                                     <table class="table-no-border">
                                         <thead>
                                             <tr>
-                                                <th>Block No</th>
-                                                <th>NL Name</th>
+                                                <th>Location ID</th>
+                                                <th>Niche Location</th>
                                                 <th>Size</th>
                                                 <th>Description</th>
                                                 <th>Type</th>
@@ -62,24 +60,21 @@ if(isset($_GET['profid']) && isset($_GET['name'])){
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             <?php
-                                               
-                                                $select = "SELECT * FROM tblNicheLocation";
-                                                $query = $conn->query($select);
-
-                                                while($data = $query->fetch(PDO::FETCH_ASSOC)){
-                                                    $id = $data['LocID'];
-                                                    $nlname = $data['NLName'];
-                                                    $size = $data['Size'];
-                                                    $description = $data['Description'];
-                                                    $type = $data['Type'];
+                                            $select = "SELECT * FROM tblNicheLocation";
+                                            $query = $conn->query($select);
+                                            while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+                                                $id = $data['LocID'];
+                                                $nlname = $data['NLName'];
+                                                $size = $data['Size'];
+                                                $description = $data['Description'];
+                                                $type = $data['Type'];
                                             ?>
                                             <tr>
                                                 <td><?php echo $id ?></td>
                                                 <td><?php echo $nlname ?></td>
                                                 <td><?php echo $size ?></td>
-                                                <td><?php echo $description?></td>
+                                                <td><?php echo $description ?></td>
                                                 <td><?php echo $type ?></td>
                                                 <td>
                                                     <button class="btn btn-primary"
@@ -91,7 +86,6 @@ if(isset($_GET['profid']) && isset($_GET['name'])){
                                             <?php } ?>
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
                         </div>
@@ -102,10 +96,24 @@ if(isset($_GET['profid']) && isset($_GET['name'])){
     </div>
 
     <script>
-    function enableAddButton(select) {
+    function toggleInputFields(select) {
         var addButton = document.getElementById("addButton");
-        if (select.value !== "") {
+        var inputFields = document.getElementById("inputFields");
+
+        var inputElements = inputFields.getElementsByTagName("input");
+
+        if (select.value === "Apartment") {
             addButton.disabled = false;
+
+            for (var i = 0; i < inputElements.length; i++) {
+                inputElements[i].readOnly = false;
+            }
+        } else if (select.value === "Chamber") {
+            addButton.disabled = false;
+
+            for (var i = 0; i < inputElements.length; i++) {
+                inputElements[i].readOnly = true;
+            }
         } else {
             addButton.disabled = true;
         }
@@ -119,12 +127,9 @@ if(isset($_GET['profid']) && isset($_GET['name'])){
     </script>
 
 
-
     <?php
     require('assets/component/script.php');
     ?>
-
-
 </body>
 
 </html>

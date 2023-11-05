@@ -17,6 +17,11 @@ $fullname = $_POST['fullname'];
 $contact = $_POST['contact'];
 $email = $_POST['email'];
 $createdby = $_POST['create'];
+$userID = $_POST['userid'];
+$bday = $_POST['bday'];
+
+date_default_timezone_set('Asia/Manila'); 
+$currentDateTime = date('h:i:s A');
 
 try {
     if (!empty($lname) && !empty($fname) && !empty($mname)) {
@@ -31,12 +36,14 @@ try {
     
         if ($result['count'] > 0) {
             if ($result['count'] > 0) {
-                echo '<script type="text/javascript">alert("Duplicate entry: A record with the same name and suffix already exists."); window.location.href = "form.php";</script>';
+                echo '<script type="text/javascript">alert("Duplicate entry: A record with the same name and suffix already exists."); window.location.href = "../admin/form.php";</script>';
                 exit; 
             } 
         }else {
+        
+
             // Insert Data for tblDeathRecord
-            $sql = "INSERT INTO tblDeathRecord (ProfileID, Lname, Fname, MName, Suffix, DateofDeath, CauseofDeath, IntermentPlace) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO tblDeathRecord (ProfileID, Lname, Fname, MName, Suffix, DateofDeath, CauseofDeath, IntermentPlace, Birthydate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(1, $profileID, PDO::PARAM_STR);
             $stmt->bindParam(2, $lname, PDO::PARAM_STR);
@@ -46,6 +53,7 @@ try {
             $stmt->bindParam(6, $dateofdeath, PDO::PARAM_STR);
             $stmt->bindParam(7, $causeofdeath, PDO::PARAM_STR);
             $stmt->bindParam(8, $intermentplace, PDO::PARAM_STR);
+            $stmt->bindParam(9, $bday, PDO::PARAM_STR);
     
             // Insert Data for tblIntermentReservation
             $sqlreserve = "INSERT INTO tblIntermentReservation (AppointmentID, Relationship, Requestor, ProfID) VALUES (?, ?, ?, ?)";
@@ -63,7 +71,12 @@ try {
             $stmtcontact->bindParam(3, $email, PDO::PARAM_STR);
             $stmtcontact->bindParam(4, $createdby, PDO::PARAM_STR);
             
-            if ($stmt->execute() && $stmtreserve->execute() && $stmtcontact->execute()) {
+
+            $stmt2 = "INSERT INTO TBL_Audit_Trail (User_ID, Date, Timex, Action) VALUES (?, GETDATE(), ?, 'New Added Occupant: ".$fullname."')";
+            $insertAudit = $conn->prepare($stmt2);
+            $insertAudit->bindParam(1, $userID, PDO::PARAM_STR);
+            $insertAudit->bindParam(2, $currentDateTime, PDO::PARAM_STR);
+            if ($stmt->execute() && $stmtreserve->execute() && $stmtcontact->execute() && $insertAudit->execute()) {
                 echo "<script>
                     document.addEventListener('DOMContentLoaded', function() {
                         var modal = document.createElement('div');

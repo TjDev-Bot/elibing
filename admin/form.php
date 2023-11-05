@@ -41,15 +41,18 @@ if (isset($_GET['id'])) {
                                             <div class="container-interment">
                                                 <div class="formbold-main">
                                                     <div class="">
-                                                        <!-- <button class="btn btn-danger" type="button" name="submit"
-                                                            onclick="goBack()">Back</button> -->
+
                                                         <form action="../dbConn/adoccupant.php" method="POST">
-                                                            <input type="hidden" value="<?php echo $id ?> ">
-                                                            <input type="hidden" name="create" value="<?php echo $createdby ?>">
+                                                            <input type="hidden"  name="userid" value="<?php echo $id ?> ">
+                                                            <input type="hidden" name="create"
+                                                                value="<?php echo $createdby ?>">
+
                                                             <div class="formbold-mb-5 w-full  formbold-px-3">
                                                                 <label for="time" class="formbold-form-label">
                                                                 </label>
-                                                                <input type="hidden" name="Nid" id="user_name" required class="formbold-form-input" value="<?php echo $nicheno ?>" />
+                                                                <input type="hidden" name="Nid" id="user_name" required
+                                                                    class="formbold-form-input"
+                                                                    value="<?php echo $nicheno ?>" />
                                                             </div>
 
                                                             <h4 class="mb-5">Applicant's Information</h4>
@@ -59,40 +62,48 @@ if (isset($_GET['id'])) {
                                                                     <label for="name" class="formbold-form-label">
                                                                         Full Name
                                                                     </label>
-                                                                    <input type="text" name="fullname" id="name" placeholder="Enter Full Name" required class="formbold-form-input"/>
+                                                                    <input type="text" name="fullname" id="name"
+                                                                        placeholder="Enter Full Name" required
+                                                                        class="formbold-form-input" />
                                                                 </div>
-                                                                
-                                                                <div class="formbold-mb-5 w-full formbold-px-3" >
-                                                                    <label for="name" class="formbold-form-label">Relationship to the
-                                                                        Deceased
+
+                                                                <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                    <label for="name" class="formbold-form-label ">
+                                                                        Relationship to the Deceased
                                                                     </label>
                                                                     <select name="relationship" id="">
-                                                                        <option value="" selected disabled>Select Relationship Status</option>
+                                                                        <option value="" selected disabled>Select
+                                                                            Relationship Status</option>
                                                                         <option value="Daughter">Daughter</option>
                                                                         <option value="Son">Son</option>
                                                                         <option value="Spouse">Spouse</option>
                                                                         <option value="Relative">Relative</option>
-                                                                        <option value="Concern Citizen">Concern Citizen</option>
+                                                                        <option value="Concern Citizen">Concern Citizen
+                                                                        </option>
                                                                     </select>
                                                                 </div>
                                                             </div>
 
-
                                                             <div class="formbold-mb-5 flex">
-                                                                <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <div class="formbold-mb-5 w-full">
                                                                     <label for="" class="formbold-form-label">
                                                                         Contact No
                                                                     </label>
-                                                                    <input type="tel" name="contact" id="name" placeholder="Please enter a valid Philippine phone number 11 digits." required class="formbold-form-input" pattern="^\63\d{10}$" title="Please enter a valid Philippine phone number with 63 and 10 digits." />
+                                                                    <input type="tel" name="contact" id="name"
+                                                                        placeholder="Please enter a valid Philippine phone number 11 digits."
+                                                                        required class="formbold-form-input"
+                                                                        pattern="^\63\d{10}$"
+                                                                        title="Please enter a valid Philippine phone number with 63 and 10 digits." />
                                                                 </div>
 
                                                                 <div class="formbold-mb-5 w-full formbold-px-3">
                                                                     <label for="name" class="formbold-form-label">
                                                                         Email Address
                                                                     </label>
-                                                                    <input type="email" name="email" id="" placeholder="Enter Email Address" class="formbold-form-input" />
+                                                                    <input type="email" name="email" id=""
+                                                                        placeholder="Enter Email Address"
+                                                                        class="formbold-form-input" />
                                                                 </div>
-
                                                             </div>
                                                             <br>
                                                             <hr>
@@ -102,21 +113,30 @@ if (isset($_GET['id'])) {
                                                                     <label for="name" class="formbold-form-label"> Last
                                                                         Name
                                                                     </label>
-                                                                    <input type="text" name="Lname" id="name" placeholder="Enter Last Name" required="required" class="formbold-form-input" />
+                                                                    <input type="text" name="Lname" id="name"
+                                                                        placeholder="Enter Last Name"
+                                                                        required="required"
+                                                                        class="formbold-form-input" />
                                                                 </div>
 
                                                                 <div class="formbold-mb-5 w-full  formbold-px-3">
                                                                     <label for="name" class="formbold-form-label"> First
                                                                         Name
                                                                     </label>
-                                                                    <input type="text" name="Fname" id="name" placeholder="Enter First Name" required="required" class="formbold-form-input" />
+                                                                    <input type="text" name="Fname" id="name"
+                                                                        placeholder="Enter First Name"
+                                                                        required="required"
+                                                                        class="formbold-form-input" />
                                                                 </div>
 
                                                                 <div class="formbold-mb-5 w-full  formbold-px-3">
                                                                     <label for="name" class="formbold-form-label">
                                                                         Middle Name
                                                                     </label>
-                                                                    <input type="text" name="MName" id="name" placeholder="Enter Middle Name" required="required" class="formbold-form-input" />
+                                                                    <input type="text" name="MName" id="name"
+                                                                        placeholder="Enter Middle Name"
+                                                                        required="required"
+                                                                        class="formbold-form-input" />
                                                                 </div>
 
                                                                 <div class="formbold-mb-5 w-full  formbold-px-3">
@@ -129,34 +149,44 @@ if (isset($_GET['id'])) {
                                                                         <option value="Jr">Jr</option>
                                                                         <option value="Sr">Sr</option>
                                                                     </select>
-                                                                    <!-- <input type="text" name="Suffix" id="name"
-                                                                        placeholder="Jr / Sr"
-                                                                        class="formbold-form-input" /> -->
                                                                 </div>
                                                             </div>
                                                             <div class="formbold-mb-5 flex">
-                                                                <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="date" class="formbold-form-label">
+                                                                        Birth Date </label>
+                                                                    <input type="date" name="bday" id="ddate" required
+                                                                        class="formbold-form-input" />
+                                                                </div>
+                                                                <div class="formbold-mb-5 w-full">
                                                                     <label for="date" class="formbold-form-label">
                                                                         Date of Death </label>
-                                                                    <input type="date" name="DateofDeath" id="ddate" required class="formbold-form-input" />
+                                                                    <input type="date" name="DateofDeath" id="ddate"
+                                                                        required class="formbold-form-input" />
                                                                 </div>
 
                                                                 <div class="formbold-mb-5 w-full formbold-px-3">
                                                                     <label for="name" class="formbold-form-label">Cause
                                                                         of Death
                                                                     </label>
-                                                                    <input type="text" name="CauseofDeath" id="name" placeholder="" required class="formbold-form-input" />
+                                                                    <input type="text" name="CauseofDeath" id="name"
+                                                                        placeholder="" required
+                                                                        class="formbold-form-input" />
                                                                 </div>
 
                                                                 <div class="formbold-mb-5 w-full formbold-px-3">
-                                                                    <label for="name" class="formbold-form-label">Interment Place
+                                                                    <label for="name"
+                                                                        class="formbold-form-label">Interment Place
                                                                     </label>
-                                                                    <input type="text" name="IntermentPlace" id="name" placeholder="Enter Place" required class="formbold-form-input" />
+                                                                    <input type="text" name="IntermentPlace" id="name"
+                                                                        placeholder="Enter Place" required
+                                                                        class="formbold-form-input" />
                                                                 </div>
-
                                                             </div>
+
                                                             <hr>
-                                                            <button class="formbold-btn-next" name="next" data-bs-target="#exampleModal">Next</button>
+                                                            <button class="formbold-btn-next" name="next"
+                                                                data-bs-target="#exampleModal">Next</button>
 
                                                         </form>
                                                     </div>
@@ -174,37 +204,37 @@ if (isset($_GET['id'])) {
     </div>
 </body>
 <style>
-    .add-appointment {
-        box-shadow: 0px 10px 14px -7px #276873;
-        background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
-        background-color: #4169e1;
-        border-radius: 8px;
-        display: inline-block;
-        cursor: pointer;
-        color: #ffffff;
-        font-family: Courier New;
-        font-size: 20px;
-        font-weight: bold;
-        padding: 13px 32px;
-        text-decoration: none;
-        text-shadow: 0px 1px 0px #3d768a;
-    }
+.add-appointment {
+    box-shadow: 0px 10px 14px -7px #276873;
+    background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
+    background-color: #4169e1;
+    border-radius: 8px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Courier New;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 13px 32px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #3d768a;
+}
 
-    .add-appointment:hover {
-        background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
-        background-color: #4169e1;
-    }
+.add-appointment:hover {
+    background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
+    background-color: #4169e1;
+}
 
-    .add-appointment:active {
-        position: relative;
-        top: 1px;
-    }
+.add-appointment:active {
+    position: relative;
+    top: 1px;
+}
 </style>
 
 <script>
-    function goBack() {
-        window.history.back();
-    }
+function goBack() {
+    window.history.back();
+}
 </script>
 
 
