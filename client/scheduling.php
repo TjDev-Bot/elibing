@@ -37,15 +37,15 @@ function build_calendar($month, $year){
      $next_month = date('m', mktime(0,0,0, $month+1, 1, $year));
      $next_year = date('Y', mktime(0,0,0, $month+1, 1, $year));
 
-     if(isset($_GET['id'])){
-        $profileId = $_GET['id'];
+     if(isset($_GET['profid'])){
+        $profileId = $_GET['profid'];
 
     }
      $calendar = "<center class='month-sched'><h2>$month_name $year</center></h2></center>";
      $calendar.= "<div class='text-center'>";
-     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".$prev_month."&year=".$prev_year."&id=".$profileId."'><i class='fa-solid fa-angles-left'></i> Prev</a>";
-     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".date('m')."&year=".date('Y')."&id=".$profileId."'>Current Month</a>";
-     $calendar.= "<a id='next-button' class='btn btn-primary btn-xs mx-1' href='?month=".$next_month."&year=".$next_year."&id=".$profileId."'>Next <i class='fa-solid fa-angles-right'></i></a>";
+     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".$prev_month."&year=".$prev_year."&profid=".$profileId."'><i class='fa-solid fa-angles-left'></i> Prev</a>";
+     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".date('m')."&year=".date('Y')."&profid=".$profileId."'>Current Month</a>";
+     $calendar.= "<a id='next-button' class='btn btn-primary btn-xs mx-1' href='?month=".$next_month."&year=".$next_year."&profid=".$profileId."'>Next <i class='fa-solid fa-angles-right'></i></a>";
      $calendar.= "</div>";
 
     $calendar.="<div class='calendar-body'>";
@@ -102,11 +102,11 @@ function build_calendar($month, $year){
                 if ($selectedDateCount >= 0) {
                     // $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4><button class='btn btn-danger btn-sm disabled'>Reserved</button></td>";
                     $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4>";
-                    $calendar .= " <a href='../dbConn/schedule-date2.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
+                    $calendar .= " <a href='../dbConn/schedule-date.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
                     $calendar .= "</td>";                    
                 } else {
                     $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4>";
-                    $calendar .= " <a href='../dbConn/schedule-date2.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
+                    $calendar .= " <a href='../dbConn/schedule-date.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
                     $calendar .= "</td>";
                 }
             } else {
@@ -171,4 +171,3 @@ function build_calendar($month, $year){
 
     </div>
 </div>
-

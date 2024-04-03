@@ -1,4 +1,3 @@
-Thomas Jon A. Barrientos
 <?php
 session_start();
 include('conn.php');
@@ -6,21 +5,32 @@ include('conn.php');
 $email = $_GET['email'];
 $password = $_GET['password'];
 
+// date_default_timezone_set('Asia/Manila'); // Set the timezone to 'Asia/Manila'
+
 $select = "SELECT * FROM tblUsersLogin WHERE username = ? AND pw = ?";
 $stmt = $conn->prepare($select);
-$stmt->execute([$email, $password]);
+$stmt->bind_param('ss', $email, $password);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
 
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($row) {
+    $role = $row['Restriction'];
+    $_SESSION['id'] = $row['UserID'];
+    $_SESSION['email1'] = $row['username'];
+    $_SESSION['Createdby'] = $row['Createdby'];
+    $_SESSION['restriction'] = $row['Restriction'];
 
-if ($result) {
-    $role = $result['Restriction'];
+    // Get the current time in the desired format (12-hour clock with AM or PM)
+    // $currentDateTime = date('h:i:s A');
 
-    $_SESSION['id'] = $result['UserID'];
-    $_SESSION['Createdby'] = $result['Createdby'];
-    $_SESSION['restriction'] = $result['Restriction'];
+    $stmt1 = "INSERT INTO TBL_Audit_Trail (User_ID, Action) VALUES (?, 'Log-in')";
+    $insertAudit = $conn->prepare($stmt1);
+    $insertAudit->bind_param('i', $row['UserID']);
+    $insertAudit->execute();
 
     if ($role == 'E-Libing Client') {
-        header('location: ../client/index.php');
+        header('location: ../client/dashboard.php');
         exit();
     } elseif ($role == 'E-Libing Admin') {
         header('location: ../admin/dashboard.php');
@@ -35,7 +45,7 @@ if ($result) {
         die();
     }
 } else {
-    echo '<script type="text/javascript"> alert("Wrong Credentials\n Try Again"); window.location.href = "../user-log.php"; </script>';
+    echo '<script type="text/javascript"> alert("Wrong Credentials\n Try Again"); window.location.href = "../user-log.php?email=' . urlencode($email) . '"; </script>';
     exit();
 }
 ?>

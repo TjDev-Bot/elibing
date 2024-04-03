@@ -17,10 +17,20 @@ function updateCountdown() {
         var warningColor = '';
 
         if (currentDate > dueDate) {
-            dueWarning = 'Past Due (' + daysDifference + ' days ' + hoursDifference + 'h ' +
-                minutesDifference + 'm ' + secondsDifference + 's)';
             warningColor = 'red';
             dueDateElement.style.color = 'red';
+            // if (daysDifference <= -5) {
+            //     warningColor = 'red';
+            //     dueDateElement.style.color = 'red';
+
+            // } else {
+            //     dueWarning = 'Past Due (' + daysDifference + ' days ' + hoursDifference + 'h ' +
+            //     minutesDifference + 'm ' + secondsDifference + 's)';
+            //     warningColor = 'red';
+            //     dueDateElement.style.color = 'red';
+               
+               
+            // }
         } else if (daysDifference >= 7 && daysDifference < 30) {
             dueWarning = 'A week (' + daysDifference + ' days)';
             warningColor = 'blue';
@@ -30,7 +40,7 @@ function updateCountdown() {
                 secondsDifference + 's left)';
             warningColor = 'green';
             dueDateElement.style.color = 'green';
-        } else if (daysDifference >= 1 && daysDifference <= 6) {
+        } else if (daysDifference >= 1 && daysDifference <= 7) {
             dueWarning = 'a (' + daysDifference + ' day/s left)';
             warningColor = 'orange';
             dueDateElement.style.color = 'orange';

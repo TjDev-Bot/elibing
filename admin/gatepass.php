@@ -2,33 +2,98 @@
 <html lang="en">
 
 <?php
-require_once('assets/component/header.php');
+require('assets/component/header.php');
+require('assets/component/topnavbar.php');
+require('assets/component/sidebars.php');
+
+include '../dbConn/conn.php';
+if (isset($_GET['profid']) && isset($_GET['gatepass'])) {
+    $profid = $_GET['profid'];
+    $gatepass = $_GET['gatepass'];
+
+
+    $selectreserve = "SELECT * FROM  tblNiche
+    INNER JOIN tblIntermentReservation ON  tblNiche.Nid =  tblIntermentReservation.Nid
+    INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
+    INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID WHERE tblIntermentReservation.ProfID = '$profid'";
+    $queryreserve = $conn->query($selectreserve);
+    while ($dataloc = $queryreserve->fetch_assoc()) {
+
+        $requestor = $dataloc['Requestor'];
+        $name = $dataloc['Fname'] . ' ' . $dataloc['Mname'] . ' ' . $dataloc['Lname'];
+        $nicheno = $dataloc['Nno'];
+        $intermentdate = $dataloc['IntermentDateTime'];
+        $nichelocaion = $dataloc['NLName'];
+        $size = $dataloc['Size'];
+        $description = $dataloc['Description'];
+        $type = $dataloc['Type'];
+        $level = $dataloc['Level'];
+    }
+}
 ?>
 
 <body>
-    <div class="bg">
+    <center>
+        <div class="bg">
+            <button class="btn btn-primary btn-print" id="printButton">
+                <i class='bx bx-printer'></i>
+            </button>
+            <div class="card">
+                <span class="card__success"><i class="ion-checkmark"></i></span>
+                <div class="passlogo">
+                    <img src="../image/gensanlogo.png" alt="logo" class="passlogo" width="80px" style="display: flex; justify-content:center; margin: 0 auto;">
+                    <h1 class="card__msg" style="text-align:center;">GATE PASS</h1>
+                    <h3 class="card__submsg">Antonio C. Acharon Memorial Park, Brgy. Fatima,GSC</h3>
+                    <h3>
+                        Requestor : <?php echo $requestor ?>
+                    </h3>
+                    <h3>
+                        Deceased Name : <?php echo ucfirst($name) ?>
+                    </h3>
+                    <h3>
+                        Interment Date & Time : <?php echo date('F j, Y', strtotime($intermentdate)); ?>
+                    </h3>
+                    <h3>
+                        Niche No : <?php echo $nicheno ?>
+                    </h3>
+                    <h3>
+                        Level : <?php echo $level ?>
+                    </h3>
 
-        <div class="card">
+                    <h3>
+                        Niche Location : <?php echo $nichelocaion ?>
+                    </h3>
 
-            <span class="card__success"><i class="ion-checkmark"></i></span>
+                    <h3>
+                        Gatepass No : <?php echo $gatepass ?>
+                    </h3>
 
-            <h1 class="card__msg">GATE PASS</h1>
-            <h3 class="card__submsg">Antonio C. Acharon Memorial Park, Brgy. Fatima,GSC</h3>
-            <button type="button" class="formbold-btn-next" name="next" onclick="window.location.href='dashboard.php'">Done</button>
-            <div class="card__body">
-
+                </div>
             </div>
-
         </div>
-
-    </div>
+    </center>
+    <button type="button" class="formbold-btn-next btn-done" name="next" id="doneButton" style="width: 20vw;justify-content:center; margin: auto 45%;" onclick="next()">Done</button>
 </body>
+<script>
+    function next() {
+        var url = 'intermentSched.php';
+        window.location.href = url;
+    }
+</script>
+<style>
 
-<!--style>
-    primary-col=#6C7BEE .bg {
+    center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto;
+        margin-left: 50px;
+    }
 
-        background-color: primary-col;
-        width: 480px;
+    .bg {
+
+        background-color:primary-color;
+        width: 70vw;
         overflow: hidden;
         margin: 0 auto;
         box-sizing: border-box;
@@ -42,15 +107,19 @@ require_once('assets/component/header.php');
         background-color: white;
         width: 100%;
         float: left;
-        margin-top: 40px;
+        margin-top: 3%;
         border-radius: 5px;
         box-sizing: border-box;
-        padding: 80px 30px 25px 30px;
-        text-align: center;
+        border-style: solid;
+        border-color: black;
+        padding: 40px 30px 25px 30px;
+        text-align: left;
         position: relative;
 
+
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-        0 1px 2px rgba(0, 0, 0, 0.24) &__success {
+        0 1 px 2 px rgba(0, 0, 0, 0.24) ; __success
+        {
             position: absolute;
             top: -50px;
             left: 145px;
@@ -67,19 +136,29 @@ require_once('assets/component/header.php');
             }
         }
 
+        .passlogo {
+            place-items: center;
+
+        }
+
         &__msg {
             text-transform: uppercase;
             color: #55585b;
+            text-align: center;
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 5px;
+            text-align: center;
+            position: relative;
+
         }
 
-        &__submsg {
+        & __submsg {
             color: #959a9e;
             font-size: 16px;
             font-weight: 400;
             margin-top: 0px;
+            text-align: left;
         }
 
         &__body {
@@ -92,7 +171,7 @@ require_once('assets/component/header.php');
             padding: 30px;
         }
 
-        &__avatar {
+        & __avatar {
             width: 50px;
             height: 50px;
             border-radius: 100%;
@@ -102,11 +181,11 @@ require_once('assets/component/header.php');
             top: 7px;
         }
 
-        &__recipient-info {
+        & __recipient-info {
             display: inline-block;
         }
 
-        &__recipient {
+        & __recipient {
             color: #232528;
             text-align: left;
             margin-bottom: 5px;
@@ -119,7 +198,7 @@ require_once('assets/component/header.php');
             margin-top: 0px;
         }
 
-        &__price {
+        & __price {
             color: #232528;
             font-size: 70px;
             margin-top: 25px;
@@ -138,7 +217,7 @@ require_once('assets/component/header.php');
             margin-bottom: 5px;
         }
 
-        &__payment {
+        & __payment {
             background-color: white;
             border-radius: 4px;
             width: 100%;
@@ -146,21 +225,21 @@ require_once('assets/component/header.php');
             box-sizing: border-box;
             display: flex;
             align-items: center;
-            justify-content center;
+            justify-content: center;
         }
 
-        &__credit-card {
+        & __credit-card {
             width: 50px;
             display: inline-block;
             margin-right: 15px;
         }
 
-        &__card-details {
+        & __card-details {
             display: inline-block;
             text-align: left;
         }
 
-        &__card-type {
+        & __card-type {
             text-transform: uppercase;
             color: #232528;
             font-weight: 600;
@@ -174,12 +253,12 @@ require_once('assets/component/header.php');
             margin-top: 0px;
         }
 
-        &__tags {
+        & __tags {
             clear: both;
             padding-top: 15px;
         }
 
-        &__tag {
+        & __tag {
             text-transform: uppercase;
             background-color: #f8f6f6;
             box-sizing: border-box;
@@ -189,4 +268,47 @@ require_once('assets/component/header.php');
             color: #d3cece;
         }
     }
+
+    @media print {
+
+        .sb-topnav,
+        .sb-sidenav {
+            display: none;
+        }
+
+
+        #printButton,
+        #doneButton {
+            display: none;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            width:130%;
+            height: auto;
+            margin-left: -10em;
+        }
+    }
+
+    .btn-done {
+        translate: transform ease-in-out .2s;
+        margin-top: auto;
+        background-color: blue;
+        color: white;
+    }
+
+    .btn-done:hover {
+        transform: scale(0.9);
+        color: white;
+        background-color:#6a64f1;
+    }
 </style>
+<script>
+    document.getElementById("printButton").addEventListener("click", function() {
+        window.print();
+    });
+</script>

@@ -7,7 +7,10 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include('../dbConn/conn.php');
 
-$select = "SELECT * FROM tblDeathRecord INNER JOIN tblIntermentReservation ON tblDeathRecord.ProfileID = tblIntermentReservation.ProfID ORDER BY IntermentDateTime DESC";
+$select = "SELECT * FROM tblIntermentReservation
+LEFT JOIN tblBuriedRecord ON tblIntermentReservation.ProfID = tblBuriedRecord.Profid
+INNER JOIN tblNiche ON tblIntermentReservation.Nid = tblNiche.Nid 
+INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID WHERE tblDeathRecord.IntermentDateTime IS NOT NULL  ORDER BY IntermentDateTime DESC";
 $query = $conn->query($select);
 
 ?>
@@ -17,7 +20,6 @@ $query = $conn->query($select);
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <!-- <h1 class="mt-4">Interment Schedule</h1> -->
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">
                             <h1>Interment Schedule</h1>
@@ -25,20 +27,14 @@ $query = $conn->query($select);
                     </ol>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
-                            <!-- <input type="search" id="searchInput" placeholder="Search here..."> -->
-                             
 
-                            <div class="activity-log-container">
+                                <div class="col-sm-6">
+                                    <input type="search" id="searchInput" placeholder="Search here...">
+                                </div>
                                 <div class="activity-log-container-scroll" id="interment-schedule-table">
-                                    <table class="table-no-border" id="table-no-border">
+                                    <table class="table-no-border" id="e-libingTable">
                                         <thead>
                                             <tr>
-                                                <!--<th scope="col" class="px-6 py-3">
-                                            SchedID
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Niche No.
-                                        </th>-->
                                                 <th scope="col" class="px-6 py-3">
                                                     Name
                                                 </th>
@@ -48,39 +44,57 @@ $query = $conn->query($select);
                                                 <th scope="col" class="px-6 py-3">
                                                     Action
                                                 </th>
-
                                             </tr>
                                         </thead>
                                         <tbody id="table-body" id="interment-schedule-body">
                                             <?php
-                                            while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
-                                                $name = $data['Fname'].' '.$data['MName'].' '.$data['Lname'];
-                                                $desireddatetime = $data['IntermentDateTime'];
-                                                $nicheno = $data['Nid'];
-                                                $profid = $data['ProfID'];
+                                                while ($data = $query->fetch_assoc()) {
+                                                    $name = $data['Fname'] . ' ' . $data['Mname'] . ' ' . $data['Lname'] . ' ' . $data['Suffix'];
+                                                    $desireddatetime = $data['IntermentDateTime'];
+                                                    $nicheno = $data['Nid'];
+                                                    $profid = $data['ProfileID'];
+                                                    $appID = $data['AppointmentID'];
+                                                    $status = $data['Status'];
+                                                    $occupancy = $data['OccupancyDate'];
 
-                                                if ($desireddatetime !== null) {
+                                                    if ($occupancy == null && $desireddatetime != '0000-00-00 00:00:00') {
 
                                             ?>
                                             <tr id="elementToHide">
-                                                <td><?php echo $name ?></td>
-                                                <td><?php echo date('F j, Y g:i A', strtotime($desireddatetime)); ?>
+                                                <td>
+                                                    <?php echo $name ?>
                                                 </td>
                                                 <td>
-                                                    <form action="../dbConn/upintermentsched.php" method="POST">
-                                                        <input type="hidden" name="nid" value="<?php echo $nicheno ?>">
+                                                    <?php echo date('F j, Y g:i A', strtotime($desireddatetime)); ?>
+                                                </td>
+                                                <td>
+                                                    <div class="buttons">
                                                         <input type="hidden" name="profid"
                                                             value="<?php echo $profid ?>">
-                                                        <button class="btn btn-success submit-button mb-5" type="button"
-                                                            id="updateButton">
-                                                            <span class="update-label">Buried</span>
-                                                            <div class="loader"></div>
-                                                        </button>
-                                                    </form>
-                                                    <div style="display:none;" id="response"></div>
+                                                        <input type="hidden" name="appid" value="<?php echo $appID ?>">
+                                                        <form action="../dbConn/upintermentsched.php" method="POST">
+                                                            <input type="hidden" name="nid"
+                                                                value="<?php echo $nicheno ?>">
+                                                            <input type="hidden" name="profid"
+                                                                value="<?php echo $profid ?>">
+                                                            <button class="btn btn-success submit-button"
+                                                                type="button" id="updateButton">
+
+                                                                <span class="update-label">Repose</span>
+                                                                <div class="loader"></div>
+                                                            </button>
+                                                            <button class="btn btn-primary" type="button" 
+                                                                onclick="view('<?php echo $appID; ?>', '<?php echo $profid; ?>')">
+                                                                <i class='bx bx-edit-alt'></i>
+                                                            </button>
+                                                        </form>
+                                                        <div style="display:none;" id="response"></div>
+
+                                                    </div>
                                                 </td>
                                             </tr>
-                                            <?php }} ?>
+                                            <?php }
+                                            } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -97,6 +111,11 @@ $query = $conn->query($select);
 
 
     <script>
+    function view(appointmentID, profID) {
+        var url = 'viewInterment.php?AppID=' + appointmentID + '&ProfID=' + profID;
+        profID;
+        window.location.href = url;
+    }
     $(document).ready(function() {
         $(".submit-button").click(function() {
             var form = $(this).closest('form');
@@ -166,9 +185,6 @@ $query = $conn->query($select);
     }
     </script>
 
-
-
-
     <style>
     .loader {
         border: 4px solid rgba(255, 255, 255, 0.3);
@@ -222,7 +238,31 @@ $query = $conn->query($select);
     }
     </style>
 
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the input element and table
+        const searchInput = document.getElementById("searchInput");
+        const alumniTable = document.getElementById("search");
 
+        // Add an event listener to the input field
+        searchInput.addEventListener("input", function() {
+            const searchText = searchInput.value.toLowerCase();
+
+            // Get all the rows in the table body
+            const rows = alumniTable.querySelectorAll("tbody tr");
+
+            // Loop through each row and hide/show based on the search text
+            rows.forEach(function(row) {
+                const rowData = row.textContent.toLowerCase();
+                if (rowData.includes(searchText)) {
+                    row.style.display = ""; // Show the row
+                } else {
+                    row.style.display = "none"; // Hide the row
+                }
+            });
+        });
+    });
+    </script>
 
     <?php
     require('assets/component/script.php');

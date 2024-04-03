@@ -9,9 +9,9 @@ require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
 
-if (isset($_GET['locid']) && isset($_GET['profid'])) {
+if (isset($_GET['locid']) && isset($_GET['id'])) {
     $block_id = $_GET['locid'];
-    $profid = $_GET['profid'];
+    $profid = $_GET['id'];
     $select = "SELECT * FROM tblNicheLocation WHERE LocID = $block_id";
     // $query = mysqli_query($conn, $select);
 
@@ -37,16 +37,7 @@ if (isset($_GET['locid']) && isset($_GET['profid'])) {
 
                     <button class="btn btn-danger mb-2" type="button" name="submit" onclick="goBack('<?php echo $profid ?>')">Back</button>
 
-                    <!-- <form action="../dbConn/adlocation.php" method="POST" class="mb-4" style="float: right">
-                        <label for="">Generate Niche No</label>
-                        <input type="text" name="nicheno" required>
-                        <label for="">Size</label>
-                        <input type="text" name="size" required>
-                        <label for="">Level</label>
-                        <input type="number" name="level" required>
-                       
-                        <button class="btn btn-primary " type="submit" name="submit">Submit</button>
-                    </form> -->
+                  
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
@@ -68,7 +59,7 @@ if (isset($_GET['locid']) && isset($_GET['profid'])) {
                                             <?php
                                             $selectloc = "SELECT * FROM tblNiche WHERE LocID = '$block_id' ORDER BY Nno ASC";
                                             $queryloc = $conn->query($selectloc);
-                                            while ($dataloc = $queryloc->fetch(PDO::FETCH_ASSOC)) {
+                                            while ($dataloc = $queryloc->fetch_assoc()) {
                                                 // $location_id = $dataloc['location_id'];
                                                 $nicheid = $dataloc['Nid'];
                                                 $level = $dataloc['Level'];
@@ -124,7 +115,7 @@ if (isset($_GET['locid']) && isset($_GET['profid'])) {
 
     <script>
     function goBack(profid) {
-        var url = 'location.php?profid=' + profid;
+        var url = 'location.php?id=' + profid;
         window.location.href = url;
     }
 

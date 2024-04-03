@@ -7,7 +7,7 @@ $userId = $_SESSION['id'];
 $select = "SELECT * FROM tblUsersLogin WHERE UserID = '$userId'";
 $selectResult = $conn->query($select);
 
-while($row = $selectResult->fetch(PDO::FETCH_ASSOC)){
+while($row = $selectResult->fetch_assoc()){
     $name = $row['Createdby'];
 }
 ?>
@@ -90,10 +90,14 @@ while($row = $selectResult->fetch(PDO::FETCH_ASSOC)){
                             Reserve
                         </a>
 
-
                         <a class="nav-link " href="form.php">
                             <div class="sb-nav-link-icon"><i class="bx bx-table"></i></div>
-                            Niche
+                            Application
+                        </a>
+                        
+                        <a class="nav-link " href="request.php">
+                            <div class="sb-nav-link-icon"><i class="bx bx-user"></i></div>
+                           Request
                         </a>
 
 

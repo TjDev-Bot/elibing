@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'e4c8052b6b3270d6a37921466b7e5c80f11c3612',
+        'reference' => 'b8f7dd1eee6c62228975503c59a693ed57853227',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,11 +13,152 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'e4c8052b6b3270d6a37921466b7e5c80f11c3612',
+            'reference' => 'b8f7dd1eee6c62228975503c59a693ed57853227',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'guzzle/batch' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/cache' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/common' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/guzzle' => array(
+            'pretty_version' => 'v3.9.3',
+            'version' => '3.9.3.0',
+            'reference' => '0645b70d953bc1c067bbc8d5bc53194706b628d9',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../guzzle/guzzle',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'guzzle/http' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/inflection' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/iterator' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/log' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/parser' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin-async' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin-backoff' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin-cache' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin-cookie' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin-curlauth' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin-error-response' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin-history' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin-log' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin-md5' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin-mock' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/plugin-oauth' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/service' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
+        ),
+        'guzzle/stream' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.9.3',
+            ),
         ),
         'guzzlehttp/guzzle' => array(
             'pretty_version' => '7.8.0',
@@ -43,6 +184,15 @@
             'reference' => 'be45764272e8873c72dbe3d2edcfdfcc3bc9f727',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'kickstartph/semaphore-client' => array(
+            'pretty_version' => '0.2',
+            'version' => '0.2.0.0',
+            'reference' => 'd9d6b85054efec79818f2e2b3e64914ce872069d',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../kickstartph/semaphore-client',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -186,6 +336,15 @@
             'reference' => '7c3aff79d10325257a001fcf92d991f24fc967cf',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'symfony/event-dispatcher' => array(
+            'pretty_version' => 'v2.8.52',
+            'version' => '2.8.52.0',
+            'reference' => 'a77e974a5fecb4398833b0709210e3d5e334ffb0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/event-dispatcher',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

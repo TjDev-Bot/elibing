@@ -55,11 +55,15 @@
 
 
                         <hr>
-
+                        <a class="nav-link " href="deceased.php">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-file-pen"></i></div>
+                            Death Record
+                        </a>
                         <a class="nav-link " href="IntermentSched.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-days"
-                                    style="color: #ffffff;"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i></div>
                             Interment Schedule
+                        </a>
+                        
                         </a>
 
                     </div>

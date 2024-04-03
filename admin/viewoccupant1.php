@@ -14,7 +14,7 @@ if (isset($_GET['locid']) && isset($_GET['nid'])) {
     $block_id = $_GET['locid'];
     $selectt = "SELECT * FROM tblNiche WHERE Nid = '$nicheno'";
     $query = $conn->query($selectt);
-    while ($occupant = $query->fetch(PDO::FETCH_ASSOC)) {
+    while ($occupant = $query->fetch_assoc()) {
         // $nicheno = $occupant['Nid'];
         $level = $occupant['Level'];
         // $status = $occupant['Status'];
@@ -59,7 +59,7 @@ if (isset($_GET['locid']) && isset($_GET['nid'])) {
                                     <table class="table-no-border">
                                         <thead>
                                             <tr>
-                                                <th>ID Number</th>
+                                                
                                                 <th>Name</th>
                                                 <th>Date of Death</th>
                                                 <th>Interment Place</th>
@@ -69,42 +69,41 @@ if (isset($_GET['locid']) && isset($_GET['nid'])) {
                                         </thead>
 
                                         <tbody>
-                                            <?php
-                                            // $selectocc = "SELECT * FROM tblDeathRecord";
-                                            // $queryocc = $conn->query($selectocc);
-                                    
+                                            <?php       
                                            
-                                            // $select = "SELECT * FROM tblNiche
-                                            // INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
-                                            // INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
-                                            // INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID WHERE LocID = '$block_id' ";
+                                            
+                                            $selectOccupants = "SELECT * FROM tblNiche
+                                                INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
+                                                INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
+                                                INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID 
+                                                LEFT JOIN tblBuriedRecord ON tblDeathRecord.ProfileID = tblBuriedRecord.Profid
+                                                WHERE tblIntermentReservation.Nid = '$nicheno'  ORDER BY tblIntermentReservation.ProfID DESC";
 
-                                            $select = "SELECT * FROM tblNiche
-                                            INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
-                                            INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
-                                            INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID WHERE tblIntermentReservation.Nid = '$nicheno' ORDER BY ProfID DESC";
+                                            $queryOccupants = $conn->query($selectOccupants);
 
-                                 
-                                            $queryocc = $conn->query($select);
-                                            while ($data = $queryocc->fetch(PDO::FETCH_ASSOC)) {
+                                            while ($data = $queryOccupants->fetch_assoc()) {
                                                 $profileid = $data['ProfileID'];
                                                 $dateofdeath = $data['DateofDeath'];
-                                                $name = $data['Fname'] . ' ' . $data['MName'] . ' ' . $data['Lname'] . ' ' . $data['Suffix'];
+                                                $name = $data['Fname'] . ' ' . $data['Mname'] . ' ' . $data['Lname'] . ' ' . $data['Suffix'];
                                                 $intermentplace = $data['IntermentPlace'];
                                                 $intermentdatetime = $data['IntermentDateTime'];
+                                                $status = $data['Status'];
+                                            
 
 
-                                                if($intermentdatetime === null){
-                                                    $intermentdatetime = "N/A";
-                                                } else {
-                                                    $intermentdatetime = date('F j, Y g:i A', strtotime($intermentdatetime));
-                                                }
+                                                // if($intermentdatetime === '0000-00-00 00:00'){
+                                                //     $intermentdatetime = "N/A";
+                                                // } else {
+                                                //     $intermentdatetime = date('F j, Y g:i A', strtotime($intermentdatetime));
+                                                // }
+
+                                           
                                             ?>
 
 
                                             <tr>
 
-                                                <td class="px-6 py-4">
+                                                <td class="px-6 py-4" style="display: none;">>
                                                     <?php echo $profileid  ?>
                                                 </td>
 
@@ -129,7 +128,7 @@ if (isset($_GET['locid']) && isset($_GET['nid'])) {
                                                     <input type="hidden" value="<?php echo $level ?>">
                                                     <button class="btn btn-primary "
                                                         onclick="viewOcuppant('<?php echo $block_id ?>', '<?php echo $nicheno ?>',  '<?php echo $profileid ?>')">
-                                                        <i class='bx bx-edit-alt'></i>
+                                                        <i class='bx bx-show-alt'></i>
                                                     </button>
                                                 </td>
                                             </tr>

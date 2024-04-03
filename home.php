@@ -9,68 +9,78 @@ require('component/navbar.php');
 
 <style>
     .container-section {
-        width: 70%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .card-side {
-        position: absolute;
-        right: 10%;
-        margin: auto;
-        padding: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        margin-top: 20px; /* Adjust as needed */
     }
 
-    #card {
-        width: 120%;
+    .card-panel {
+        width: 100%; /* Make the card panel take full width */
+        margin-bottom: 30px;
+        margin-right: 20px;
+        margin-leftt: 100px;
     }
 
-    .card-content h2 {
-        margin-left: 100%;
+    .card {
+        width: 100%;
+        background: #f0f0f0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 2s linear both;
+    }
+
+    .card:hover {
+  background-color: #E0E0E0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+    .card-content {
+        margin-top: 0px;
+    }
+
+    #card img {
+        max-width: 100%;
+ 
+    }
+
+    @media (min-width: 768px) {
+        .card-side {
+            width: 50%; /* Two cards per row on larger screens */
+        }
+    }
+
+    @media (min-width: 992px) {
+        .card-side {
+            width: 30%; /* Three cards per row on even larger screens */
+        }
+    }
+
+    @media (min-width: 300px) {
+        .card-side {
+            width: 40%; /* Three cards per row on even larger screens */
+        }
     }
 </style>
 
 <body>
 
     <header class="header-home">
-        <img class="bg" src="image/e-Libing.png" alt="">
-        <div class="overlay">
-            <h1 style="font-size:5vw;">e-Libing</h1>
-            <p style="font-size:2vw;"> We cater electronic burial services including appointments, bookings, cadaver
-                locations, and many more. </p>
-        </div>
+        <img class="bg" src="image/bg.jpg" alt="">
+
     </header>
 
-    <div class="container-home">
-        <div class="offer-section">
-            <aside class="card-side">
-                <div class="card-panel" id="card-panel">
-                    <div class="card" id="card">
-                        <a href="#" id="myBtn">
-                            <div class="image-wrapper">
-                                <img src="image/burial.jpg" class="burial" alt="">
-                            </div>
-                            <div class="card-content">
-                                <h2>Burials</h2>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <br>
-                <div class="card-panel" id="card-panel">
-                    <div class="card" id="card">
-                        <a href="#" id="myBtn">
-                            <div class="image-wrapper">
-                                <img src="image/locator.jpg" class="locator" alt="">
-                            </div>
-                            <div class="card-content">
-                                <h2>Locator</h2>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-            </aside>
-
-            <section class="container-section">
+    <div class="offer-section">
+    <section class="container-section">
+        <div class="container-home">
                 <h1 style="font-size:5vw;">WHAT WE OFFER</h1>
                 <p style="font-size:1.9vw;">With E-Libing, we offer a comprehensive range of burial services tailored to
                     your
@@ -84,11 +94,39 @@ require('component/navbar.php');
                     to
                     discuss
                     your specific needs. We are here for you every step of the way.</p>
-            </section>
+                    </div>
 
-        </div>
+                    <aside class="card-side">
+            <div class="card-panel" id="card-panel">
+                <div class="card" id="card">
+                    <a href="#" id="myBtn">
+                        <div class="image-wrapper">
+                            <img src="image/burial.jpg" class="burial" alt="">
+                        </div>
+                        <div class="card-content">
+                            <h2>Burials</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-panel" id="card-panel">
+                <div class="card" id="card">
+                    <a href="e-locator/index.php" id="myBtn">
+                        <div class="image-wrapper">
+                            <img src="image/locator.jpg" class="locator" alt="">
+                        </div>
+                        <div class="card-content">
+                            <h2>Locator</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+        </aside>
+        
+    </section>
     </div>
-
     <section class="teaser col-1-3  not">
         <img class="teaser-image" src="image/morgue.jpg" align="right" alt="">
         <h1 style="font-size:4vw;">Notification of the Exhumation of Cadavers</h1>

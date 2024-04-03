@@ -12,6 +12,11 @@ include('../dbConn/conn.php');
 
 ?>
 <link rel="stylesheet" href="css/intermentschedule.css">
+<?php
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+}
+?>
 <body>
     <div id="layoutSidenav">
         <div id="layoutSidenav_content">
@@ -22,13 +27,22 @@ include('../dbConn/conn.php');
                             <h1>Interment Schedule</h1>
                         </li>
                     </ol>
+                    <div class="container">
+                        <form action="../dbConn/delete_data.php" method="GET">
+                            
+
+                        </form>
+                    </div>
+
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
-                           <?php include("scheduling.php") ?>
+                            <?php include("scheduling.php") ?>
                         </div>
             </main>
         </div>
     </div>
+
+
 
 
     <?php

@@ -1,45 +1,51 @@
 <?php
-
 require __DIR__ . '/vendor/autoload.php';
 
-use Vonage\Client;
-use Vonage\Client\Credentials\Basic;
-use Vonage\SMS\Message\SMS;
+use Semaphore\SemaphoreClient;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-$pApiKey = "0e874d9c";
-$sApiKey = "891NtsCy98fBdubG";
+
+                 
+$pApiKey = "a6d46a0fdf128bf2c02d9ecc388754d0";
 
 $contact = isset($_POST['contact']) ? $_POST['contact'] : null;
 $email = isset($_POST['email']) ? $_POST['email'] : null;
+$email1 = isset($_POST['email1']) ? $_POST['email1'] : null;
 
 if ($contact && $email) {
     $message = "Need to renew";
-    $from = "elibing@gmail.com";
-
-    $basic = new Basic($pApiKey, $sApiKey);
-    $client = new Client($basic);
-
+    $from = $email1;
     $smsSuccess = false;
     $emailSuccess = false;
 
     try {
-        $smsMessage = new SMS($contact, 'E-Libing', $message);
-        $smsResponse = $client->sms()->send($smsMessage);
+       
+        $ch = curl_init();
+        $parameters = array(
+            'apikey' => $pApiKey, 
+            'number' => $contact,
+            'message' => 'Need to Renew',
+            'sendername' => 'SEMAPHORE'
+        );
+        curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages' );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $parameters ) );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $output = curl_exec( $ch );
+        curl_close ($ch);
+        // echo $output;
+        $smsSuccess = true;
 
-        if ($smsResponse->current()->getStatus() == 0) {
-            $smsSuccess = true;
-        } else {
-            echo "SMS failed to send with status: " . $smsResponse->current()->getStatus();
-            return; 
-        }
+
     } catch (Exception $e) {
         echo "An error occurred while sending the SMS: " . $e->getMessage();
         return; 
     }
+
+    
 
     // Initialize the PHPMailer
     $mail = new PHPMailer(true);
@@ -73,7 +79,7 @@ if ($contact && $email) {
                                            E - Libing</h1>
                                             <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif; text-align: justify; text-justify: inter-word;">
                                                 '.$message.'
-                                                <br><br>Email submitted by: <a href="#">elibing@gmail.com</a>.
+                                                <br><br>Email submitted by: <a href="#">'.$from . '</a>.
                                                 <br><br>Thank you and God Bless.
                                             </p>
                                             <!-- <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="#" style="color:#b11919;text-decoration:underline;">Proceed</a></p> -->
@@ -132,7 +138,7 @@ if ($contact && $email) {
             return; 
         }
     } catch (Exception $e) {
-        echo "An error occurred while sending the email: " . $e->getMessage();
+        echo "An error occurred while sending the email: "  . $e->getMessage();
         return; 
     }
 

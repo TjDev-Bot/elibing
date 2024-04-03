@@ -8,7 +8,9 @@ $baseDir = dirname($vendorDir);
 return array(
     'Vonage\\NexmoBridge\\' => array($vendorDir . '/vonage/nexmo-bridge/src'),
     'Vonage\\' => array($vendorDir . '/vonage/client-core/src'),
+    'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
     'StellaMaris\\Clock\\' => array($vendorDir . '/stella-maris/clock/src'),
+    'Semaphore\\' => array($vendorDir . '/kickstartph/semaphore-client/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-factory/src', $vendorDir . '/psr/http-message/src'),
     'Psr\\Http\\Client\\' => array($vendorDir . '/psr/http-client/src'),

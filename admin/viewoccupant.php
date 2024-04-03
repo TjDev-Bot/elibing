@@ -5,8 +5,8 @@
 
 <?php
 require('assets/component/header.php');
-require('assets/component/topnavbar.php');
-require('assets/component/sidebars.php');
+// require('assets/component/topnavbar.php');
+// require('assets/component/sidebars.php');
 
 include "../dbConn/conn.php";
 
@@ -20,10 +20,10 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid']) && is
     $select = "SELECT * FROM tblDeathRecord WHERE ProfileID = '$profId'";
     $query = $conn->query($select);
 
-    while ($occupant = $query->fetch(PDO::FETCH_ASSOC)) {
+    while ($occupant = $query->fetch_assoc()) {
     
         // $id = $occupant['occupant_id'];
-        $name = $occupant['Fname'] . ' ' . $occupant['MName'] . ' ' . $occupant['Lname'] . ' ' .  $occupant['Suffix'];
+        $name = $occupant['Fname'] . ' ' . $occupant['Mname'] . ' ' . $occupant['Lname'] . ' ' .  $occupant['Suffix'];
         $dateofdeath = $occupant['DateofDeath'];
         $causeofdeath = $occupant['CauseofDeath'];
         $intermentplace = $occupant['IntermentPlace'];

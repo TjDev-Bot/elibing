@@ -19,9 +19,21 @@ if (isset($_POST['submit'])) {
             $datetime = $date . ' ' . $time;
             $sql = "UPDATE tblDeathRecord SET IntermentDateTime = ? WHERE ProfileID = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$datetime, $profileId]);
+            $stmt->bind_param('si', $datetime, $profileId);  
+            $stmt->execute();
+        
+            $insert_query = "INSERT INTO selected_slots (date_selected, profile_id) VALUES (?, ?)";
+            $stmt1 = $conn->prepare($insert_query);
+            $stmt1->bind_param('si', $date, $profileId);
+            $stmt1->execute();
 
-            if ($stmt->rowCount() > 0) {
+            $day_name = strtolower(date('l', strtotime($date)));
+            $update_query = "UPDATE slot_availability SET slots_available = slots_available - 1 WHERE day_of_week = ?";
+            $stmt_update = $conn->prepare($update_query);
+            $stmt_update->bind_param('s', $day_name);
+            $stmt_update->execute();
+
+            if ($stmt->affected_rows > 0 && $stmt1->affected_rows > 0 && $stmt_update->affected_rows > 0) {
                 echo "<script>
                 document.addEventListener('DOMContentLoaded', function() {
                     var modal = document.createElement('div');
@@ -40,7 +52,7 @@ if (isset($_POST['submit'])) {
         
                     setTimeout(function () {
                         modal.style.display = 'none';
-                        window.location.href = '../admin/location.php?profid=" .$profileId ."';
+                        window.location.href = '../admin/orderpayment.php?profid=" .$profileId ."';
                     }, 1000); 
                 });
               </script>";

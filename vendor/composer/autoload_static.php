@@ -28,7 +28,9 @@ class ComposerStaticInit5d6f9031e1d3b77d38a4f4a4651f8608
         ),
         'S' => 
         array (
+            'Symfony\\Component\\EventDispatcher\\' => 34,
             'StellaMaris\\Clock\\' => 18,
+            'Semaphore\\' => 10,
         ),
         'P' => 
         array (
@@ -62,9 +64,17 @@ class ComposerStaticInit5d6f9031e1d3b77d38a4f4a4651f8608
         array (
             0 => __DIR__ . '/..' . '/vonage/client-core/src',
         ),
+        'Symfony\\Component\\EventDispatcher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
+        ),
         'StellaMaris\\Clock\\' => 
         array (
             0 => __DIR__ . '/..' . '/stella-maris/clock/src',
+        ),
+        'Semaphore\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kickstartph/semaphore-client/src',
         ),
         'Psr\\Log\\' => 
         array (
@@ -117,6 +127,20 @@ class ComposerStaticInit5d6f9031e1d3b77d38a4f4a4651f8608
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'G' => 
+        array (
+            'Guzzle\\Tests' => 
+            array (
+                0 => __DIR__ . '/..' . '/guzzle/guzzle/tests',
+            ),
+            'Guzzle' => 
+            array (
+                0 => __DIR__ . '/..' . '/guzzle/guzzle/src',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
@@ -126,6 +150,7 @@ class ComposerStaticInit5d6f9031e1d3b77d38a4f4a4651f8608
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit5d6f9031e1d3b77d38a4f4a4651f8608::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit5d6f9031e1d3b77d38a4f4a4651f8608::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit5d6f9031e1d3b77d38a4f4a4651f8608::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit5d6f9031e1d3b77d38a4f4a4651f8608::$classMap;
 
         }, null, ClassLoader::class);

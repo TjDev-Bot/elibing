@@ -11,18 +11,18 @@ require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
 
-if (isset($_GET['locid']) && isset($_GET['nid'])) {
+if (isset($_GET['profid']) && isset($_GET['locid']) && isset($_GET['nid'])) {
+    $profId = $_GET['profid'];
     $block_id = $_GET['locid'];
     $nid = $_GET['nid'];
-    $profId = $_GET['profid'];
 
     $select = "SELECT * FROM tblDeathRecord WHERE ProfileID = '$profId'";
     $query = $conn->query($select);
 
-    while ($occupant = $query->fetch(PDO::FETCH_ASSOC)) {
+    while ($occupant = $query->fetch_assoc()) {
     
         // $id = $occupant['occupant_id'];
-        $name = $occupant['Fname'] . ' ' . $occupant['MName'] . ' ' . $occupant['Lname'] . ' ' .  $occupant['Suffix'];
+        $name = $occupant['Fname'] . ' ' . $occupant['Mname'] . ' ' . $occupant['Lname'] . ' ' .  $occupant['Suffix'];
         $dateofdeath = $occupant['DateofDeath'];
         $causeofdeath = $occupant['CauseofDeath'];
         $intermentplace = $occupant['IntermentPlace'];
@@ -56,14 +56,8 @@ if (isset($_GET['locid']) && isset($_GET['nid'])) {
                                             <div class="container-interment">
                                                 <div class="formbold-main">
                                                     <div class="">
-
-                                                        <h3>
-
-
-                                                        </h3>
                                                         <button class="btn btn-danger" type="button" name="submit"
                                                             onclick="goBack('<?php echo $block_id ?>' , '<?php echo $nid ?>')">Back</button>
-                                                        <p>
                                                         <div class="formbold-mb-5 w-full  formbold-px-3 flex">
 
                                                             <div class="formbold-mb-5 w-full  formbold-px-3">
@@ -119,54 +113,51 @@ if (isset($_GET['locid']) && isset($_GET['nid'])) {
                         </div>
                     </div>
                 </div>
-
-
-
+            </main>
         </div>
-        </main>
-    </div>
-    </div>
 
-    <script>
-    function goBack(block_id, nicheno) {
-        var url = 'viewoccupant1.php?locid=' + block_id + '&nid=' + nicheno;
-        window.location.href = url;
-    }
-    </script>
-
+        <script>
+        function goBack(block_id, nicheno) {
+            console.log("goBack function called with block_id:", block_id, "and nicheno:", nicheno);
+            var url = 'viewoccupant1.php?locid=' + block_id + '&nid=' + nicheno;
+            console.log("Redirecting to URL:", url);
+            window.location.href = url;
+        }
+        </script>
 
 
-    <?php
+
+        <?php
     require('assets/component/script.php');
     ?>
 
-    <style>
-    .add-appointment {
-        box-shadow: 0px 10px 14px -7px #276873;
-        background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
-        background-color: #4169e1;
-        border-radius: 8px;
-        display: inline-block;
-        cursor: pointer;
-        color: #ffffff;
-        font-family: Courier New;
-        font-size: 20px;
-        font-weight: bold;
-        padding: 13px 32px;
-        text-decoration: none;
-        text-shadow: 0px 1px 0px #3d768a;
-    }
+        <style>
+        .add-appointment {
+            box-shadow: 0px 10px 14px -7px #276873;
+            background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
+            background-color: #4169e1;
+            border-radius: 8px;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Courier New;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 13px 32px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #3d768a;
+        }
 
-    .add-appointment:hover {
-        background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
-        background-color: #4169e1;
-    }
+        .add-appointment:hover {
+            background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
+            background-color: #4169e1;
+        }
 
-    .add-appointment:active {
-        position: relative;
-        top: 1px;
-    }
-    </style>
+        .add-appointment:active {
+            position: relative;
+            top: 1px;
+        }
+        </style>
 </body>
 
 </html>

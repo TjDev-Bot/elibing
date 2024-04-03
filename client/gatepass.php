@@ -1,30 +1,88 @@
+Mary Gwyneth Sangga
 <!DOCTYPE html>
 <html lang="en">
 
 <?php
-require_once('component/header.php');
+require('assets/component/header.php');
+require('assets/component/topnavbar.php');
+require('assets/component/sidebars.php');
+
+include '../dbConn/conn.php';
+if(isset($_GET['profid'])){
+    $profid = $_GET['profid'];
+
+
+    $selectreserve = "SELECT * FROM  tblNiche
+    INNER JOIN tblIntermentReservation ON  tblNiche.Nid =  tblIntermentReservation.Nid
+    INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
+    INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID WHERE tblIntermentReservation.ProfID = '$profid'";
+    $queryreserve = $conn->query($selectreserve);
+    while ($dataloc = $queryreserve->fetch(PDO::FETCH_ASSOC)) {
+        
+        $requestor = $dataloc['Requestor'];
+        $name = $dataloc['Fname'].' '.$dataloc['MName'].' '.$dataloc['Lname'];
+        $nicheno = $dataloc['Nno'];
+        $intermentdate = $dataloc['IntermentDateTime'];
+        $nichelocaion = $dataloc['NLName'];
+        $size = $dataloc['Size'];
+        $description = $dataloc['Description'];
+        $type = $dataloc['Type'];
+        $level = $dataloc['Level'];
+    }
+}
 ?>
 
 <body>
-    <div class="bg">
 
-        <div class="card">
+    <center>
+        <div class="bg">
+            <button class="btn btn-primary btn-print " id="printButton">
+                <i class='bx bx-printer'></i>
+            </button>
+            <div class="card">
+                <span class="card__success"><i class="ion-checkmark"></i></span>
+                <div class="passlogo">
+                <img src="../image/gensanlogo.png" alt="logo"  class="passlogo" width="80px">
+                <h1 class="card__msg">GATE PASS</h1>
+                <h3 class="card__submsg">Antonio C. Acharon Memorial Park, Brgy. Fatima,GSC</h3>
+                <h3>
+                    Requestor : <?php echo $requestor ?>
+                </h3>
+                <h3>
+                    Deceased Name : <?php echo $name ?>
+                </h3>
+                <h3>
+                    Interment Date & Time : <?php echo $intermentdate ?>
+                </h3>
+                <h3>
+                   Level : <?php echo $level ?>
+                </h3>
+              
+                <h3>
+                    Niche Location : <?php echo $nichelocaion ?>
+                </h3>
+               
+                <button type="button" class="formbold-btn-next" name="next" id="doneButton"
+                    onclick="window.location.href='intermentSched.php'">Done</button>
+                <div class="card__body">
 
-            <span class="card__success"><i class="ion-checkmark"></i></span>
-
-            <h1 class="card__msg">GATE PASS</h1>
-            <h3 class="card__submsg">Antonio C. Acharon Memorial Park, Brgy. Fatima,GSC</h3>
-            <button type="button" class="formbold-btn-next" name="next" onclick="window.location.href='index.php'">Done</button>
-            <div class="card__body">
+                </div>
 
             </div>
 
         </div>
-
-    </div>
+</div>
+    </center>
 </body>
 
 <style>
+center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 200px;
+}
+
 primary-col=#6C7BEE .bg {
 
     background-color: primary-col;
@@ -45,9 +103,12 @@ primary-col=#6C7BEE .bg {
     margin-top: 40px;
     border-radius: 5px;
     box-sizing: border-box;
-    padding: 80px 30px 25px 30px;
-    text-align: center;
+    border-style: solid;
+    border-color: black;
+    padding: 40px 30px 25px 30px;
+    text-align: left;
     position: relative;
+
 
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
     0 1px 2px rgba(0, 0, 0, 0.24) &__success {
@@ -66,13 +127,24 @@ primary-col=#6C7BEE .bg {
             font-size: 45px;
         }
     }
+    .passlogo {
+      display: block;
+      margin: 0 auto;
+      width: 40%;
+      place-items: center;
+      relative
+    }
 
     &__msg {
         text-transform: uppercase;
         color: #55585b;
+        text-align: center;
         font-size: 18px;
         font-weight: 500;
         margin-bottom: 5px;
+        text-align: center;
+        position: relative;
+        
     }
 
     &__submsg {
@@ -80,6 +152,7 @@ primary-col=#6C7BEE .bg {
         font-size: 16px;
         font-weight: 400;
         margin-top: 0px;
+        text-align: left;
     }
 
     &__body {
@@ -189,4 +262,34 @@ primary-col=#6C7BEE .bg {
         color: #d3cece;
     }
 }
+
+@media print {
+
+    .sb-topnav,
+    .sb-sidenav {
+        display: none;
+    }
+
+
+    #printButton,
+    #doneButton {
+        display: none;
+    }
+
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    body {
+        width: 100%;
+        height: 297mm;
+        margin: 0;
+    }
+}
 </style>
+<script>
+document.getElementById("printButton").addEventListener("click", function() {
+    window.print();
+});
+</script>

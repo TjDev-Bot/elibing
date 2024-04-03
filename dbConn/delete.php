@@ -4,7 +4,6 @@ try {
     if (isset($_GET['id'])) {
         $blockId = $_GET['id'];
         
-        $conn->begin_transaction();
         
         // First, delete from the location table
         $locationSql = "DELETE FROM location WHERE block_id = ?";

@@ -1,31 +1,41 @@
 <?php
+
+session_start();
 include "conn.php";
 
+date_default_timezone_set('Asia/Manila'); 
+$currentDateTime = date('h:i:s A');
+
 $profid = $_POST['profid'];
-$relationship = $_POST['relationship'];
 $contact = $_POST['contact'];
 $email = $_POST['email'];
-$fname = $_POST['fname'];
-$mname = $_POST['mname'];
-$lname = $_POST['lname'];
-$cause = $_POST['causeofdeath'];
-$intermentplace = $_POST['intermentplace'];
-$intermentdatetime = $_POST['intermentdate'];
+$userID = $_POST['userid'];
+$name = $_POST['fullname'];
 
 try {
-    $update = "UPDATE tblContactInfo SET ContactNo = ?, Email = ?, ModifiedWhen = GETDATE() WHERE ProfID = ?";
-    $stmt = $conn->prepare($update);
-    $stmt->execute([$contact, $email, $profid]);
+   
+    $stmt1 = "INSERT INTO TBL_Audit_Trail (User_ID, Action) VALUES (?, 'Update Applicant Info: ". $name ."')";
+    $insertAudit = $conn->prepare($stmt1);
+    $insertAudit->bind_param('i', $userID);
 
-    $updatedeath = "UPDATE tblDeathRecord SET Lname = ?, Fname = ?, MName = ?, IntermentPlace = ?, CauseofDeath = ? WHERE ProfileID = ?";
-    $stmtdeath = $conn->prepare($updatedeath);
-    $stmtdeath->execute([$lname, $fname, $mname, $intermentplace, $cause, $profid]);
+    if ($insertAudit->execute()) {
+        if (mysqli_affected_rows($conn) > 0) {
+            $update = "UPDATE tblContactInfo SET ContactNo = ?, Email = ?, ModifiedWhen = CURDATE() WHERE ProfID = ?";
+            $stmt = $conn->prepare($update);
+            $stmt->execute([$contact, $email, $profid]);
 
-    if ($stmt->rowCount() > 0 && $stmtdeath->rowCount() > 0) {
-        echo "success";
+            if (mysqli_affected_rows($conn) > 0) {
+                echo "success";
+            } else {
+                echo "";
+            }
+        } else {
+            echo "Error inserting into TBL_Audit_Trail.";
+        }
     } else {
-        echo "Error: Unable to update information";
+        echo "Error executing the audit insert query.";
     }
 } catch (PDOException $e) {
-    echo " Error: " . $e->getMessage();
+    echo "Error: " . $e->getMessage();
 }
+?>

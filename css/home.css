@@ -19,13 +19,13 @@
 
 .overlay h1 {
   margin-top: 30%;
-  color: rgba(7, 6, 95);
+  color: rgb(255, 255, 255);
   font-size: 80px;
   text-align: center;
 }
 
 .overlay p {
-  color: rgb(7, 6, 95);
+  color: rgb(255, 255, 255);
   font-size: 40px;
   text-align: center;
   padding: 20px 20px 20px 20px;
@@ -50,7 +50,7 @@ header {
   left: 0;
   height: 100%;
   width: 40%;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.0);
   backdrop-filter: blur(10px);
   overflow: hidden;
   animation: fadeInUp 1s ease-out;
@@ -74,8 +74,7 @@ section p {
 }
 
 .offer-section {
-  
-  background-color: rgb(1, 57, 94);
+  background-color: #1b2c71;
   color: #fff;
   padding: 30px;
 }
@@ -91,7 +90,7 @@ section p {
 }
 
 .card h2 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins';
   color: black;
   margin-top: 5px;
   margin-left: 125px;
@@ -102,9 +101,6 @@ a:link,
 a:visited {
   text-decoration: none;
 }
-
-
-
 
 .card:hover {
   background-color: #E0E0E0;
@@ -189,7 +185,7 @@ animation: fadeInUp 3s linear both;
 }
 
 .master-profiles {
-  background-color: rgb(1, 57, 94);
+  background-color: #1b2c71;
   color: #fff;
 
 }

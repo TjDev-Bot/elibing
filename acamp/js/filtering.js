@@ -17,10 +17,17 @@ function updateCountdown() {
         var warningColor = '';
 
         if (currentDate > dueDate) {
-            dueWarning = 'Past Due (' + daysDifference + ' days ' + hoursDifference + 'h ' +
+            if (daysDifference <= -5) {
+                warningColor = 'red';
+                dueDateElement.style.color = 'red';
+            } else {
+                dueWarning = 'Past Due (' + daysDifference + ' days ' + hoursDifference + 'h ' +
                 minutesDifference + 'm ' + secondsDifference + 's)';
-            warningColor = 'red';
-            dueDateElement.style.color = 'red';
+                warningColor = 'red';
+                dueDateElement.style.color = 'red';
+               
+               
+            }
         } else if (daysDifference >= 7 && daysDifference < 30) {
             dueWarning = 'A week (' + daysDifference + ' days)';
             warningColor = 'blue';
@@ -122,15 +129,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Add an event listener for the filter change event
 document.getElementById('timeFilter').addEventListener('change', filterTable);
-
-// Initial table filtering
 filterTable();
-
-
-    // Add an event listener for the filter change event
     document.getElementById('timeFilter').addEventListener('change', filterTable);
-
-    // Initial table filtering
     filterTable();
 
 

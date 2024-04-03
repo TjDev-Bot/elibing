@@ -2,43 +2,49 @@
 include "conn.php";
 include "../component/locfunction.php";
 
-
 try {
     $locID = nextNumb("L", "tblNicheLocation", "LocID", 4, "");
-    $nlname = $_POST['nlname'];
-    $size = $_POST['size'];
-    $des = $_POST['description'];
-    $type = $_POST['type'];
-    $profid = $_POST['profid'];
-    $name = $_POST['name'];
+    $nlname = isset($_POST['nlname']) ? $_POST['nlname'] : '';
+    $size = isset($_POST['size']) ? $_POST['size'] : null; 
+    $des = isset($_POST['description']) ? $_POST['description'] : '';
+    $type = isset($_POST['type']) ? $_POST['type'] : '';
+    $userID = isset($_POST['userid']) ? $_POST['userid'] : '';
+    date_default_timezone_set('Asia/Manila'); 
+
+    // Use a single prepared statement for both checks and insert
+    $sql = "INSERT INTO tblNicheLocation (LocID, NLName, Size, Description, Type) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssiss", $locID, $nlname, $size, $des, $type);
 
     // Check if the LocID already exists
     $checkSql = "SELECT COUNT(*) AS count FROM tblNicheLocation WHERE LocID = ?";
     $checkStmt = $conn->prepare($checkSql);
-    $checkStmt->bindParam(1, $locID, PDO::PARAM_STR);
+    $checkStmt->bind_param("s", $locID);
     $checkStmt->execute();
-    $result = $checkStmt->fetch(PDO::FETCH_ASSOC);
-    $count = $result['count'];
+    $checkStmt->bind_result($count);
+    $checkStmt->fetch();
+    
+    $checkStmt->close(); // Close the check statement
 
-    // If LocID is a duplicate, keep incrementing it until a non-duplicate value is found
+    // If LocID already exists, generate a new one
     while ($count > 0) {
         $locID = nextNumb("L", "tblNicheLocation", "LocID", 3, $locID);
-        $checkStmt->bindParam(1, $locID, PDO::PARAM_STR);
+        
+        $checkStmt = $conn->prepare($checkSql); // Prepare a new statement for the next iteration
+        $checkStmt->bind_param("s", $locID);
         $checkStmt->execute();
-        $result = $checkStmt->fetch(PDO::FETCH_ASSOC);
-        $count = $result['count'];
+        $checkStmt->bind_result($count);
+        $checkStmt->fetch();
+        
+        $checkStmt->close(); // Close the check statement
     }
 
-    // Insert the non-duplicate LocID
-    $sql = "INSERT INTO tblNicheLocation (LocID, NLName, Size, Description, Type) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(1, $locID, PDO::PARAM_STR);
-    $stmt->bindParam(2, $nlname, PDO::PARAM_STR);
-    $stmt->bindParam(3, $size, PDO::PARAM_STR);
-    $stmt->bindParam(4, $des, PDO::PARAM_STR);
-    $stmt->bindParam(5, $type, PDO::PARAM_STR);
-
+    // Insert the data
     if ($stmt->execute()) {
+        $stmt1 = $conn->prepare("INSERT INTO TBL_Audit_Trail (User_ID, Action) VALUES (?, 'Add Block: ".$type."')");
+        $stmt1->bind_param("i", $userID);
+        $stmt1->execute();
+
         echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
             var modal = document.createElement('div');
@@ -60,7 +66,7 @@ try {
                 window.location.href = '../admin/masterprofile.php?';
             }, 1000); 
         });
-    </script>";
+        </script>";
     } else {
         // Error handling for any other issues
         echo "<script>
@@ -81,16 +87,15 @@ try {
 
             setTimeout(function () {
                 modal.style.display = 'none';
-                window.location.href = '../admin/location.php?id=" . $profid . "&name=" . $name . "';
+                window.location.href = '../admin/masterprofile.php';
             }, 1000); 
         });
-    </script>";
+        </script>";
     }
+
+    $stmt->close();
+    $conn->close();
 } catch (PDOException $e) {
-    // Handle any other PDO exceptions here
     echo "Error: " . $e->getMessage();
 }
-
-// $stmt->closeCursor();
-$conn = null;
 ?>

@@ -116,8 +116,13 @@
                         </div> -->
                         <a class="nav-link " href="form.php">
                             <div class="sb-nav-link-icon"><i class="bx bx-table"></i></div>
-                            Niche
+                            Application
                         </a>
+                        <a class="nav-link " href="request.php">
+                            <div class="sb-nav-link-icon"><i class="bx bx-user"></i></div>
+                           Request
+                        </a>
+
                         <a class="nav-link " href="user.php">
                             <div class="sb-nav-link-icon"><i class="bx bx-user"></i></div>
                            Users

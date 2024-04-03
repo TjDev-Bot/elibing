@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,21 +40,14 @@ if (isset($_GET['id'])) {
                                             <div class="container-interment">
                                                 <div class="formbold-main">
                                                     <div class="">
-                                                        <!-- <button class="btn btn-danger" type="button" name="submit"
-                                                            onclick="goBack()">Back</button> -->
+
                                                         <form action="../dbConn/adoccupant.php" method="POST">
-                                                            <input type="hidden" value="<?php echo $id ?> ">
+                                                            <input type="hidden"  name="userid" value="<?php echo $id ?> ">
                                                             <input type="hidden" name="create"
                                                                 value="<?php echo $createdby ?>">
-                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                                <label for="time" class="formbold-form-label">
-                                                                </label>
-                                                                <input type="hidden" name="Nid" id="user_name" required
-                                                                    class="formbold-form-input"
-                                                                    value="<?php echo $nicheno ?>" />
-                                                            </div>
 
-                                                            <h4 class="mb-5">Applicant's Information</h4>
+
+                                                            <h4 class="mb-2">Applicant's Information</h4>
 
                                                             <div class="formbold-mb-5 flex">
                                                                 <div class="formbold-mb-5 w-full">
@@ -68,9 +60,8 @@ if (isset($_GET['id'])) {
                                                                 </div>
 
                                                                 <div class="formbold-mb-5 w-full formbold-px-3">
-                                                                    <label for="name"
-                                                                        class="formbold-form-label">Relationship to the
-                                                                        Deceased
+                                                                    <label for="name" class="formbold-form-label ">
+                                                                        Relationship to the Deceased
                                                                     </label>
                                                                     <select name="relationship" id="">
                                                                         <option value="" selected disabled>Select
@@ -85,11 +76,10 @@ if (isset($_GET['id'])) {
                                                                 </div>
                                                             </div>
 
-
-                                                            <div class="formbold-mb-5 flex">
-                                                                <div class="formbold-mb-5 w-full formbold-px-3">
+                                                            <div class="formbold-mb-2 flex">
+                                                                <div class="formbold-mb-5 w-full">
                                                                     <label for="" class="formbold-form-label">
-                                                                        Contact No
+                                                                        Contact Number
                                                                     </label>
                                                                     <input type="tel" name="contact" id="name"
                                                                         placeholder="Please enter a valid Philippine phone number 11 digits."
@@ -106,12 +96,11 @@ if (isset($_GET['id'])) {
                                                                         placeholder="Enter Email Address"
                                                                         class="formbold-form-input" />
                                                                 </div>
-
                                                             </div>
-                                                            <br>
+                                                         
                                                             <hr>
                                                             <h4 class="mb-5">Deceased Information</h4>
-                                                            <div class="formbold-mb-5 flex">
+                                                            <div class="formbold-mb-2 flex">
                                                                 <div class="formbold-mb-5 w-full  ">
                                                                     <label for="name" class="formbold-form-label"> Last
                                                                         Name
@@ -138,7 +127,6 @@ if (isset($_GET['id'])) {
                                                                     </label>
                                                                     <input type="text" name="MName" id="name"
                                                                         placeholder="Enter Middle Name"
-                                                                        required="required"
                                                                         class="formbold-form-input" />
                                                                 </div>
 
@@ -152,13 +140,16 @@ if (isset($_GET['id'])) {
                                                                         <option value="Jr">Jr</option>
                                                                         <option value="Sr">Sr</option>
                                                                     </select>
-                                                                    <!-- <input type="text" name="Suffix" id="name"
-                                                                        placeholder="Jr / Sr"
-                                                                        class="formbold-form-input" /> -->
                                                                 </div>
                                                             </div>
                                                             <div class="formbold-mb-5 flex">
                                                                 <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                    <label for="date" class="formbold-form-label">
+                                                                        Birth Date </label>
+                                                                    <input type="date" name="bday" id="ddate" required
+                                                                        class="formbold-form-input" />
+                                                                </div>
+                                                                <div class="formbold-mb-5 w-full">
                                                                     <label for="date" class="formbold-form-label">
                                                                         Date of Death </label>
                                                                     <input type="date" name="DateofDeath" id="ddate"
@@ -170,7 +161,7 @@ if (isset($_GET['id'])) {
                                                                         of Death
                                                                     </label>
                                                                     <input type="text" name="CauseofDeath" id="name"
-                                                                        placeholder="" required
+                                                                        placeholder="Enter Cause of Death" required
                                                                         class="formbold-form-input" />
                                                                 </div>
 
@@ -182,10 +173,6 @@ if (isset($_GET['id'])) {
                                                                         placeholder="Enter Place" required
                                                                         class="formbold-form-input" />
                                                                 </div>
-
-
-
-
                                                             </div>
 
                                                             <hr>
@@ -208,37 +195,37 @@ if (isset($_GET['id'])) {
     </div>
 </body>
 <style>
-    .add-appointment {
-        box-shadow: 0px 10px 14px -7px #276873;
-        background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
-        background-color: #4169e1;
-        border-radius: 8px;
-        display: inline-block;
-        cursor: pointer;
-        color: #ffffff;
-        font-family: Courier New;
-        font-size: 20px;
-        font-weight: bold;
-        padding: 13px 32px;
-        text-decoration: none;
-        text-shadow: 0px 1px 0px #3d768a;
-    }
+.add-appointment {
+    box-shadow: 0px 10px 14px -7px #276873;
+    background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
+    background-color: #4169e1;
+    border-radius: 8px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Courier New;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 13px 32px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #3d768a;
+}
 
-    .add-appointment:hover {
-        background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
-        background-color: #4169e1;
-    }
+.add-appointment:hover {
+    background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
+    background-color: #4169e1;
+}
 
-    .add-appointment:active {
-        position: relative;
-        top: 1px;
-    }
+.add-appointment:active {
+    position: relative;
+    top: 1px;
+}
 </style>
 
 <script>
-    function goBack() {
-        window.history.back();
-    }
+function goBack() {
+    window.history.back();
+}
 </script>
 
 

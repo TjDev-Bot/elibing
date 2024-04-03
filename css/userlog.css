@@ -18,7 +18,7 @@ body{
 .home{
     position: absolute;
     top: 50%;
-    width: 80%;
+    width: 50%;
     height: 90%;
     margin-left: 50%;   
     transform: translate(-50%, -50%);

@@ -1,39 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="css/about.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <?php
 require_once('component/header.php');
 require_once('component/navbar.php');
 ?>
 
-<br><br><br><br>
-<div class="container-about">
-
-    <div class="container1">
-        <section class="secText"> 
-            <p>An electronic burial service is a digital platform or
+<div class="container1">
+<div class="header">
+        
+        </div>
+<div class="column">
+<h1 style="font-size:3vw;">About Us</h1>
+            <img src="image/cemetery.jpg" alt="Your Name">
+        </div>
+        <div class="column">
+            <h1>e-Libing for ACAMP</h1>
+            <hr>
+            <br>
+            <p>
+            An electronic burial service is a digital platform or
                 online service that allows individuals to participate in a
-                funeral or memorial ceremony remotely.</p>
-        </section>
-        <aside class="imgAbout">
-            <img src="image/cemetery.jpg" align="right" alt="">
-        </aside>
-        <article class="artText">
+                funeral or memorial ceremony remotely.
+            </p> <br>
             <p><b>Burial services</b> - includes interment, provision of functional equipment and gender
                 responsive
                 facilities, and clean, orderly and safe memorial park in ACAMP, Barangay Fatima, General
                 Santos
-                City. <br> <br>
-                <b >Beneficiary</b> – People of General Santos City <br> <br>
+                City. <br> 
+                <b >Beneficiary</b> – People of General Santos City <br>
                 <b >Client</b> – Person/s who process the burial of the deceased.
             </p>
-        </article>
+            <!-- <a href="#">Contact Us</a> -->
+        </div>
     </div>
 
 
-
-</div>
 <!-- <body>
     <header>
         <div class="container-all-about">

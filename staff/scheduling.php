@@ -11,17 +11,13 @@ function build_calendar($month, $year){
     $schedules = array();
     $result = $conn->query($sql);
     if($result){
-        $count = $result->rowCount();
+        $count = $result->num_rows;
         if($count > 0){
-            while($row = $result->fetch(PDO::FETCH_ASSOC)){
+            while($row = $result->fetch_assoc()){
                 $schedules[] = $row['IntermentDateTime'];
-                // echo '<pre>';
-                // var_dump($schedules);
-                // echo '</pre>';
             }
         }
     }
-
 
      $days_of_week = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
      
@@ -37,15 +33,15 @@ function build_calendar($month, $year){
      $next_month = date('m', mktime(0,0,0, $month+1, 1, $year));
      $next_year = date('Y', mktime(0,0,0, $month+1, 1, $year));
 
-     if(isset($_GET['id'])){
-        $profileId = $_GET['id'];
+     if(isset($_GET['profid'])){
+        $profileId = $_GET['profid'];
 
     }
      $calendar = "<center class='month-sched'><h2>$month_name $year</center></h2></center>";
      $calendar.= "<div class='text-center'>";
-     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".$prev_month."&year=".$prev_year."&id=".$profileId."'><i class='fa-solid fa-angles-left'></i> Prev</a>";
-     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".date('m')."&year=".date('Y')."&id=".$profileId."'>Current Month</a>";
-     $calendar.= "<a id='next-button' class='btn btn-primary btn-xs mx-1' href='?month=".$next_month."&year=".$next_year."&id=".$profileId."'>Next <i class='fa-solid fa-angles-right'></i></a>";
+     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".$prev_month."&year=".$prev_year."&profid=".$profileId."'><i class='fa-solid fa-angles-left'></i> Prev</a>";
+     $calendar.= "<a class='btn btn-primary btn-xs mx-1' href='?month=".date('m')."&year=".date('Y')."&profid=".$profileId."'>Current Month</a>";
+     $calendar.= "<a id='next-button' class='btn btn-primary btn-xs mx-1' href='?month=".$next_month."&year=".$next_year."&profid=".$profileId."'>Next <i class='fa-solid fa-angles-right'></i></a>";
      $calendar.= "</div>";
 
     $calendar.="<div class='calendar-body'>";
@@ -90,27 +86,27 @@ function build_calendar($month, $year){
         } elseif ($date < $date_today) {
             $calendar .= "<td><h4 class='current_day_notavailable'>$current_day</h4><button class='btn btn-secondary btn-sm disabled'>Not Available</button></td>";
         } else {
-            $user_selected_date = "SELECT COUNT(*) as count FROM tblDeathRecord WHERE CONVERT(DATE, IntermentDateTime) = :selectedDate";
+            $user_selected_date = "SELECT COUNT(*) as count FROM tblDeathRecord WHERE DATE(IntermentDateTime) = ?";
             $stmt = $conn->prepare($user_selected_date);
-            $stmt->bindParam(':selectedDate', $date, PDO::PARAM_STR);
+            $stmt->bind_param('s', $date);
             $stmt->execute();
             
+            
             if ($stmt) {
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                $selectedDateCount = $row['count'];
+                $stmt->store_result();
+                $selectedDateCount = $stmt->num_rows;
             
                 if ($selectedDateCount >= 0) {
-                    // $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4><button class='btn btn-danger btn-sm disabled'>Reserved</button></td>";
                     $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4>";
-                    $calendar .= " <a href='../dbConn/staff-schedule-date.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
+                    $calendar .= " <a href='../dbConn/special-date1.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
                     $calendar .= "</td>";                    
                 } else {
                     $calendar .= "<td class='$today'><h4 class='current_day'>$current_day</h4>";
-                    $calendar .= " <a href='../dbConn/staff-schedule-date.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
+                    $calendar .= " <a href='../dbConn/special-date1.php?date=" . $date . "&id=" . $profileId . "' class='btn btn-success btn-sm'>Select Date</a> ";
                     $calendar .= "</td>";
                 }
             } else {
-                die("Database query error: " . implode(", ", $conn->errorInfo()));
+                die("Database query error: " . $conn->error);
             }
         }
     
@@ -118,56 +114,42 @@ function build_calendar($month, $year){
         $day_of_week++;
     }
     
+    $calendar.= "</table>";
+    $calendar.= "</div>";
 
-    
-     $calendar.= "</table>";
-     $calendar.= "</div>";
-
-     
-     
-     return $calendar;
-
-     
-
+    return $calendar;
 }
+
 ?>
-
-
 
 <div class="banner">
     <div class="container">
         <div class="row mt-100">
             <div class="col-md-12">
-
                 <div class="scheduling-container">
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="card-scheduling-1">
+                            <div class="card-scheduling-1" style="height: 70vw;">
                                 <div class="col-md-12">
                                     <?php
-                                        $date_components = getdate();
-                                        // var_dump($date_components);
-                                        if(isset($_GET['month']) && isset($_GET['year'])){
-                                            $month = $_GET['month'];
-                                            $year = $_GET['year'];
-                                        }else{
-                                            $month = $date_components['mon'];
-                                            $year = $date_components['year'];
-                                        }
-                                                    
-                                            echo build_calendar($month, $year);
+                                    $date_components = getdate();
+                                    // var_dump($date_components);
+                                    if(isset($_GET['month']) && isset($_GET['year'])){
+                                        $month = $_GET['month'];
+                                        $year = $_GET['year'];
+                                    }else{
+                                        $month = $date_components['mon'];
+                                        $year = $date_components['year'];
+                                    }
+
+                                    echo build_calendar($month, $year);
                                     ?>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-
             </div>
-
         </div>
-
     </div>
 </div>

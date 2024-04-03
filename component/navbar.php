@@ -2,7 +2,7 @@
     <nav class="navbar-container container">
         <a href="home.php" class="home-link">
             <div class="navbar-logo">
-                <img src="image/lgu_logo.png" alt="" class="logo" float="left">
+                <img src="image/lgulogogensan.png" alt="" style="height:75px;" class="logo" float="left">
             </div>
         </a>
         <button type="button" id="navbar-toggle" aria-controls="navbar-menu" aria-label="Toggle menu"
@@ -16,6 +16,7 @@
                 <li class="navbar-item"><a class="navbar-link" href="home.php">Home</a></li>
                 <li class="navbar-item"><a class="navbar-link" href="about.php">About</a></li>
                 <li class="navbar-item"><a class="navbar-link" href="contact.php">Contact</a></li>
+                <!--li class="navbar-item"><a class="navbar-link" href="card.php">Niches</a></li-->
                 <li class="navbar-item"><a class="navbar-link btn" href="user-log.php" style="color:white">Login</a></li>
             </ul>
         </div>
@@ -104,6 +105,7 @@
     .navbar-logo {
         align-items: center;
         margin-left: 10px;
+
     }
 
     #navbar-toggle {

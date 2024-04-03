@@ -31,32 +31,22 @@ include "../dbConn/conn.php";
                         <li class="breadcrumb-item active">
                             <h1>Reserved Niche</h1>
                         </li>
-
                     </ol>
-
-                    <h3>
-                    </h3>
-
-                    <!-- <button class="btn btn-danger mb-2" type="button" name="submit" onclick="goBack()">Back</button> -->
-
-
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
                             <div class="activity-log-container">
+                                <div class="col-sm-6">
+                                    <input type="search" id="searchInput" placeholder="Search here...">
+                                </div>
                                 <div class="activity-log-container-scroll">
-                                    <table class="table-no-border">
+                                    <table class="table-no-border" id="e-libingTable">
                                         <thead>
                                             <tr>
-                                                <th>Appointment ID</th>
-                                                <th>Location ID</th>
-                                                <th>Nicnhe No</th>
-                                                <th>Profile ID</th>
-                                                <th>Relationship</th>
-                                                <th>Name</th>
-                                                <th>Status</th>
-                                                <!-- <th>Nno</th>
-                                                <th>Size</th>
-                                                <th>Status</th> -->
+                                                <th>Apartment</th>
+                                                <th>Niche Number</th>
+                                                <th>Level</th>
+                                                <th>Deacesed Name</th>
+                                                <th>Requestor</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -66,35 +56,32 @@ include "../dbConn/conn.php";
                                             $selectreserve = 'SELECT * FROM  tblNiche
                                             INNER JOIN tblIntermentReservation ON  tblNiche.Nid =  tblIntermentReservation.Nid
                                             INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
-                                            INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID';
+                                            INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID WHERE tblDeathRecord.IntermentDateTime IS NULL';
                                             $queryreserve = $conn->query($selectreserve);
-                                            while ($dataloc = $queryreserve->fetch(PDO::FETCH_ASSOC)) {
+                                            while ($dataloc = $queryreserve->fetch_assoc()) {
                                                 
                                                 $appointmentID = $dataloc['AppointmentID'];
-                                                $relationship = $dataloc['Relationship'];
+                                                $requestor = $dataloc['Requestor'];
                                                 $locID = $dataloc['LocID'];
                                                 $nicheno = $dataloc['Nid'];
-                                                $profID = $dataloc['ProfID'];
-                                                $name = $dataloc['Fname'].' '.$dataloc['MName'].' '.$dataloc['Lname'];
+                                                $profID = $dataloc['ProfileID'];
+                                                $name = $dataloc['Fname'].' '.$dataloc['Mname'].' '.$dataloc['Lname'];
                                                 $status = $dataloc['Status'];
-
-                                                
-                                                if($status == 1){
-                                                    $statustoString = "Reserved";
-                                               
-                                             
-                                       
+                                                $nid = $dataloc['Nid'];
+                                                $nno = $dataloc['Nno'];
+                                                $nlname = $dataloc['NLName'];
+                                                $level = $dataloc['Level'];
+                                              
                                             ?>
                                             <tr>
-
-                                                <td><?php echo $appointmentID ?></td>
-                                                <td><?php echo $locID ?></td>
-                                                <td><?php echo $nicheno ?></td>                                               
-                                                <td><?php echo $profID ?></td>                                                
-                                                <td><?php echo $relationship ?></td>
+                                                <td><?php echo $nlname ?></td>
+                                                <td style="display: none;"><?php echo $appointmentID ?></td>
+                                                <td style="display: none;"><?php echo $locID ?></td>
+                                                <td><?php echo $nno ?></td>
+                                                <td><?php echo $level ?></td>
+                                                <td style="display: none;"><?php echo $profID ?></td>
                                                 <td><?php echo $name ?></td>
-                                                <td><?php echo $statustoString ?></td>
-
+                                                <td><?php echo $requestor ?></td>
                                                 <td>
                                                     <button class="btn btn-primary "
                                                         onclick="viewReserve('<?php echo $appointmentID; ?>')">
@@ -104,7 +91,7 @@ include "../dbConn/conn.php";
 
                                                 </td>
                                             </tr>
-                                            <?php } } ?>
+                                            <?php }  ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -119,31 +106,15 @@ include "../dbConn/conn.php";
     </div>
 
     <script>
-    // function goBack() {
-    //     var url = 'location.php'
-    //     window.location.href = url;
-
-    // }
-
     function viewReserve(appointmentID) {
         var url = 'viewreserve.php?AppID=' + appointmentID;
         window.location.href = url;
     }
-
-    // function openDelete(location_id, block_id) {
-    //     var url = '../dbConn/deleteloc.php?loc_id=' + location_id + '&block_id=' + block_id;
-    //     window.location.href = url;
-    // }
-
-
     document.getElementById("search-input").addEventListener("input", searchTable);
     </script>
-
     <?php
     require('assets/component/script.php');
     ?>
-
-
 </body>
 
 </html>

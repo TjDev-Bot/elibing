@@ -15,7 +15,7 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
     $profid = $_GET['profid'];
     $selectt = "SELECT * FROM tblNiche WHERE Nid = '$nicheno'";
     $query = $conn->query($selectt);
-    while ($occupant = $query->fetch(PDO::FETCH_ASSOC)) {
+    while ($occupant = $query->fetch_assoc()) {
         // $nicheno = $occupant['Nid'];
         $level = $occupant['Level'];
         // $status = $occupant['Status'];
@@ -79,7 +79,7 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
                                                 <th>Date of Death</th>
                                                 <th>Interment Place</th>
                                                 <th>Interment Date & Time</th>
-                                                <th>Action</th>
+                                                <!-- <th>Action</th> -->
                                             </tr>
                                         </thead>
 
@@ -95,18 +95,22 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
                                             // INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID WHERE LocID = '$block_id' ";
 
                                             $select = "SELECT * FROM tblNiche
-                                            INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
-                                            INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
-                                            INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID WHERE tblIntermentReservation.Nid = '$nicheno' ORDER BY ProfID DESC";
+                                                INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
+                                                INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
+                                                INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID 
+                                                LEFT JOIN tblBuriedRecord ON tblDeathRecord.ProfileID = tblBuriedRecord.Profid
+                                                WHERE tblIntermentReservation.Nid = '$nicheno'  ORDER BY tblIntermentReservation.ProfID DESC";
+
 
                                  
                                             $queryocc = $conn->query($select);
-                                            while ($data = $queryocc->fetch(PDO::FETCH_ASSOC)) {
+                                            while ($data = $queryocc->fetch_assoc()) {
                                                 $profileid = $data['ProfileID'];
                                                 $dateofdeath = $data['DateofDeath'];
-                                                $name = $data['Fname'] . ' ' . $data['MName'] . ' ' . $data['Lname'] . ' ' . $data['Suffix'];
+                                                $name = $data['Fname'] . ' ' . $data['Mname'] . ' ' . $data['Lname'] . ' ' . $data['Suffix'];
                                                 $intermentplace = $data['IntermentPlace'];
                                                 $intermentdatetime = $data['IntermentDateTime'];
+                                                $stat = $data['Status1'];
 
 
                                                 if($intermentdatetime === null){
@@ -114,6 +118,10 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
                                                 } else {
                                                     $intermentdatetime = date('F j, Y g:i A', strtotime($intermentdatetime));
                                                 }
+
+
+                                                if($stat != 1){
+
                                             ?>
 
 
@@ -136,19 +144,19 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
                                                 <td class="px-6 py-4">
                                                     <?php echo $intermentdatetime ?>
                                                 </td>
-
+<!-- 
                                                 <td class="px-6 py-4">
                                                     <input type="hidden" value="<?php echo $block_id ?>">
                                                     <input type="hidden" value="<?php echo $nicheno ?>">
-                                                    <input type="hidden" value="<?php echo $profid ?>">
+                                                    <input type="hidden" value="<?php echo $prof ?>">
                                                     <input type="hidden" value="<?php echo $level ?>">
                                                     <button class="btn btn-primary "
                                                         onclick="viewOcuppant('<?php echo $block_id ?>', '<?php echo $nicheno ?>', '<?php echo $profid ?>', '<?php echo $level ?>')">
                                                         <i class='bx bx-edit-alt'></i>
                                                     </button>
-                                                </td>
+                                                </td> -->
                                             </tr>
-                                            <?php } ?>
+                                            <?php } }?>
                                         </tbody>
 
                                     </table>
@@ -162,12 +170,12 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
     </div>
     <script>
     function goBack(block_id, profid) {
-        var url = 'niche.php?locid=' + block_id + '&profid=' + profid;
+        var url = 'niche.php?locid=' + block_id + '&id=' + profid;
         window.location.href = url;
     }
 
-    function viewOcuppant(block_id, nicheno, profid, level) {
-        var url = 'viewoccupant.php?locid=' + block_id + '&nid=' + nicheno + '&profid=' + profid + '&level=' + level;
+    function viewOcuppant(block_id, nicheno, prof, level) {
+        var url = 'viewoccupant.php?locid=' + block_id + '&nid=' + nicheno + '&profid=' + prof + '&level=' + level;
         window.location.href = url;
     }
     </script>
@@ -255,8 +263,9 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid'])) {
                             text: 'Info Successfully Updated',
                             icon: 'success'
                         }).then(function() {
-                            // Refresh the page
-                            location.reload();
+                            window.location.href = 'reserve.php';
+
+                            // location.reload();
                         });
                     } else {
                         Swal.fire({

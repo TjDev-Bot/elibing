@@ -3,23 +3,23 @@ function nextNumb($tmpInitial, $VarTable, $VarOrder, $VarLength, $DisYr)
 {
     include "conn.php";
 
-    if ($DisYr == '') {
-        $DisYr = $tmpInitial . '';
-    } else {
-        $DisYr = $DisYr . $tmpInitial . '';
-    }
+    $prefix = ($DisYr == '') ? $tmpInitial : $DisYr . $tmpInitial;
 
-    $query = "SELECT ISNULL(MAX(CAST(SUBSTRING(" . $VarOrder . ", " . (strlen($DisYr) + 1) . ", " . ($VarLength - strlen($DisYr)) . ") AS INT)), 0) + 1 AS pernum FROM " . $VarTable . " WHERE " . $VarOrder . " LIKE ?";
+    $query = "SELECT IFNULL(MAX(CAST(SUBSTRING(" . $VarOrder . ", " . (strlen($prefix) + 1) . ", " . ($VarLength - strlen($prefix)) . ") AS SIGNED)), 0) + 1 AS pernum FROM " . $VarTable . " WHERE " . $VarOrder . " LIKE ?";
     $stmt1 = $conn->prepare($query);
-    $stmt1->execute(array($DisYr . '%'));
 
-    $row = $stmt1->fetch(PDO::FETCH_ASSOC);
+    $param = $prefix . '%';
+    $stmt1->bind_param('s', $param); 
+    $stmt1->execute();
+
+    $result = $stmt1->get_result();
+    $row = $result->fetch_assoc();
     $NextIDnum = $row['pernum'];
 
-    $NextIDnum = $DisYr . str_pad($NextIDnum, $VarLength - strlen($DisYr), '0', STR_PAD_LEFT);
-    
-    $stmt1->closeCursor();
-    $conn = null;
+    $NextIDnum = $prefix . str_pad($NextIDnum, $VarLength - strlen($prefix), '0', STR_PAD_LEFT);
+
+    $stmt1->close();
+    $conn->close();
 
     return $NextIDnum;
 }

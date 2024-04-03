@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-<link href="assets/css/table.css" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/walkin.css">
+<link rel="stylesheet" href="css/walkin.css">
+
 
 <?php
-include('../dbConn/conn.php');
-require_once('component/header.php');
+require('assets/component/header.php');
+require('assets/component/topnavbar.php');
+require('assets/component/sidebars.php');
+
+include "../dbConn/conn.php";
+
 
 if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid']) && isset($_GET['level'])) {
     $block_id = $_GET['locid'];
@@ -31,105 +34,74 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid']) && is
     }
 }
 ?>
-
-
 <body>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">
+                            <h1>View Occupant</h1>
+                        </li>
 
-    <!-- Pre-loader end -->
-    <div id="pcoded" class="pcoded">
-        <div class="pcoded-container navbar-wrapper">
-            <!-- Top Nav Bar-->
-            <?php require_once('component/topnavbar.php'); ?>
+                    </ol>
+                    <div class="pcoded-inner-content">
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <div class="page-body">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div class="container-interment">
+                                                <div class="formbold-main">
+                                                    <div class="">
+                                                        <button class="btn btn-danger" type="button" name="submit"
+                                                            onclick="goBack('<?php echo $block_id ?>' , '<?php echo $nid ?>', '<?php echo $profId ?>', '<?php echo $level ?>')">Back</button>
+                                                        <p>
 
-            <div class="pcoded-main-container">
-                <div class="pcoded-wrapper">
-                    <!-- Sidebar -->
-                    <?php require_once('component/sidebar.php'); ?>
-                    <div class="pcoded-content">
-                        <!-- Page-header start -->
-                        <div class="page-header">
-                            <div class="page-block">
-                                <div class="row align-items-center">
-                                    <div class="col-md-8">
-                                        <div class="page-header-title">
-                                            <h5 class="m-b-10">Dashboard</h5>
-                                            <p class="m-b-0">Welcome to Appointment</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <ul class="breadcrumb">
-                                            <li class="breadcrumb-item">
-                                                <a href="index.php"> <i class="fa fa-home"></i> </a>
-                                            </li>
-                                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Page-header end -->
-                        <div class="pcoded-inner-content">
-                            <!-- Main-body start -->
-                            <div class="main-body">
-                                <div class="page-wrapper">
-                                    <!-- Page-body start -->
-                                    <div class="page-body">
-                                        <div class="row">
-                                            <div class="col-sm">
-                                                <div class="container-interment">
-                                                    <div class="formbold-main">
-                                                        <div class="">
-                                                            <button class="btn btn-danger" type="button" name="submit"
-                                                                onclick="goBack('<?php echo $block_id ?>' , '<?php echo $nid ?>', '<?php echo $profId ?>', '<?php echo $level ?>')">Back</button>
-                                                            <p>
+                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                            <label for="name" class="formbold-form-label"></label>
+                                                            Name
+                                                            </label>
+                                                            <input type="text" name="Lname" id="name"
+                                                                value="<?php echo $name ?>" required="required"
+                                                                class="formbold-form-input" readonly />
+                                                        </div>
 
-                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                                <label for="name" class="formbold-form-label"></label>
-                                                                Name
-                                                                </label>
-                                                                <input type="text" name="Lname" id="name"
-                                                                    value="<?php echo $name ?>" required="required"
-                                                                    class="formbold-form-input" readonly />
-                                                            </div>
+                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                            <label for="date" class="formbold-form-label">
+                                                                Date of Death </label>
+                                                            <input type="date" name="DateofDeath" id="ddate"
+                                                                value="<?php echo $dateofdeath ?>" required
+                                                                class="formbold-form-input" readonly />
+                                                        </div>
 
-                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                                <label for="date" class="formbold-form-label">
-                                                                    Date of Death </label>
-                                                                <input type="date" name="DateofDeath" id="ddate"
-                                                                    value="<?php echo $dateofdeath ?>" required
-                                                                    class="formbold-form-input" readonly />
-                                                            </div>
+                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                            <label for="name" class="formbold-form-label">Cause of Death
+                                                            </label>
+                                                            <input type="text" name="CauseofDeath" id="name"
+                                                                value="<?php echo $causeofdeath ?>" required
+                                                                class="formbold-form-input" readonly />
+                                                        </div>
 
-                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                                <label for="name" class="formbold-form-label">Cause of
-                                                                    Death
-                                                                </label>
-                                                                <input type="text" name="CauseofDeath" id="name"
-                                                                    value="<?php echo $causeofdeath ?>" required
-                                                                    class="formbold-form-input" readonly />
-                                                            </div>
+                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                            <label for="name" class="formbold-form-label">Interment
+                                                                Place
+                                                            </label>
+                                                            <input type="text" name="IntermentPlace" id="name"
+                                                                value="<?php echo $intermentplace ?>" required
+                                                                class="formbold-form-input" readonly />
+                                                        </div>
 
-                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                                <label for="name" class="formbold-form-label">Interment
-                                                                    Place
-                                                                </label>
-                                                                <input type="text" name="IntermentPlace" id="name"
-                                                                    value="<?php echo $intermentplace ?>" required
-                                                                    class="formbold-form-input" readonly />
-                                                            </div>
-
-                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
-                                                                <label for="date" class="formbold-form-label">
-                                                                    Interment Date</label>
-                                                                <input type="text" name="IntermentDate" id="ddate"
-                                                                    value="<?php echo $intermentdatetime; ?>" required
-                                                                    class="formbold-form-input" readonly />
-
-                                                            </div>
-
+                                                        <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                            <label for="date" class="formbold-form-label">
+                                                                Interment Date</label>
+                                                            <input type="text" name="IntermentDate" id="ddate"
+                                                                value="<?php echo $intermentdatetime; ?>" required
+                                                                class="formbold-form-input" readonly />
 
                                                         </div>
+
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,35 +112,54 @@ if (isset($_GET['locid']) && isset($_GET['nid']) && isset($_GET['profid']) && is
                         </div>
                     </div>
                 </div>
-                <div id="styleSelector"> </div>
-            </div>
+
+
+
         </div>
+        </main>
+    </div>
     </div>
 
     <script>
     function goBack(block_id, nicheno, profid, level) {
-        var url = 'clientoccupant.php?locid=' + block_id + '&nid=' + nicheno + '&profid=' + profid + '&level=' + level;
+        var url = 'occupant.php?locid=' + block_id + '&nid=' + nicheno + '&profid=' + profid + '&level=' + level;
         window.location.href = url;
     }
     </script>
-    <!-- Required Jquery -->
-    <script type="text/javascript" src="assets/js/jquery/jquery.min.js "></script>
-    <script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>
-    <script type="text/javascript" src="assets/js/popper.js/popper.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap/js/bootstrap.min.js "></script>
-    <!-- waves js -->
-    <script src="assets/pages/waves/js/waves.min.js"></script>
-    <!-- jquery slimscroll js -->
-    <script type="text/javascript" src="assets/js/jquery-slimscroll/jquery.slimscroll.js"></script>
 
-    <!-- slimscroll js -->
-    <script src="assets/js/jquery.mCustomScrollbar.concat.min.js "></script>
 
-    <!-- menu js -->
-    <script src="assets/js/pcoded.min.js"></script>
-    <script src="assets/js/vertical/vertical-layout.min.js "></script>
-    <script type="text/javascript" src="assets/js/script.js "></script>
 
+    <?php
+    require('assets/component/script.php');
+    ?>
+
+    <style>
+    .add-appointment {
+        box-shadow: 0px 10px 14px -7px #276873;
+        background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
+        background-color: #4169e1;
+        border-radius: 8px;
+        display: inline-block;
+        cursor: pointer;
+        color: #ffffff;
+        font-family: Courier New;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 13px 32px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #3d768a;
+    }
+
+    .add-appointment:hover {
+        background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
+        background-color: #4169e1;
+    }
+
+    .add-appointment:active {
+        position: relative;
+        top: 1px;
+    }
+    </style>
 </body>
 
 </html>

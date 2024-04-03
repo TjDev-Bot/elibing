@@ -12,8 +12,6 @@ require('component/navbar.php');
     <div class="home">
         <div class="content">
             <br>
-            <!-- <img src="image/lgu_logo.png" alt="logo" class="logo" id="logo"> -->
-  
         </div>
         <div class="container-login">
             <form action="dbConn/valLogin.php" method="GET">
@@ -22,13 +20,14 @@ require('component/navbar.php');
 
                     <div class="form-group-login">
                         <label for="username">Email</label>
-                        <input type="email" name="email" class="form-control-login">
-
+                        <input type="email" name="email" class="form-control-login"
+                            value="<?php if(isset($_GET['email'])) { echo htmlspecialchars($_GET['email']); } ?>">
                     </div>
                     <div class="form-group-login">
                         <label for="password">Password</label>
                         <input type="password" name="password" class="form-control-login">
                     </div>
+
                 </div>
 
                 <button class="custom-button">Login</button>
@@ -41,3 +40,5 @@ require('component/navbar.php');
 </body>
 
 </html>
+
+    

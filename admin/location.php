@@ -7,8 +7,8 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include('../dbConn/conn.php');
 require_once('../component/locfunction.php');
-if(isset($_GET['profid'])){
-    $profid = $_GET['profid'];
+if(isset($_GET['id'])){
+    $profid = $_GET['id'];
 }
 
 ?>
@@ -21,27 +21,22 @@ if(isset($_GET['profid'])){
 
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">
-                            <h1>Block</h1>
+                            <h1>Apartment</h1>
                         </li>
                     </ol>
 
+
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <form action="../dbConn/delete_data.php" method="GET">
+                            <input type="hidden" name="id" value="<?php echo $profid ?>">
+                            <button class="btn btn-danger" type="submit">
+                                Cancel
+                            </button>
+                        </form>
+                        <br>
                         <div class="container">
 
-                            <!-- <form action="../dbConn/block.php" method="POST">
-                                <div class="">
-                                    <select name="type" id="type" class="">
-                                        <option value="Chamber">Chamber</option>
-                                        <option value="Apartment">Apartment</option>
-                                    </select>
-                                </div>
-                                <input type="text" name="nlname" placeholder="Input NL Name">
-                                <input type="text" name="size" placeholder="Input Size">
-                                <input type="text" name="description" placeholder="Input Description">
 
-                              
-                                <button class="btn btn-primary mb-4" type="submit">Add Block</button>
-                            </form> -->
 
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll">
@@ -63,7 +58,7 @@ if(isset($_GET['profid'])){
                                                 $select = "SELECT * FROM tblNicheLocation";
                                                 $query = $conn->query($select);
 
-                                                while($data = $query->fetch(PDO::FETCH_ASSOC)){
+                                                while($data = $query->fetch_assoc()){
                                                     $id = $data['LocID'];
                                                     $nlname = $data['NLName'];
                                                     $size = $data['Size'];
@@ -99,10 +94,9 @@ if(isset($_GET['profid'])){
     <script>
     function addNiche(profid, id) {
         console.log("addNiche called with id:", id);
-        var url = 'niche.php?profid=' + profid + '&locid=' + id;
+        var url = 'niche.php?id=' + profid + '&locid=' + id;
         window.location.href = url;
     }
-
     </script>
 
 

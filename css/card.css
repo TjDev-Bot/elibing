@@ -1,0 +1,91 @@
+body {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  margin: 90px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+
+}
+
+.card-niche {
+  text-align: center;
+  /* padding: 20px; */
+  width: 150px;
+  height: 55px;
+  background-color: #1b2c71;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  margin-right: 300px;
+  cursor: pointer;
+  transition: transform ease-in-out .3s;
+}
+
+.card-niche:hover{
+  transform: scale(1.1);
+}
+
+.row{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.col{
+  width: calc(20% - 20px); 
+  margin: 10px;
+  text-align: center;
+}
+
+.no-data-message {
+  text-align: center;
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #000;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+.col-sm-6 {
+  flex: 0 0 auto;
+  width: 50%;
+  margin: 15;
+  margin-bottom: 10px;
+}
+
+
+
