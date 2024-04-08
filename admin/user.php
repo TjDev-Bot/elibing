@@ -15,7 +15,6 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 require('assets/component/script.php');
 
-
 ?>
 
 <body>
@@ -104,7 +103,6 @@ require('assets/component/script.php');
                                                 <tbody>
 
                                                     <?php
-
                                                     $selectloc = "SELECT * FROM tblUsersLogin";
                                                     $queryloc = $conn->query($selectloc);
                                                     while ($dataloc = $queryloc->fetch_assoc()) {

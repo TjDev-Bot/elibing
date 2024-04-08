@@ -29,6 +29,13 @@ if (!empty($name) || !empty($email) || !empty($password) || !empty($role)) {
     $insertAudit->bind_param('i', $id);
     $insertAudit->execute();
 
+    
+    $stmt2 = "INSERT INTO TBL_Audit_Trail (User_ID, Date, Timex, Action) VALUES (?, GETDATE(), ?, 'New Added User')";
+    $insertAudit = $conn->prepare($stmt2);
+    $insertAudit->bindParam(1, $userID, PDO::PARAM_STR);
+    $insertAudit->bindParam(2, $currentDateTime, PDO::PARAM_STR);
+    $insertAudit->execute();
+
     if ($num == 0) {
 
         // $hashedPassword = hash('sha1', $password);

@@ -29,7 +29,6 @@ $userID = $_SESSION['id'];
                     </ol>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
-
                             <div class="activity-log-container">
                                 <div class="col-sm-6">
                                     <input type="search" id="searchInput" placeholder="Search here...">

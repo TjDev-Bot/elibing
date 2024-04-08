@@ -178,6 +178,7 @@ $(document).ready(function() {
 
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
+<<<<<<< HEAD
                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                                 Total Buried in the Cemetery</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -504,6 +505,221 @@ $(document).ready(function() {
                                 </div>
                             </div>
                         </div>
+=======
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Total Buried in the Cemetery</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $totalDeath ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-person-digging fa-2xl" style="color: #dddfeb;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+<<<<<<< HEAD
+                        </div>
+
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <?php
+                                    $selectAvailable = "SELECT * FROM tblNiche WHERE Status = 0";
+                                    $resAvailable = $conn->query($selectAvailable);
+                                    $tblAvailable = $resAvailable->fetchAll(PDO::FETCH_ASSOC);
+                                    $totalAvailable = count($tblAvailable);
+                                    ?>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Total Available Niche</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $totalAvailable ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-table-cells fa-2xl" style="color: #dddfeb;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <?php
+                                    $selectReserved = "SELECT * FROM tblNiche WHERE Status = 1";
+                                    $resReserved = $conn->query($selectReserved);
+                                    $tblReserved = $resReserved->fetchAll(PDO::FETCH_ASSOC);
+                                    $totalReserved = count($tblReserved);
+                                    ?>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Total Reserved Niche</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $totalReserved ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-square-person-confined fa-2xl"
+                                                style="color: #dddfeb;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Age Group Distribution</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="myPieChart" class="chart-pie pt-4 pb-2"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Niche Status</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="myBarChart" style="height: 330px; width: 100%;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Monthly Revenue</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-area">
+                                            <canvas id="myLineChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+=======
+                        </div>
+
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <?php
+<<<<<<< HEAD
+                                    $selectAvailable = "SELECT * FROM tblNiche WHERE Status = 0";
+                                    $resAvailable = $conn->query($selectAvailable);
+                                    $tblAvailable = $resAvailable->fetchAll(PDO::FETCH_ASSOC);
+                                    $totalAvailable = count($tblAvailable);
+=======
+                                        $selectAvailable = "SELECT * FROM tblNiche WHERE Status = 0";
+                                        $resAvailable = $conn->query($selectAvailable);
+
+                                        $tblAvailable = $resAvailable->fetchAll(PDO::FETCH_ASSOC);
+                                        $totalAvailable = count($tblAvailable);
+
+                                    
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+                                    ?>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Total Available Niche</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $totalAvailable ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-table-cells fa-2xl" style="color: #dddfeb;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <?php
+                                    $selectReserved = "SELECT * FROM tblNiche WHERE Status = 1";
+                                    $resReserved = $conn->query($selectReserved);
+                                    $tblReserved = $resReserved->fetchAll(PDO::FETCH_ASSOC);
+                                    $totalReserved = count($tblReserved);
+                                    ?>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Total Reserved Niche</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $totalReserved ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-square-person-confined fa-2xl"
+                                                style="color: #dddfeb;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Age Group Distribution</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="myPieChart" class="chart-pie pt-4 pb-2"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Niche Status</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="myBarChart" style="height: 330px; width: 100%;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Monthly Revenue</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-area">
+                                            <canvas id="myLineChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                     </div>
             </main>
         </div>
@@ -531,7 +747,10 @@ $(document).ready(function() {
         #startDate,
         #endDate,
         #printButton,
+<<<<<<< HEAD
         #labeldate,
+=======
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
         #filter-button {
             display: none;
         }
@@ -567,6 +786,7 @@ $(document).ready(function() {
         },
         options: {
             maintainAspectRatio: false,
+<<<<<<< HEAD
        
             plugins: {
                 legend: {
@@ -587,12 +807,43 @@ $(document).ready(function() {
         }
     });
 
+=======
+            scales: {
+                x: {
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Status"
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    display: false,
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Count"
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+
+    });
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
 
     var ctxPie = document.getElementById("myPieChart").getContext("2d");
     var myPieChart = new Chart(ctxPie, {
         type: "doughnut",
         data: {
+<<<<<<< HEAD
             // labels: ["Regular", "Senior Citizen", "Child"],
+=======
+            labels: ["Regular", "Senior Citizen", "Child"],
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
             datasets: [{
                 data: [
                     <?php echo $dataPointsPie[0]['y']; ?>,
@@ -603,6 +854,7 @@ $(document).ready(function() {
             }]
         },
         options: {
+<<<<<<< HEAD
             maintainAspectRatio: true,
             plugins: {
                 datalabels: {
@@ -639,6 +891,36 @@ $(document).ready(function() {
         datasets: [{
             label: "Earnings",
             data: <?php echo json_encode($monthlyRevenueValues); ?>,
+=======
+            maintainAspectRatio: false,
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: "#dddfeb",
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10
+            },
+
+        }
+    });
+
+    document.getElementById("printButton").addEventListener("click", function() {
+        window.print();
+    });
+
+
+    var ctx = document.getElementById("myLineChart").getContext('2d');
+
+    // Chart data and options
+    var chartData = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+            label: "Earnings",
+            data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
             borderColor: "rgba(78, 115, 223, 1)",
             backgroundColor: "rgba(78, 115, 223, 0.05)",
             pointRadius: 3,
@@ -650,21 +932,45 @@ $(document).ready(function() {
             pointHitRadius: 10,
             pointBorderWidth: 2,
         }]
+<<<<<<< HEAD
 
+=======
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
     };
 
     var chartOptions = {
         maintainAspectRatio: false,
         scales: {
             x: {
+<<<<<<< HEAD
                 type: 'category',
                 labels: monthNames,
+=======
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                 grid: {
                     display: false,
                     drawBorder: false,
                 },
+<<<<<<< HEAD
             },
             y: {
+=======
+                ticks: {
+                    maxTicksLimit: 7,
+                    callback: function(value, index, values) {
+                        return value; // Remove $ sign
+                    }
+                }
+            },
+            y: {
+                ticks: {
+                    maxTicksLimit: 5,
+                    padding: 10,
+                    callback: function(value, index, values) {
+                        return '$' + number_format(value);
+                    }
+                },
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                 grid: {
                     color: "rgb(234, 236, 244)",
                     zeroLineColor: "rgb(234, 236, 244)",
@@ -684,16 +990,23 @@ $(document).ready(function() {
         }
     };
 
+<<<<<<< HEAD
+=======
+    // Create the line chart
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: chartData,
         options: chartOptions
     });
+<<<<<<< HEAD
 
 
     function number_format(number) {
         return number.toLocaleString();
     }
+=======
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
     </script>
 
     <?php
@@ -701,6 +1014,7 @@ $(document).ready(function() {
     ?>
 </body>
 
+<<<<<<< HEAD
 </html>
 <style>
 #dataPointsPieContainer {
@@ -745,3 +1059,6 @@ $(document).ready(function() {
     margin-right: 5px;
 }
 </style>
+=======
+</html>
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed

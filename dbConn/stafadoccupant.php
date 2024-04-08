@@ -105,7 +105,7 @@ try {
               </script>";
             }
         }
-    } else {
+} else {
         echo "All fields are required";
         die();
     }

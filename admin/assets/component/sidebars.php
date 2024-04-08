@@ -60,12 +60,20 @@
                         </a>
 
                         <a class="nav-link " href="deceased.php">
+<<<<<<< HEAD
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-file-pen"></i></div>
+=======
+                            <div class="sb-nav-link-icon"><i class="bx bx-calendar"></i></div>
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                             Death Record
                         </a>
 
                         <a class="nav-link " href="masterprofile.php">
+<<<<<<< HEAD
                             <div class="sb-nav-link-icon"><i class="bx bxs-user-detail"></i></div>
+=======
+                            <div class="sb-nav-link-icon"><i class="bx bx-calendar"></i></div>
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                             Master Profile
                         </a>
                         <a class="nav-link " href="IntermentSched.php">
@@ -115,6 +123,7 @@
                             </nav>
                         </div> -->
                         <a class="nav-link " href="form.php">
+<<<<<<< HEAD
                             <div class="sb-nav-link-icon"><i class="bx bx-table"></i></div>
                             Application
                         </a>
@@ -127,6 +136,11 @@
                             <div class="sb-nav-link-icon"><i class="bx bx-user"></i></div>
                            Users
                         </a>
+=======
+                            <div class="sb-nav-link-icon"><i class="bx bx-map"></i></div>
+                            Niche
+                        </a>
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
 
                         <a class="nav-link " href="activitylog.php">
                             <div class="sb-nav-link-icon"><i class="bx bx-alarm-exclamation"></i></div>

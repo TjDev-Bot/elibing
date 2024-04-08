@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="css/walkin.css">
@@ -299,7 +300,7 @@ if(isset($_GET['id']) && isset($_SESSION['id']) && isset($_GET['status'])){
                             text: 'Info Successfully Updated',
                             icon: 'success'
                         }).then(function() {
-                            window.location.href = 'deceased.php';
+                            window.location.href = '../staff/deceased.php';
                         });
                     } else {
                         Swal.fire({

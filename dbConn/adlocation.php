@@ -12,17 +12,55 @@ $level = $_POST['level'];
 $stat = $_POST['stat'];
 $size = $_POST['size'];
 $profid = $_POST['profid'];
+<<<<<<< HEAD
 $userID = $_POST['userid'];
 
 if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || !empty($stat) || !empty($size)) {
     $batchSize = 10;
     $numBatches = ceil($nicheno / $batchSize);
+=======
+<<<<<<< HEAD
+$userID = $_POST['userid'];
+
+if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || !empty($stat) || !empty($size)) {
+    $batchSize = 10;
+    $numBatches = ceil($nicheno / $batchSize);
+=======
+<<<<<<< HEAD
+$userID = $_POST['userid'];
+
+=======
+
+// Check if the input values are valid
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || !empty($stat) || !empty($size)) {
+    $batchSize = 10;
+    $numBatches = ceil($nicheno / $batchSize);
+
+<<<<<<< HEAD
+=======
+    // Get the maximum Nno for the given LocID
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
     $getMaxNnoSql = "SELECT MAX(Nno) FROM tblNiche";
     $getMaxNnoStmt = $conn->prepare($getMaxNnoSql);
     $getMaxNnoStmt->execute();
+<<<<<<< HEAD
     $getMaxNnoStmt->bind_result($maxNno);
     $getMaxNnoStmt->fetch();
     
+=======
+    $maxNno = $getMaxNnoStmt->fetchColumn();
+
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+    // If maxNno is NULL (no existing Nno), start from 1, otherwise, increment it
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
     if ($maxNno === null) {
         $maxNno = 0;
     }
@@ -30,6 +68,7 @@ if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || 
     
     $counter = 1;
 
+<<<<<<< HEAD
     $insertSql = "INSERT INTO tblNiche (Nid, LocID, Level, Size, Status, Nno) VALUES (?,?, ?, ?, 0, ?)";
     $stmt = $conn->prepare($insertSql);
     $stmt->bind_param('ssssi', $nicherow, $locID, $level, $size, $nno);
@@ -38,6 +77,44 @@ if (is_numeric($nicheno) || $nicheno > 0 || !empty($locID) || !empty($level) || 
     $stmt1 = "INSERT INTO TBL_Audit_Trail (User_ID, Action) VALUES (?, 'Add Niche')";
     $insertAudit = $conn->prepare($stmt1);
     $insertAudit->bind_param('i', $userID);
+=======
+<<<<<<< HEAD
+    $counter = 1;
+
+=======
+<<<<<<< HEAD
+    $counter = 1;
+
+=======
+    $counter = 1; // Initialize a counter
+
+    // Prepare the insert statement outside the loop
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+    $insertSql = "INSERT INTO tblNiche (Nid, LocID, Level, Size, Status, Nno) VALUES (?,?, ?, ?, 0, ?)";
+    $stmt = $conn->prepare($insertSql);
+    $stmt->bindParam(1, $nicherow, PDO::PARAM_STR);
+    $stmt->bindParam(2, $locID, PDO::PARAM_STR);
+    $stmt->bindParam(3, $level, PDO::PARAM_STR);
+    $stmt->bindParam(4, $size, PDO::PARAM_INT);
+    $stmt->bindParam(5, $nno, PDO::PARAM_INT);
+<<<<<<< HEAD
+
+    
+    $stmt1 = "INSERT INTO TBL_Audit_Trail (User_ID, Date, Timex, Action) VALUES (?, GETDATE(), ?, 'Add Niche')";
+    $insertAudit = $conn->prepare($stmt1);
+    $insertAudit->bindParam(1, $userID, PDO::PARAM_STR);
+    $insertAudit->bindParam(2, $currentDateTime, PDO::PARAM_STR);
+    $insertAudit->execute();
+=======
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+
+    
+    $stmt1 = "INSERT INTO TBL_Audit_Trail (User_ID, Date, Timex, Action) VALUES (?, GETDATE(), ?, 'Add Niche')";
+    $insertAudit = $conn->prepare($stmt1);
+    $insertAudit->bindParam(1, $userID, PDO::PARAM_STR);
+    $insertAudit->bindParam(2, $currentDateTime, PDO::PARAM_STR);
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
     $insertAudit->execute();
 
     for ($batch = 0; $batch < $numBatches; $batch++) {

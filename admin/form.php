@@ -41,6 +41,7 @@ if (isset($_GET['id'])) {
                                             <div class="container-interment">
                                                 <div class="formbold-main">
                                                     <div class="">
+<<<<<<< HEAD
 
                                                         <form action="../dbConn/adoccupant.php" method="POST">
                                                             <input type="hidden"  name="userid" value="<?php echo $id ?> ">
@@ -49,13 +50,58 @@ if (isset($_GET['id'])) {
 
 
                                                             <h4 class="mb-3">Applicant's Information</h4>
+=======
+<<<<<<< HEAD
 
+                                                        <form action="../dbConn/adoccupant.php" method="POST">
+                                                            <input type="hidden"  name="userid" value="<?php echo $id ?> ">
+                                                            <input type="hidden" name="create"
+                                                                value="<?php echo $createdby ?>">
+
+=======
+<<<<<<< HEAD
+
+                                                        <form action="../dbConn/adoccupant.php" method="POST">
+                                                            <input type="hidden"  name="userid" value="<?php echo $id ?> ">
+                                                            <input type="hidden" name="create"
+                                                                value="<?php echo $createdby ?>">
+
+=======
+                                                        <!-- <button class="btn btn-danger" type="button" name="submit"
+                                                            onclick="goBack()">Back</button> -->
+                                                        <form action="../dbConn/adoccupant.php" method="POST">
+                                                            <input type="hidden" value="<?php echo $id?> ">
+                                                            <input type="hidden" name="create"
+                                                                value="<?php echo $createdby ?>">
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                <label for="time" class="formbold-form-label">
+                                                                </label>
+                                                                <input type="hidden" name="Nid" id="user_name" required
+                                                                    class="formbold-form-input"
+                                                                    value="<?php echo $nicheno ?>" />
+                                                            </div>
+
+<<<<<<< HEAD
+                                                            <h4 class="mb-5">Applicant's Information</h4>
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
+
+=======
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
                                                             <div class="formbold-mb-5 flex">
                                                                 <div class="formbold-mb-5 w-full">
                                                                     <label for="name" class="formbold-form-label">
                                                                         Full Name
                                                                     </label>
                                                                     <input type="text" name="fullname" id="name"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                                         placeholder="Enter Full Name" required
                                                                         class="formbold-form-input" />
                                                                 </div>
@@ -77,6 +123,28 @@ if (isset($_GET['id'])) {
                                                                 </div>
                                                             </div>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+                                                                        required class="formbold-form-input" />
+                                                                </div>
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="name"
+                                                                        class="formbold-form-label">Relationship to the
+                                                                        Deceased
+                                                                    </label>
+                                                                    <input type="text" name="relationship" id="name"
+                                                                        placeholder="e.g Daughter" required="required"
+                                                                        class="formbold-form-input" />
+                                                                </div>
+                                                            </div>
+
+
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                             <div class="formbold-mb-5 flex">
                                                                 <div class="formbold-mb-5 w-full">
                                                                     <label for="" class="formbold-form-label">
@@ -94,6 +162,7 @@ if (isset($_GET['id'])) {
                                                                         Email Address
                                                                     </label>
                                                                     <input type="email" name="email" id=""
+<<<<<<< HEAD
                                                                         placeholder="Enter Email Address"
                                                                         class="formbold-form-input" />
                                                                 </div>
@@ -101,6 +170,29 @@ if (isset($_GET['id'])) {
                                                             
                                                             <hr>
                                                             <h4 class="mb-3">Deceased Information</h4>
+=======
+<<<<<<< HEAD
+                                                                        placeholder="Enter Email Address"
+=======
+<<<<<<< HEAD
+                                                                        placeholder="Enter Email Address"
+=======
+                                                                        placeholder="" 
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+                                                                        class="formbold-form-input" />
+                                                                </div>
+                                                            </div>
+<<<<<<< HEAD
+                                                            <br>
+                                                            <hr>
+                                                            <h4 class="mb-5">Deceased Information</h4>
+=======
+
+                                                            <hr>
+                                                            <h6 class="mb-5">Deceased Information</h6>
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                             <div class="formbold-mb-5 flex">
                                                                 <div class="formbold-mb-5 w-full  ">
                                                                     <label for="name" class="formbold-form-label"> Last
@@ -128,6 +220,10 @@ if (isset($_GET['id'])) {
                                                                     </label>
                                                                     <input type="text" name="MName" id="name"
                                                                         placeholder="Enter Middle Name"
+<<<<<<< HEAD
+=======
+                                                                        required="required"
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                                         class="formbold-form-input" />
                                                                 </div>
 
@@ -141,10 +237,28 @@ if (isset($_GET['id'])) {
                                                                         <option value="Jr">Jr</option>
                                                                         <option value="Sr">Sr</option>
                                                                     </select>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+                                                                    <!-- <input type="text" name="Suffix" id="name"
+                                                                        placeholder="Jr / Sr"
+                                                                        class="formbold-form-input" /> -->
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                                 </div>
                                                             </div>
                                                             <div class="formbold-mb-5 flex">
-                                                                <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="date" class="formbold-form-label">
+                                                                        Birth Date </label>
+                                                                    <input type="date" name="bday" id="ddate" required
+                                                                        class="formbold-form-input" />
+                                                                </div>
+                                                                <div class="formbold-mb-5 w-full">
                                                                     <label for="date" class="formbold-form-label">
                                                                         Birth Date </label>
                                                                     <input type="date" name="bday" id="ddate" required
@@ -162,7 +276,11 @@ if (isset($_GET['id'])) {
                                                                         of Death
                                                                     </label>
                                                                     <input type="text" name="CauseofDeath" id="name"
+<<<<<<< HEAD
                                                                         placeholder="Enter Cause of Death" required
+=======
+                                                                        placeholder="" required
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                                         class="formbold-form-input" />
                                                                 </div>
 
@@ -174,6 +292,19 @@ if (isset($_GET['id'])) {
                                                                         placeholder="Enter Place" required
                                                                         class="formbold-form-input" />
                                                                 </div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                             </div>
 
                                                             <hr>

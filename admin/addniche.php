@@ -1,4 +1,15 @@
+<<<<<<< HEAD
 <?php session_start(); ?>
+=======
+<<<<<<< HEAD
+<?php session_start(); ?>
+=======
+<<<<<<< HEAD
+<?php session_start(); ?>
+=======
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +20,7 @@ require('assets/component/sidebars.php');
 
 include "../dbConn/conn.php";
 
+<<<<<<< HEAD
 $userID = isset($_SESSION['id']) ? $_SESSION['id'] : ''; 
 
 if (isset($_GET['locid'])) {
@@ -21,6 +33,42 @@ if (isset($_GET['locid'])) {
     
     }
 
+=======
+<<<<<<< HEAD
+$userID = isset($_SESSION['id']) ? $_SESSION['id'] : ''; 
+
+if (isset($_GET['locid'])) {
+    $block_id = $_GET['locid'];
+    
+    $select = "SELECT * FROM tblNicheLocation WHERE LocID = '$block_id'";
+    $query = $conn->query($select); 
+    while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+        $type = $data['Type'];
+    
+    }
+
+=======
+<<<<<<< HEAD
+$userID = isset($_SESSION['id']) ? $_SESSION['id'] : ''; 
+
+if (isset($_GET['locid'])) {
+    $block_id = $_GET['locid'];
+    
+    $select = "SELECT * FROM tblNicheLocation WHERE LocID = '$block_id'";
+    $query = $conn->query($select); 
+    while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+        $type = $data['Type'];
+    
+    }
+
+=======
+
+if (isset($_GET['locid'])) {
+    $block_id = $_GET['locid'];
+    $select = "SELECT * FROM tblNicheLocation WHERE LocID = $block_id"; 
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
 }
 ?>
 
@@ -36,6 +84,7 @@ if (isset($_GET['locid'])) {
                         </li>
 
                     </ol>
+<<<<<<< HEAD
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
@@ -44,7 +93,11 @@ if (isset($_GET['locid'])) {
                                 onclick="goBack()">Back</button>
                             <form action="../dbConn/adlocation.php" method="POST">
                                 <input type="hidden" name="userid" value="<?php echo $userID ?>">
+<<<<<<< HEAD
                                 <input type="hidden" id="typeParam" value="<?php echo $type; ?>">
+=======
+                                <input type="text" id="typeParam" value="<?php echo $type; ?>">
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                 <input type="text" name="nicheno" placeholder="Generate Niche No." required>
                                 <input type="text" name="size" placeholder="Size" required>
                                 <input type="number" name="level" placeholder="Level" required>
@@ -54,6 +107,33 @@ if (isset($_GET['locid'])) {
                                 <button class="btn btn-primary" type="submit" name="submit">Submit</button>
                             </form>
                             </br>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+                    <br>
+
+                    <button class="btn btn-danger mb-2" type="button" name="submit" onclick="goBack()">Back</button>
+
+                    <form action="../dbConn/adlocation.php" method="POST" class="mb-4" style="float: right">
+                        <label for="">Generate Niche No</label>
+                        <input type="text" name="nicheno" required>
+                        <label for="">Size</label>
+                        <input type="text" name="size" required>
+                        <label for="">Level</label>
+                        <input type="number" name="level" required>
+                        <input type="hidden" name="locid" value="<?php echo $block_id ?>">
+                        <input type="hidden" value="0" name="stat">
+                        <input type="hidden" name="profid" value="<?php echo $profid ?>">
+                        <button class="btn btn-primary " type="submit" name="submit">Submit</button>
+                    </form>
+
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <div class="container">
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                             <div class="activity-log-container">
                                 <div class="activity-log-container-scroll">
                                     <table class="table-no-border">
@@ -153,6 +233,13 @@ if (isset($_GET['locid'])) {
     </div>
 
     <script>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
     var typeParam = document.getElementById("typeParam").value;
 
     function hideInputFields() {
@@ -171,6 +258,14 @@ if (isset($_GET['locid'])) {
     window.onload = hideInputFields;
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
     function goBack() {
         var url = 'masterprofile.php'
         window.location.href = url;

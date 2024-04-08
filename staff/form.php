@@ -41,10 +41,29 @@ if (isset($_GET['id'])) {
                                                 <div class="formbold-main">
                                                     <div class="">
 
+<<<<<<< HEAD
                                                         <form action="../dbConn/adoccupant.php" method="POST">
                                                             <input type="hidden"  name="userid" value="<?php echo $id ?> ">
                                                             <input type="hidden" name="create"
                                                                 value="<?php echo $createdby ?>">
+=======
+<<<<<<< HEAD
+                                                        <form action="../dbConn/stafadoccupant.php" method="POST">
+=======
+                                                        <form action="../dbConn/adoccupant.php" method="POST">
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+                                                            <input type="hidden"  name="userid" value="<?php echo $id ?> ">
+                                                            <input type="hidden" name="create"
+                                                                value="<?php echo $createdby ?>">
+
+                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                <label for="time" class="formbold-form-label">
+                                                                </label>
+                                                                <input type="hidden" name="Nid" id="user_name" required
+                                                                    class="formbold-form-input"
+                                                                    value="<?php echo $nicheno ?>" />
+                                                            </div>
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
 
 
                                                             <h4 class="mb-2">Applicant's Information</h4>
@@ -76,7 +95,11 @@ if (isset($_GET['id'])) {
                                                                 </div>
                                                             </div>
 
+<<<<<<< HEAD
                                                             <div class="formbold-mb-2 flex">
+=======
+                                                            <div class="formbold-mb-5 flex">
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                                 <div class="formbold-mb-5 w-full">
                                                                     <label for="" class="formbold-form-label">
                                                                         Contact Number
@@ -143,7 +166,13 @@ if (isset($_GET['id'])) {
                                                                 </div>
                                                             </div>
                                                             <div class="formbold-mb-5 flex">
-                                                                <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="date" class="formbold-form-label">
+                                                                        Birth Date </label>
+                                                                    <input type="date" name="bday" id="ddate" required
+                                                                        class="formbold-form-input" />
+                                                                </div>
+                                                                <div class="formbold-mb-5 w-full">
                                                                     <label for="date" class="formbold-form-label">
                                                                         Birth Date </label>
                                                                     <input type="date" name="bday" id="ddate" required

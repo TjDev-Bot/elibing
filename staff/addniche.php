@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,9 +42,21 @@ if (isset($_GET['locid'])) {
 
                             <button class="btn btn-danger mb-4" type="button" name="submit"
                                 onclick="goBack()">Back</button>
+<<<<<<< HEAD
                             <form action="../dbConn/staff-adlocation.php" method="POST">
                                 <input type="hidden" name="userid" value="<?php echo $userID ?>">
                                 <input type="hidden" id="typeParam" value="<?php echo $type; ?>">
+=======
+<<<<<<< HEAD
+                            <form action="../dbConn/staff-adlocation.php" method="POST">
+                            <input type="hidden" name="userid" value="<?php echo $userID ?>">
+
+=======
+                            <form action="../dbConn/adlocation.php" method="POST">
+                                <input type="hidden" name="userid" value="<?php echo $userID ?>">
+                                <input type="text" id="typeParam" value="<?php echo $type; ?>">
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                 <input type="text" name="nicheno" placeholder="Generate Niche No." required>
                                 <input type="text" name="size" placeholder="Size" required>
                                 <input type="number" name="level" placeholder="Level" required>

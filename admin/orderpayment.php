@@ -12,6 +12,7 @@ require('assets/component/topnavbar.php');
 require('assets/component/sidebars.php');
 include "../dbConn/conn.php";
 
+<<<<<<< HEAD
 if (isset($_GET['profid'])) {
     $profid = $_GET['profid'];
 }
@@ -27,6 +28,75 @@ function generateGatePassNumber() {
 $gatePassNumber = generateGatePassNumber();
 $_SESSION['gatePassNumber'] = $gatePassNumber;
 $userid = $_SESSION['id'];
+=======
+<<<<<<< HEAD
+ob_start(); 
+=======
+<<<<<<< HEAD
+ob_start(); 
+
+if (isset($_POST['paymentButton'])) {
+ 
+
+    $nid = $_POST['nid'];
+    $profidd = $_POST['id'];
+=======
+if(isset($_GET['nid']) && isset($_GET['profid'])){
+    $nid = $_GET['nid'];
+    $profid = $_GET['profid'];
+} 
+
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+
+if (isset($_POST['paymentButton'])) {
+ 
+
+    $nid = $_POST['nid'];
+<<<<<<< HEAD
+    $profidd = $_POST['id'];
+=======
+    $profid = $_POST['id'];
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+
+    try {
+        $update1 = "UPDATE tblNiche SET Status = 2 WHERE Nid = ?";
+        $stmt1 = $conn->prepare($update1);
+        $stmt1->execute([$nid]);
+
+<<<<<<< HEAD
+        if ($stmt1->rowCount() > 0) {
+            echo '<script>alert("Payment Successful"); window.location = "gatepass.php?profid=' . $profidd . '";</script>';
+=======
+<<<<<<< HEAD
+        if ($stmt1->rowCount() > 0) {
+            echo '<script>alert("Payment Successful"); window.location = "gatepass.php?profid=' . $profidd . '";</script>';
+=======
+        // $update2 = "UPDATE tblIntermentReservation SET Nid = ? WHERE ProfID = ?";
+        // $stmt2 = $conn->prepare($update2);
+        // $stmt2->execute([$nid, $profid]);
+
+        if ($stmt1->rowCount() > 0) {
+            header("Location: dashboard.php");
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+            exit();
+        } else {
+            echo "No records updated.";
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+<<<<<<< HEAD
+
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
 ?>
 
 <body>
@@ -40,6 +110,7 @@ $userid = $_SESSION['id'];
 
                         </li>
                     </ol>
+<<<<<<< HEAD
                     <div class="relative shadow-md sm:rounded-lg">
                         <button class="btn btn-primary btn-print" id="printButton">
                             <i class='bx bx-printer'></i>
@@ -49,6 +120,51 @@ $userid = $_SESSION['id'];
                             $profid = $_GET['profid'];
                         }
                         ?>
+=======
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+                        <?php
+                                 if(isset($_GET['nid']) && isset($_GET['profid'])){
+                                    $nid = $_GET['nid'];
+                                    $profid = $_GET['profid'];
+                                }
+                       ?>
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+                        <form action="" method="POST">
+                            <input type="hidden" name="nid" value="<?php echo $nid ?>">
+                            <input type="hidden" name="id" value="<?php echo $profid ?>">
+                            <button class="btn btn-success" name="paymentButton" type="submit">Payment</button>
+                        </form>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="">
+                                        <?php 
+                                                // $select = "SELECT * FROM prices";
+                                                // $query = mysqli_query($conn, $select);
+                                                // while($data = mysqli_fetch_assoc($query)){
+                                                //     $apartmentniche = $data['apartmentniche'];
+                                                //     $floatingniche1stuser = $data['floatingniche1stuser'];
+                                                //     $floatingniche2nduser = $data['floatingniche2nduser'];
+                                                //     $below18 = $data['18andbelow'];
+                                                //     $age0 = $data['0age'];
+                                                //     $bonechamber = $data['bonechamber'];
+                                                //     $mausoleum = $data['mausoleum'];
+                                                //     $mausdownpayment = $data['mausdownpayment'];
+                                                //     $mausamortization = $data['mausamortization'];
+                                                //     $exhupermitfee = $data['exhupermitfee'];
+                                                //     $exhufee = $data['exhufee'];
+                                                //     $burialfee = $data['burialfee'];
+                                                //     $deathcertificate = $data['deathcertificate'];
+                                                // }
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
 
                         <?php
                         while ($data = $query->fetch_assoc()) {

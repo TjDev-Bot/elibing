@@ -29,6 +29,16 @@ if ($row) {
     $insertAudit->bind_param('i', $row['UserID']);
     $insertAudit->execute();
 
+    // Get the current time in the desired format (12-hour clock with AM or PM)
+    $currentDateTime = date('h:i:s A');
+
+    $stmt1 = "INSERT INTO TBL_Audit_Trail (User_ID, Date, Timex, Action) VALUES (?, GETDATE(), ?, 'Log-in')";
+    $insertAudit = $conn->prepare($stmt1);
+    $insertAudit->bindParam(1, $result['UserID'], PDO::PARAM_STR);
+    $insertAudit->bindParam(2, $currentDateTime, PDO::PARAM_STR); // Bind the formatted time
+
+    $insertAudit->execute();
+
     if ($role == 'E-Libing Client') {
         header('location: ../client/dashboard.php');
         exit();

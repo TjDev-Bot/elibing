@@ -1,4 +1,5 @@
 body {
+<<<<<<< HEAD
   display: flex;
   justify-content: center;
   height: 100vh;
@@ -89,3 +90,94 @@ body {
 
 
 
+=======
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    margin: 90px;
+}
+
+.card-niche {
+    text-align: center;
+    /* padding: 20px; */
+    width: 150px;
+    height: 200px;
+    background-color: #3498db;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+<<<<<<< HEAD
+   margin-right: 400px;
+=======
+    margin: 10px;
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+    cursor: pointer;
+    transition: transform ease-in-out .3s;
+}
+
+.card-niche:hover{
+    transform: scale(1.1);
+}
+
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.col{
+    width: calc(20% - 20px); 
+    margin: 10px;
+    text-align: center;
+}
+
+<<<<<<< HEAD
+.no-data-message {
+    text-align: center;
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+=======
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #000;
+<<<<<<< HEAD
+    width: 80%;
+=======
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed

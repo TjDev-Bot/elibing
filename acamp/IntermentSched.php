@@ -27,6 +27,7 @@ $query = $conn->query($select);
                     </ol>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
+<<<<<<< HEAD
 
                                 <div class="col-sm-6">
                                     <input type="search" id="searchInput" placeholder="Search here...">
@@ -35,6 +36,34 @@ $query = $conn->query($select);
                                     <table class="table-no-border" id="e-libingTable">
                                         <thead>
                                             <tr>
+=======
+<<<<<<< HEAD
+                            <div class="col-sm-6">
+                                <input type="search" id="searchInput" placeholder="Search here...">
+                            </div>
+=======
+                            <!-- <input type="search" id="searchInput" placeholder="Search here..."> -->
+                                <label for="startDate" style="padding-right: 127px">Start Date:</label> <label
+                                    for="endDate">End Date:</label>
+                                </br>
+                                <input type="date" id="startDate">
+                                <input type="date" id="endDate">
+                                <button class="btn btn-primary " id="filter-button">
+                                    Filter
+                                </button>
+                                <button class="btn btn-primary btn-print" id="print-schedule">
+                                    <i class='bx bx-printer'></i>
+                                </button>
+                            <br><br>
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+                            <div class="activity-log-container">
+                                <div class="activity-log-container-scroll" id="interment-schedule-table">
+
+                                    <table class="table-no-border" id="table-no-border">
+                                        <thead>
+                                            <tr>
+
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                 <th scope="col" class="px-6 py-3">
                                                     Name
                                                 </th>
@@ -48,6 +77,7 @@ $query = $conn->query($select);
                                         </thead>
                                         <tbody id="table-body" id="interment-schedule-body">
                                             <?php
+<<<<<<< HEAD
                                                 while ($data = $query->fetch_assoc()) {
                                                     $name = $data['Fname'] . ' ' . $data['Mname'] . ' ' . $data['Lname'] . ' ' . $data['Suffix'];
                                                     $desireddatetime = $data['IntermentDateTime'];
@@ -94,6 +124,41 @@ $query = $conn->query($select);
                                                 </td>
                                             </tr>
                                             <?php }
+=======
+                                            while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+                                                $name = $data['Fname'] . ' ' . $data['MName'] . ' ' . $data['Lname'];
+                                                $desireddatetime = $data['IntermentDateTime'];
+                                                $nicheno = $data['Nid'];
+                                                $profid = $data['ProfID'];
+                                                $status = $data['Status'];
+                                                $occupancy = $data['OccupancyDate'];
+
+                                                if ($status !== '1' && $occupancy == null) {
+
+                                                    ?>
+                                                    <tr id="elementToHide">
+                                                        <td>
+                                                            <?php echo $name ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo date('F j, Y g:i A', strtotime($desireddatetime)); ?>
+                                                        </td>
+                                                        <td>
+                                                            <form action="../dbConn/upintermentsched.php" method="POST">
+                                                                <input type="hidden" name="nid" value="<?php echo $nicheno ?>">
+                                                                <input type="hidden" name="profid"
+                                                                    value="<?php echo $profid ?>">
+                                                                <button class="btn btn-success submit-button mb-5" type="button"
+                                                                    id="updateButton">
+                                                                    <span class="update-label">Buried</span>
+                                                                    <div class="loader"></div>
+                                                                </button>
+                                                            </form>
+                                                            <div style="display:none;" id="response"></div>
+                                                        </td>
+                                                    </tr>
+                                                <?php }
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                             } ?>
                                         </tbody>
                                     </table>
@@ -111,6 +176,7 @@ $query = $conn->query($select);
 
 
     <script>
+<<<<<<< HEAD
     function view(appointmentID, profID) {
         var url = 'viewInterment.php?AppID=' + appointmentID + '&ProfID=' + profID;
         profID;
@@ -122,120 +188,128 @@ $query = $conn->query($select);
             var formData = form.serialize();
             var updateButton = $(this);
             var loader = updateButton.find('.loader');
+=======
+        $(document).ready(function () {
+            $(".submit-button").click(function () {
+                var form = $(this).closest('form');
+                var formData = form.serialize();
+                var updateButton = $(this);
+                var loader = updateButton.find('.loader');
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
 
-            updateButton.prop("disabled", true);
-            updateButton.find(".update-label").hide();
-            loader.show();
+                updateButton.prop("disabled", true);
+                updateButton.find(".update-label").hide();
+                loader.show();
 
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'Do you clicked the right button?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "POST",
-                        url: form.attr("action"),
-                        data: formData,
-                        success: function(response) {
-                            var trimmedResponse = $.trim(response);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'Do you clicked the right button?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: form.attr("action"),
+                            data: formData,
+                            success: function (response) {
+                                var trimmedResponse = $.trim(response);
 
-                            updateButton.prop("disabled", false);
-                            loader.hide();
-                            updateButton.find(".update-label").show();
+                                updateButton.prop("disabled", false);
+                                loader.hide();
+                                updateButton.find(".update-label").show();
 
-                            if (trimmedResponse === "success") {
-                                form.closest('tr').remove();
+                                if (trimmedResponse === "success") {
+                                    form.closest('tr').remove();
 
-                                Swal.fire({
-                                    title: 'Success',
-                                    text: 'Interment Successfully Reserved',
-                                    icon: 'success'
-                                });
-                            } else {
-                                Swal.fire({
-                                    title: 'Error',
-                                    text: response,
-                                    icon: 'error'
-                                });
+                                    Swal.fire({
+                                        title: 'Success',
+                                        text: 'Interment Successfully Reserved',
+                                        icon: 'success'
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: response,
+                                        icon: 'error'
+                                    });
+                                }
+                                $("#response").html(response);
                             }
-                            $("#response").html(response);
-                        }
-                    });
-                } else {
-                    updateButton.prop("disabled", false);
-                    updateButton.find(".update-label").show();
-                    loader.hide();
-                }
+                        });
+                    } else {
+                        updateButton.prop("disabled", false);
+                        updateButton.find(".update-label").show();
+                        loader.hide();
+                    }
+                });
             });
         });
-    });
 
-    var intermentDateTime = <?php echo json_encode($desireddatetime); ?>;
+        var intermentDateTime = <?php echo json_encode($desireddatetime); ?>;
 
-    if (intermentDateTime === null || intermentDateTime === '') {
-        var elementToHide = document.getElementById(
-            'elementToHide');
-        if (elementToHide) {
-            elementToHide.style.display = 'none';
+        if (intermentDateTime === null || intermentDateTime === '') {
+            var elementToHide = document.getElementById(
+                'elementToHide');
+            if (elementToHide) {
+                elementToHide.style.display = 'none';
+            }
         }
-    }
     </script>
 
     <style>
-    .loader {
-        border: 4px solid rgba(255, 255, 255, 0.3);
-        border-top: 4px solid #3498db;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        animation: spin 2s linear infinite;
-        display: none;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 2s linear infinite;
+            display: none;
         }
 
-        100% {
-            transform: rotate(360deg);
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
-    }
 
-    .update-label {
-        display: inline-block;
-        margin-right: 10px;
-    }
+        .update-label {
+            display: inline-block;
+            margin-right: 10px;
+        }
 
-    .add-appointment {
-        box-shadow: 0px 10px 14px -7px #276873;
-        background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
-        background-color: #4169e1;
-        border-radius: 8px;
-        display: inline-block;
-        cursor: pointer;
-        color: #ffffff;
-        font-family: Courier New;
-        font-size: 20px;
-        font-weight: bold;
-        padding: 13px 32px;
-        text-decoration: none;
-        text-shadow: 0px 1px 0px #3d768a;
-    }
+        .add-appointment {
+            box-shadow: 0px 10px 14px -7px #276873;
+            background: linear-gradient(to bottom, #4169e1 5%, #408c99 100%);
+            background-color: #4169e1;
+            border-radius: 8px;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Courier New;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 13px 32px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #3d768a;
+        }
 
-    .add-appointment:hover {
-        background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
-        background-color: #4169e1;
-    }
+        .add-appointment:hover {
+            background: linear-gradient(to bottom, #4169e1 5%, #599bb3 100%);
+            background-color: #4169e1;
+        }
 
-    .add-appointment:active {
-        position: relative;
-        top: 1px;
-    }
+        .add-appointment:active {
+            position: relative;
+            top: 1px;
+        }
     </style>
 
     <script>
@@ -244,6 +318,7 @@ $query = $conn->query($select);
         const searchInput = document.getElementById("searchInput");
         const alumniTable = document.getElementById("search");
 
+<<<<<<< HEAD
         // Add an event listener to the input field
         searchInput.addEventListener("input", function() {
             const searchText = searchInput.value.toLowerCase();
@@ -262,6 +337,32 @@ $query = $conn->query($select);
             });
         });
     });
+=======
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the input element and table
+            const searchInput = document.getElementById("searchInput");
+            const alumniTable = document.getElementById("table-no-border");
+
+            // Add an event listener to the input field
+            searchInput.addEventListener("input", function () {
+                const searchText = searchInput.value.toLowerCase();
+
+                // Get all the rows in the table body
+                const rows = alumniTable.querySelectorAll("tbody tr");
+
+                // Loop through each row and hide/show based on the search text
+                rows.forEach(function (row) {
+                    const rowData = row.textContent.toLowerCase();
+                    if (rowData.includes(searchText)) {
+                        row.style.display = ""; // Show the row
+                    } else {
+                        row.style.display = "none"; // Hide the row
+                    }
+                });
+            });
+        });
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
     </script>
 
     <?php

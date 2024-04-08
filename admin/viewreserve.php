@@ -279,6 +279,7 @@ if(isset($_GET['AppID'])){
         window.history.back();
     }
 
+<<<<<<< HEAD
     function pay(id, nicheno) {
         var url = 'scheds.php?profid=' + id;
         window.location.href = url;
@@ -286,6 +287,20 @@ if(isset($_GET['AppID'])){
 
     function norm(id, nicheno) {
         var url = 'schedss.php?profid=' + id;
+=======
+<<<<<<< HEAD
+    function pay(id, nicheno) {
+        var url = 'orderpayment.php?profid=' + id + '&nid=' + nicheno;
+=======
+<<<<<<< HEAD
+    function pay(id, nicheno) {
+        var url = 'orderpayment.php?profid=' + id + '&nid=' + nicheno;
+=======
+    function pay(id, nid) {
+        var url = 'orderpayment.php?profid=' + id + '&nid=' + nid;
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
         window.location.href = url;
     }
     </script>

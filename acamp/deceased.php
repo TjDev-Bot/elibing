@@ -27,6 +27,7 @@ while($data = $query1->fetch_assoc()){
                     </ol>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="container">
+<<<<<<< HEAD
 
                             <div class="activity-log-container">
                                 <div class="row">
@@ -48,14 +49,78 @@ while($data = $query1->fetch_assoc()){
                                         </button-->
                                     </div>
                                 </div>
+=======
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input type="search" id="searchInput" placeholder="Search here...">
+<<<<<<< HEAD
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-log-container">
+                            <div class="activity-log-container-scroll">
+                                <table class="table-no-border" id="e-libingTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">
+                                                Name
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Block No.
+                                            </th>
+
+                                            <th scope="col" class="px-6 py-3">
+                                                Niche No.
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Appartment Type
+                                            </th>
+
+                                            <th scope="col" class="px-6 py-3">
+                                                Level
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                        <?php
+                                        $select = "SELECT * FROM tblNiche
+=======
+
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <select id="timeFilter">
+                                        <option value="all">All</option>
+                                        <option value="1_year">Fresh</option>
+                                        <option value="1_month">Near Due</option>
+                                    </select>
+
+                                    <button class="btn btn-primary btn-print" id="print-button">
+                                        <i class='bx bx-printer'></i>
+                                    </button>
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="activity-log-container">
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                 <div class="activity-log-container-scroll">
                                     <table class="table-no-border" id="e-libingTable">
                                         <thead>
                                             <tr>
+<<<<<<< HEAD
+=======
+                                
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                 <th scope="col" class="px-6 py-3">
                                                     Name
                                                 </th>
                                                 <th scope="col" class="px-6 py-3">
+<<<<<<< HEAD
                                                     Niche Location
                                                 </th>
                                                 <th scope="col" class="px-6 py-3">
@@ -64,6 +129,18 @@ while($data = $query1->fetch_assoc()){
                                                 <th scope="col" class="px-6 py-3">
                                                     Status
                                                 </th>
+=======
+                                                    Block No.
+                                                </th>
+
+                                                <th scope="col" class="px-6 py-3">
+                                                    Niche No.
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Appartment Type
+                                                </th>
+
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                 <th scope="col" class="px-6 py-3">
                                                     Level
                                                 </th>
@@ -76,13 +153,22 @@ while($data = $query1->fetch_assoc()){
                                                 <th scope="col" class="px-6 py-3">
                                                     Due
                                                 </th>
+<<<<<<< HEAD
                                                 <!-- <th scope="col" class="px-6 py-3">
                                                     Action
                                                 </th> -->
+=======
+
+                                                <th scope="col" class="px-6 py-3">
+                                                    Action
+                                                </th>
+
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                             </tr>
                                         </thead>
                                         <tbody id="table-body">
                                             <?php
+<<<<<<< HEAD
                                                 $processedProfileIDs = array(); 
                                                 $groupedRecords = array();
 
@@ -165,6 +251,81 @@ while($data = $query1->fetch_assoc()){
                                                     
                                                                                             
                                             ?>
+=======
+                                                $select = "SELECT * FROM tblNiche
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+                                                INNER JOIN tblIntermentReservation ON tblNiche.Nid = tblIntermentReservation.Nid
+                                                INNER JOIN tblDeathRecord ON tblIntermentReservation.ProfID = tblDeathRecord.ProfileID 
+                                                INNER JOIN tblNicheLocation ON tblNiche.LocID = tblNicheLocation.LocID
+                                                INNER JOIN tblContactInfo ON tblDeathRecord.ProfileID = tblContactInfo.ProfID
+                                                INNER JOIN tblBuriedRecord ON tblNiche.Nid = tblBuriedRecord.Nid WHERE tblBuriedRecord.OccupancyDate IS NOT NULL";
+<<<<<<< HEAD
+                                        $query = $conn->query($select);
+
+                                        while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+                                            $profileID = $data['ProfileID'];
+                                            $full = $data['Fname'] . ' ' . $data['MName'] . ' ' . $data['Lname'];
+                                            $locID = $data['LocID'];
+                                            $nicheno = $data['Nid'];
+                                            $level = $data['Level'];
+                                            $type = $data['Type'];
+                                            $contact = $data['ContactNo'];
+                                            $email = $data['Email'];
+                                            $occ = $data['OccupancyDate'];
+                                            $startDate = new DateTime($occ);
+                                            $currentDate = new DateTime();
+
+                                            $timeDifference = $currentDate->diff($startDate);
+
+                                            $daysDifference = $timeDifference->days;
+                                            $due = $startDate->add(new DateInterval('P5Y'));
+
+
+
+                                            ?>
+=======
+                                                $query = $conn->query($select);
+
+                                                while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+                                                    $profileID = $data['ProfileID'];
+                                                    $full = $data['Fname'] . ' ' . $data['MName'] . ' ' . $data['Lname'];
+                                                    $locID = $data['LocID'];
+                                                    $nicheno = $data['Nid'];
+                                                    $level = $data['Level'];
+                                                    $type = $data['Type'];
+                                                    $contact = $data['ContactNo'];
+                                                    $email = $data['Email'];
+                                                    $occ = $data['OccupancyDate'];
+                                                    $startDate = new DateTime($occ);
+                                                    $currentDate = new DateTime();
+
+                                                    $timeDifference = $currentDate->diff($startDate);
+
+                                                    $daysDifference = $timeDifference->days;
+                                                    $due = $startDate->add(new DateInterval('P5Y'));
+
+                                                    // if ($currentDate > $due && $daysDifference >= -7) {
+                                                    //     $insertChamber = "INSERT INTO chamber (fname, mname, lname, suffix, dateofdeath, causeofdeath) 
+                                                    //     VALUES (:fname, :mname, :lname, :suffix, :dateofdeath, :causeofdeath)";
+                                                    //     $stmt = $conn->prepare($insertChamber);
+                                                    //     $stmt->execute([
+                                                    //         ':fname' => $data['fname'],
+                                                    //         ':mname' => $data['mname'],
+                                                    //         ':lname' => $data['lname'],
+                                                    //         ':suffix' => $data['suffix'],
+                                                    //         ':dateofdeath' => $data['intermentdate'],
+                                                    //         ':causeofdeath' => $data['causeofdeath']
+                                                    //     ]);
+
+                                                    //     // Remove data from the current table
+                                                    //     $deleteOccupant = "DELETE FROM occupant WHERE occupant_id = :occupant_id";
+                                                    //     $stmt = $conn->prepare($deleteOccupant);
+                                                    //     $stmt->execute([':occupant_id' => $profileID]);
+
+                                              
+                                                ?>
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
 
 
                                             <tr>
@@ -172,12 +333,18 @@ while($data = $query1->fetch_assoc()){
                                                     <?php echo $full ?>
                                                 </td>
                                                 <td>
+<<<<<<< HEAD
                                                     <?php echo $nl ?>
+=======
+                                                    <?php echo $locID ?>
+
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                 </td>
                                                 <td>
                                                     <?php echo $nicheno ?>
                                                 </td>
                                                 <td>
+<<<<<<< HEAD
                                                     <?php
                                                         if ($type == 0) {
                                                             echo "Apartment";   
@@ -193,19 +360,34 @@ while($data = $query1->fetch_assoc()){
                                                             echo "Pull - Out";
                                                         }
                                                         ?>
+=======
+                                                    <?php echo $type ?>
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                 </td>
                                                 <td>
                                                     <?php echo $level ?>
                                                 </td>
+<<<<<<< HEAD
                                                 <td  style="display: none;">
                                                     <?php echo $contact ?>
                                                 </td>
                                                 <td style="display: none;">
                                                     <?php echo $nid ?>
+=======
+<<<<<<< HEAD
+
+
+                                                </form>
+                                                <div id="response"></div>
+=======
+                                                <td style="display: none;">
+                                                    <?php echo $contact ?>
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                 </td>
                                                 <td style="display: none;">
                                                     <?php echo $email ?>
                                                 </td>
+<<<<<<< HEAD
                                                 <td>
                                                     <?php if ($type == 5) { ?>
                                                     <span
@@ -234,10 +416,27 @@ while($data = $query1->fetch_assoc()){
                                                     <?php } ?>
                                                     <form id="smsForm" action="../submitsms.php" method="POST">
                                                         <input type="hidden" name="profileID" value="">
+=======
+                                                <td> 
+                                                    <span class="due-date"><?php echo $due->format('F j, Y'); ?></span>
+                                                    <span class="due-warning"></span>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-primary"
+                                                        onclick="View('<?php echo $profileID; ?>')">
+                                                        <i class='bx bx-edit-alt'> </i>
+                                                    </button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="renew('<?php echo $profileID ?>')">
+                                                        <i class='bx bxs-file-plus'></i>
+                                                    </button>
+                                                    <form id="smsForm" action="../submitsms.php" method="POST">
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
 
                                                         <input type="hidden" name="contact"
                                                             value="<?php echo $contact ?>">
                                                         <input type="hidden" name="email" value="<?php echo $email ?>">
+<<<<<<< HEAD
                                                         <input type="hidden" name="email1"
                                                             value="<?php echo $email1 ?>">
                                                         <button class="btn btn-success submit-button" type="button"
@@ -258,10 +457,40 @@ while($data = $query1->fetch_assoc()){
                                         </tbody>
                                     </table>
                                 </div>
+=======
+                                                        <button class="btn btn-success submit-button" type="button"
+                                                            data-profile-id="<?php echo $profileID ?>">
+                                                            <i class='bx bx-send'></i>
+                                                        </button>
+
+                                                    </form>
+                                                    <div id="response"></div>
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+
+
+                                                </td>
+                                            </tr>
+
+<<<<<<< HEAD
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+
+
+=======
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                             </div>
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
             </main>
         </div>
     </div>
@@ -304,14 +533,93 @@ while($data = $query1->fetch_assoc()){
         function submitForm(profileID) {
             var form = $("#smsForm");
             form.find('[name="profileID"]').val(profileID);
+=======
+<<<<<<< HEAD
+        </div>
+        </main>
+    </div>
+=======
+            </main>
+        </div>
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+<<<<<<< HEAD
+        $(document).ready(function () {
+            $(".submit-button").click(function () {
+                var form = $(this).closest('form'); // Find the closest form
+                var formData = form.serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: form.attr("action"),
+                    data: formData,
+                    success: function (response) {
+                        if (response === "success") {
+                            Swal.fire({
+                                title: 'Success',
+                                text: 'SMS and email sent successfully',
+                                icon: 'success'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: response, // Display the error message from submitsms.php
+                                icon: 'error'
+                            });
+                        }
+                        $("#response").html(response);
+                    }
+                });
+            });
+        });
+    </script>
+    <style>
+        .due-date {
+            font-weight: 900;
+        }
+
+        .due-warning {
+            /* color: red; */
+            font-size: 8px;
+            font-weight: 900;
+            line-height: normal;
+            /* display: flex;
+        text-align: start;
+        justify-content: start; */
+        }
+    </style>
+    <script>
+        function View(profileID) {
+            var url = 'viewmaster.php?id=' + profileID;
+            window.location.href = url;
+        }
+
+        function renew(profileID) {
+            var url = 'renewal.php?id=' + profileID;
+            window.location.href = url;
+        }
+=======
+    $(document).ready(function() {
+        $(".submit-button").click(function() {
+            var form = $(this).closest('form'); // Find the closest form
+            var formData = form.serialize();
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
 
             $.ajax({
                 type: "POST",
                 url: form.attr("action"),
+<<<<<<< HEAD
                 data: form.serialize(),
                 success: function(response) {
                     console.log("AJAX Response:", response); // Log AJAX response
 
+=======
+                data: formData,
+                success: function(response) {
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                     if (response === "success") {
                         Swal.fire({
                             title: 'Success',
@@ -321,13 +629,18 @@ while($data = $query1->fetch_assoc()){
                     } else {
                         Swal.fire({
                             title: 'Error',
+<<<<<<< HEAD
                             text: response,
+=======
+                            text: response, // Display the error message from submitsms.php
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                             icon: 'error'
                         });
                     }
                     $("#response").html(response);
                 }
             });
+<<<<<<< HEAD
         }
 
         $(".due-date").each(function() {
@@ -361,6 +674,8 @@ while($data = $query1->fetch_assoc()){
                 console.log("Calling submitForm for profileID:", profileID);
                 submitForm(profileID);
             }
+=======
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
         });
     });
     </script>
@@ -370,6 +685,7 @@ while($data = $query1->fetch_assoc()){
     }
 
     .due-warning {
+<<<<<<< HEAD
         font-size: 8px;
         font-weight: 900;
         line-height: normal;
@@ -378,6 +694,20 @@ while($data = $query1->fetch_assoc()){
     <script>
     function View(profileID, type) {
         var url = 'viewmaster.php?id=' + profileID +  '&status' + type;
+=======
+        /* color: red; */
+        font-size: 8px;
+        font-weight: 900;
+        line-height: normal;
+        /* display: flex;
+        text-align: start;
+        justify-content: start; */
+    }
+    </style>
+    <script>
+    function View(profileID) {
+        var url = 'viewmaster.php?id=' + profileID;
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
         window.location.href = url;
     }
 
@@ -385,7 +715,14 @@ while($data = $query1->fetch_assoc()){
         var url = 'renewal.php?id=' + profileID;
         window.location.href = url;
     }
+<<<<<<< HEAD
     </script>
+=======
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+    </script>
+
+
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
     <?php
     require('assets/component/script.php');
     ?>

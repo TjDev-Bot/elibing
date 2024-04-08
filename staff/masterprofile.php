@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <?php
@@ -137,7 +138,6 @@ if (isset($_GET['profid']) && isset($_GET['name']) ) {
     // }
 
     </script>
-
 
     <?php
     require('assets/component/script.php');

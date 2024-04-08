@@ -88,6 +88,13 @@ if(isset($_GET['id']) && isset($_SESSION['id']) && isset($_GET['status'])){
                                                                     class="formbold-form-input" readonly />
                                                             </div>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                             <div class="formbold-mb-5 w-full formbold-px-3">
                                                                 <label for="name"
                                                                     class="formbold-form-label">Relationship to the
@@ -96,6 +103,33 @@ if(isset($_GET['id']) && isset($_SESSION['id']) && isset($_GET['status'])){
                                                                 <input type="email" name="relationship" id=""
                                                                     value="<?php  echo $relationship ?>"
                                                                     class="formbold-form-input" readonly />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <div class="formbold-mb-5 w-full">
+                                                                    <label for="" class="formbold-form-label">
+                                                                        Contact No
+                                                                    </label>
+                                                                    <input type="tel" name="contact"
+                                                                        value="<?php echo $contact ?>"
+                                                                        class="formbold-form-input"
+                                                                        pattern="^\63\d{10}$"
+                                                                        title="Please enter a valid Philippine phone number with 63 and 10 digits." />
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="formbold w-full  formbold-px-3">
+                                                                <label for="date" class="formbold-form-label">
+                                                                    Email</label>
+                                                                <input type="email" name="email"
+                                                                    value="<?php echo $email ?>"
+                                                                    class="formbold-form-input" />
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                             </div>
                                                         </div>
 
@@ -103,7 +137,11 @@ if(isset($_GET['id']) && isset($_SESSION['id']) && isset($_GET['status'])){
                                                         <div class="formbold-mb-5 flex">
                                                             <div class="formbold-mb-5 w-full formbold-px-3">
                                                                 <label for="" class="formbold-form-label">
+<<<<<<< HEAD
                                                                     Contact Number
+=======
+                                                                    Contact No
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                                 </label>
                                                                 <input type="tel" name="contact" id=""
                                                                     value="<?php  echo $contact ?>"
@@ -118,6 +156,7 @@ if(isset($_GET['id']) && isset($_SESSION['id']) && isset($_GET['status'])){
                                                                     class="formbold-form-input" />
                                                             </div>
 
+<<<<<<< HEAD
 
                                                         </div>
                                                         <?php 
@@ -156,6 +195,17 @@ if(isset($_GET['id']) && isset($_SESSION['id']) && isset($_GET['status'])){
                                                                 <label for="name" class="formbold-form-label"> Last
                                                                     Name
                                                                 </label>
+=======
+                                                        </div>
+                                                        <br>
+                                                        <hr>
+                                                        <h4 class="mb-5">Deceased Information</h4>
+                                                        <div class="formbold-mb-5 flex">
+                                                            <div class="formbold-mb-5 w-full  ">
+                                                                <label for="name" class="formbold-form-label"> Last
+                                                                    Name
+                                                                </label>
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                                 <input type="text" name="Lname" id="name"
                                                                     value="<?php echo $lname ?>"
                                                                     class="formbold-form-input" readonly />
@@ -168,6 +218,7 @@ if(isset($_GET['id']) && isset($_SESSION['id']) && isset($_GET['status'])){
                                                                 <input type="text" name="Fname" id="name"
                                                                     value="<?php echo $fname ?>"
                                                                     class="formbold-form-input" readonly />
+<<<<<<< HEAD
                                                             </div>
 
                                                             <div class="formbold-mb-5 w-full  formbold-px-3">
@@ -207,6 +258,46 @@ if(isset($_GET['id']) && isset($_SESSION['id']) && isset($_GET['status'])){
                                                                     class="formbold-form-input" readonly />
                                                             </div>
 
+=======
+                                                            </div>
+
+                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label">
+                                                                    Middle Name
+                                                                </label>
+                                                                <input type="text" name="MName" id="name"
+                                                                    value="<?php echo $mname ?>"
+                                                                    class="formbold-form-input" readonly />
+                                                            </div>
+
+                                                            <div class="formbold-mb-5 w-full  formbold-px-3">
+                                                                <label for="name" class="formbold-form-label">
+                                                                    Suffix
+                                                                </label>
+                                                                <input type="text" value="<?php echo $suffix ?>"
+                                                                    class="formbold-form-input" readonly>
+                                                                <!-- <input type="text" name="Suffix" id="name"
+                                                                        placeholder="Jr / Sr"
+                                                                        class="formbold-form-input" /> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="formbold-mb-5 flex">
+                                                            <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <label for="date" class="formbold-form-label">
+                                                                    Date of Death </label>
+                                                                <input type="text" name="DateofDeath" id="ddate"
+                                                                    value="<?php echo $bday?>"
+                                                                    class="formbold-form-input" readonly />
+                                                            </div>
+                                                            <div class="formbold-mb-5 w-full formbold-px-3">
+                                                                <label for="date" class="formbold-form-label">
+                                                                    Date of Death </label>
+                                                                <input type="text" name="DateofDeath" id="ddate"
+                                                                    value="<?php echo $dateofdeath?>"
+                                                                    class="formbold-form-input" readonly />
+                                                            </div>
+
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                             <div class="formbold-mb-5 w-full formbold-px-3">
                                                                 <label for="name" class="formbold-form-label">Cause
                                                                     of Death
@@ -222,7 +313,28 @@ if(isset($_GET['id']) && isset($_SESSION['id']) && isset($_GET['status'])){
                                                                 </label>
                                                                 <input type="text" name="IntermentPlace" id="name"
                                                                     value="<?php echo $intermentplace ?>"
+<<<<<<< HEAD
                                                                     class="formbold-form-input" readonly />
+=======
+<<<<<<< HEAD
+                                                                    class="formbold-form-input" readonly />
+=======
+<<<<<<< HEAD
+                                                                    class="formbold-form-input" readonly />
+=======
+                                                                    class="formbold-form-input" />
+                                                            </div>
+                                                            <div class="formbold w-full  formbold-px-3" style="display:none;">
+                                                                <label for="name" class="formbold-form-label">
+                                                                    Interment Date and Time
+                                                                </label>
+                                                                <input type="datetime-local" name="intermentdate"
+                                                                    value="<?php echo $intermentdate ?>"
+                                                                    class="formbold-form-input" />
+
+>>>>>>> b72c3c4ba43fb1f2e4ade966189cf6b3d95c1687
+>>>>>>> c9be5642966b076214c66ae87a16a96449635e9f
+>>>>>>> a09fe95424795c2918695e59905a4f9ecb5f1eed
                                                             </div>
 
                                                         </div>
