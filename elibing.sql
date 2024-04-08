@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2023 at 04:21 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.1.17
+-- Generation Time: Apr 08, 2024 at 03:39 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `elibing`
 --
-CREATE DATABASE IF NOT EXISTS `elibing` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `elibing`;
 
 -- --------------------------------------------------------
 
@@ -29,12 +27,21 @@ USE `elibing`;
 -- Table structure for table `selected_slots`
 --
 
-DROP TABLE IF EXISTS `selected_slots`;
 CREATE TABLE `selected_slots` (
   `id` int(11) NOT NULL,
   `date_selected` date DEFAULT NULL,
   `profile_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `selected_slots`
+--
+
+INSERT INTO `selected_slots` (`id`, `date_selected`, `profile_id`) VALUES
+(14, '2024-04-12', 52),
+(15, '2024-04-18', 53),
+(16, '2024-04-17', 54),
+(17, '2024-04-24', 55);
 
 -- --------------------------------------------------------
 
@@ -42,7 +49,6 @@ CREATE TABLE `selected_slots` (
 -- Table structure for table `slot_availability`
 --
 
-DROP TABLE IF EXISTS `slot_availability`;
 CREATE TABLE `slot_availability` (
   `id` int(11) NOT NULL,
   `day_of_week` varchar(20) NOT NULL,
@@ -56,9 +62,9 @@ CREATE TABLE `slot_availability` (
 INSERT INTO `slot_availability` (`id`, `day_of_week`, `slots_available`) VALUES
 (1, 'Monday', 0),
 (2, 'Tuesday', 3),
-(3, 'Wednesday', 3),
-(4, 'Thursday', 3),
-(5, 'Friday', 3),
+(3, 'Wednesday', 1),
+(4, 'Thursday', 2),
+(5, 'Friday', 2),
 (6, 'Saturday', 4),
 (7, 'Sunday', 4);
 
@@ -68,7 +74,6 @@ INSERT INTO `slot_availability` (`id`, `day_of_week`, `slots_available`) VALUES
 -- Table structure for table `tblburiedrecord`
 --
 
-DROP TABLE IF EXISTS `tblburiedrecord`;
 CREATE TABLE `tblburiedrecord` (
   `BurID` int(11) NOT NULL,
   `Profid` int(11) NOT NULL,
@@ -77,13 +82,19 @@ CREATE TABLE `tblburiedrecord` (
   `Status1` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblburiedrecord`
+--
+
+INSERT INTO `tblburiedrecord` (`BurID`, `Profid`, `Nid`, `OccupancyDate`, `Status1`) VALUES
+(16, 54, 'N03', '2024-04-03', 0);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tblcontactinfo`
 --
 
-DROP TABLE IF EXISTS `tblcontactinfo`;
 CREATE TABLE `tblcontactinfo` (
   `ProfID` int(11) NOT NULL,
   `ContactNo` varchar(15) NOT NULL,
@@ -97,13 +108,20 @@ CREATE TABLE `tblcontactinfo` (
   `ModifiedSoftwareby` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblcontactinfo`
+--
+
+INSERT INTO `tblcontactinfo` (`ProfID`, `ContactNo`, `Email`, `Createdby`, `CreatedWhen`, `CreatedMachineby`, `CreatedSoftwareby`, `ModifiedWhen`, `ModifiedMachineby`, `ModifiedSoftwareby`) VALUES
+(54, '09952665097', 'gwyncastillo0604@gmail.com', 'Admin', '2024-04-03', '', 'E-Libing', '', '', 'E-Libing'),
+(55, '09952665097', 'admin@gmail.com', 'Admin', '2024-04-03', '', 'E-Libing', '', '', 'E-Libing');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tbldeathrecord`
 --
 
-DROP TABLE IF EXISTS `tbldeathrecord`;
 CREATE TABLE `tbldeathrecord` (
   `ProfileID` int(255) NOT NULL,
   `DateofDeath` date NOT NULL,
@@ -118,13 +136,20 @@ CREATE TABLE `tbldeathrecord` (
   `currentdate` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbldeathrecord`
+--
+
+INSERT INTO `tbldeathrecord` (`ProfileID`, `DateofDeath`, `CauseofDeath`, `IntermentPlace`, `IntermentDateTime`, `Lname`, `Fname`, `Mname`, `Suffix`, `Birthydate`, `currentdate`) VALUES
+(54, '2024-04-04', 'Tumor', 'ACAMP', '2024-04-17 01:00:00', 'zxczc', 'xzcxzc', 'xzcxzcxz', 'Jr', '2024-04-03', '2024-04-03'),
+(55, '2024-04-23', 'fdds', 'dfdsf', '2024-04-24 01:00:00', 'fdsfds', 'fdsf', 'dsfsdf', 'Sr', '2024-04-03', '2024-04-03');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tblintermentreservation`
 --
 
-DROP TABLE IF EXISTS `tblintermentreservation`;
 CREATE TABLE `tblintermentreservation` (
   `AppointmentID` int(11) NOT NULL,
   `Requestor` varchar(255) NOT NULL,
@@ -133,13 +158,20 @@ CREATE TABLE `tblintermentreservation` (
   `profID` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblintermentreservation`
+--
+
+INSERT INTO `tblintermentreservation` (`AppointmentID`, `Requestor`, `Nid`, `Relationship`, `profID`) VALUES
+(30, 'Mary Gwyneth Sangga', 'N03', 'Daughter', '54'),
+(31, 'sfcdsfsd', 'N04', 'Son', '55');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tblniche`
 --
 
-DROP TABLE IF EXISTS `tblniche`;
 CREATE TABLE `tblniche` (
   `Nid` varchar(255) NOT NULL,
   `LocID` varchar(255) NOT NULL,
@@ -150,13 +182,28 @@ CREATE TABLE `tblniche` (
   `currentdate` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblniche`
+--
+
+INSERT INTO `tblniche` (`Nid`, `LocID`, `Level`, `Nno`, `Size`, `Status`, `currentdate`) VALUES
+('N01', 'L001', 1, 1, '12', '2', '2024-04-03'),
+('N02', 'L001', 1, 2, '12', '2', '2024-04-03'),
+('N03', 'L001', 1, 3, '12', '2', '2024-04-03'),
+('N04', 'L001', 1, 4, '12', '1', '2024-04-03'),
+('N05', 'L001', 1, 5, '12', '0', '2024-04-03'),
+('N06', 'L001', 2, 6, '12', '0', '2024-04-03'),
+('N07', 'L001', 2, 7, '12', '0', '2024-04-03'),
+('N08', 'L001', 2, 8, '12', '0', '2024-04-03'),
+('N09', 'L001', 2, 9, '12', '0', '2024-04-03'),
+('N10', 'L001', 2, 10, '12', '0', '2024-04-03');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tblnichelocation`
 --
 
-DROP TABLE IF EXISTS `tblnichelocation`;
 CREATE TABLE `tblnichelocation` (
   `LocID` varchar(255) NOT NULL,
   `NLName` varchar(255) NOT NULL,
@@ -165,13 +212,19 @@ CREATE TABLE `tblnichelocation` (
   `Type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblnichelocation`
+--
+
+INSERT INTO `tblnichelocation` (`LocID`, `NLName`, `Size`, `Description`, `Type`) VALUES
+('L001', 'FS-0001 TO FS1-1148', 12, 'Adult', 'Apartment');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tblpayment`
 --
 
-DROP TABLE IF EXISTS `tblpayment`;
 CREATE TABLE `tblpayment` (
   `id` int(11) NOT NULL,
   `profileID` int(11) NOT NULL,
@@ -180,13 +233,20 @@ CREATE TABLE `tblpayment` (
   `currentdate` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblpayment`
+--
+
+INSERT INTO `tblpayment` (`id`, `profileID`, `totalpayment`, `gatepassno`, `currentdate`) VALUES
+(19, 54, '2,000.00', '532686', '2024-04-03'),
+(20, 55, '2,000.00', '858104', '2024-04-03');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tbluserslogin`
 --
 
-DROP TABLE IF EXISTS `tbluserslogin`;
 CREATE TABLE `tbluserslogin` (
   `UserID` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -203,7 +263,8 @@ CREATE TABLE `tbluserslogin` (
 INSERT INTO `tbluserslogin` (`UserID`, `username`, `pw`, `Createdby`, `Restriction`, `CreatedDate`) VALUES
 (6, 'admin@gmail.com', 'admin', 'Admin', 'E-Libing Admin', '2023-12-05'),
 (7, 'staff@gmail.com', 'staff', 'Staff', 'E-Libing Staff', '2023-12-05'),
-(8, 'acampsite@gmail.com', 'site', 'Acamp Site', 'E-Libing ACAMP Site', '2023-12-05');
+(8, 'acampsite@gmail.com', 'site', 'Acamp Site', 'E-Libing ACAMP Site', '2023-12-05'),
+(9, 'client@gmail.com', '123', 'Client1', 'E-Libing Client', '2024-04-03');
 
 -- --------------------------------------------------------
 
@@ -211,7 +272,6 @@ INSERT INTO `tbluserslogin` (`UserID`, `username`, `pw`, `Createdby`, `Restricti
 -- Table structure for table `tbl_audit_trail`
 --
 
-DROP TABLE IF EXISTS `tbl_audit_trail`;
 CREATE TABLE `tbl_audit_trail` (
   `User_ID` int(11) NOT NULL,
   `Date` date NOT NULL DEFAULT current_timestamp(),
@@ -470,7 +530,30 @@ INSERT INTO `tbl_audit_trail` (`User_ID`, `Date`, `Timex`, `Action`) VALUES
 (6, '2023-12-07', '09:22:41', 'New Added Occupant: kk kk kk'),
 (7, '2023-12-07', '09:39:50', 'Log-in'),
 (7, '2023-12-07', '09:45:54', 'New Added Occupant: mm m mmm'),
-(7, '2023-12-07', '09:57:17', 'Accept payment: Ken Rojas');
+(7, '2023-12-07', '09:57:17', 'Accept payment: Ken Rojas'),
+(8, '2024-04-03', '09:21:34', 'Log-in'),
+(6, '2024-04-03', '09:21:41', 'Log-in'),
+(7, '2024-04-03', '09:21:47', 'Log-in'),
+(7, '2024-04-03', '09:22:14', 'New Added Occupant: dasdas asdsa sadsd'),
+(7, '2024-04-03', '09:23:29', 'Add Block: Apartment'),
+(7, '2024-04-03', '09:23:52', 'Add Niche'),
+(7, '2024-04-03', '09:24:00', 'Add Niche'),
+(7, '2024-04-03', '09:24:44', 'New Added Occupant: John Cruz Dela Cruz'),
+(7, '2024-04-03', '09:25:47', 'Accept payment: Mary Gwyneth Sangga'),
+(9, '2024-04-03', '09:31:10', 'Log-in'),
+(9, '2024-04-03', '09:31:45', 'New Added Occupant: vxcvxc vcvxcvxc vcvccx'),
+(9, '2024-04-03', '10:37:30', 'Update Applicant Info: Mary Gwyneth Sangga'),
+(6, '2024-04-03', '10:39:15', 'Log-in'),
+(6, '2024-04-03', '10:39:53', 'Update Applicant Info: Mary Gwyneth Sangga'),
+(6, '2024-04-03', '10:40:57', 'Log-in'),
+(6, '2024-04-03', '10:40:57', 'Log-in'),
+(6, '2024-04-03', '10:42:42', 'New Added Occupant: xzcxzc xzcxzcxz zxczc'),
+(6, '2024-04-03', '10:43:00', 'Accept payment: Mary Gwyneth Sangga'),
+(6, '2024-04-03', '14:51:15', 'Log-in'),
+(6, '2024-04-03', '14:53:09', 'New Added Occupant: fdsf dsfsdf fdsfds'),
+(6, '2024-04-03', '14:55:11', 'Accept payment: sfcdsfsd'),
+(7, '2024-04-03', '14:57:17', 'Log-in'),
+(6, '2024-04-08', '09:33:59', 'Log-in');
 
 --
 -- Indexes for dumped tables
@@ -544,7 +627,7 @@ ALTER TABLE `tbluserslogin`
 -- AUTO_INCREMENT for table `selected_slots`
 --
 ALTER TABLE `selected_slots`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `slot_availability`
@@ -556,31 +639,31 @@ ALTER TABLE `slot_availability`
 -- AUTO_INCREMENT for table `tblburiedrecord`
 --
 ALTER TABLE `tblburiedrecord`
-  MODIFY `BurID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `BurID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tbldeathrecord`
 --
 ALTER TABLE `tbldeathrecord`
-  MODIFY `ProfileID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `ProfileID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `tblintermentreservation`
 --
 ALTER TABLE `tblintermentreservation`
-  MODIFY `AppointmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `AppointmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `tblpayment`
 --
 ALTER TABLE `tblpayment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tbluserslogin`
 --
 ALTER TABLE `tbluserslogin`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
